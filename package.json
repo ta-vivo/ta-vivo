@@ -1,0 +1,16 @@
+{
+  "name": "ta-vivo",
+  "version": "1.0.0",
+  "description": "Health check for API and webs with telegram and more integrations",
+  "main": "index.js",
+  "author": "Albert Hidalgo",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev:ui": "yarn workspace ui serve"
+  },
+  "workspaces": [
+    "ui",
+    "api"
+  ]
+}
