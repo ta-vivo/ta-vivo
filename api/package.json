@@ -1,7 +1,36 @@
 {
   "name": "api",
   "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec \"npm run lint -s && nodemon src/index.js --exec babel-node\"",
+    "build": "babel src --out-dir dist",
+    "start": "node dist/index.js",
+    "lint": "eslint ./src/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "cross-env": "5.0.5"
+    "@babel/polyfill": "^7.10.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "pg": "^8.3.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.3.3",
+    "sequelize-querystring-converter": "^1.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.4",
+    "@babel/core": "^7.10.4",
+    "@babel/node": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.17.0",
+    "nodemon": "^2.0.4"
   }
 }

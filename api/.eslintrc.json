@@ -1,0 +1,13 @@
+{
+    "env": {
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "rules": {
+        "semi": ["error", "always"],
+        "quotes": ["error", "single"],
+        "no-empty":"error",
+        "no-useless-catch": "off"
+    },
+    "parser": "babel-eslint"
+}
