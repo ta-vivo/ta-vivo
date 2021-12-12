@@ -7,14 +7,7 @@ const User = sequelize.define('users', {
     primaryKey: true,
     autoIncrement: true
   },
-  firstName: {
-    type: Sequelize.TEXT,
-    allowNull: false
-  },
-  lastName: {
-    type: Sequelize.TEXT
-  },
-  email: {
+  username: {
     type: Sequelize.TEXT,
     allowNull: false,
     unique: true
