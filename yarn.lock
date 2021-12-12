@@ -974,6 +974,44 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
+"@intlify/core-base@9.2.0-beta.23":
+  version "9.2.0-beta.23"
+  resolved "https://registry.yarnpkg.com/@intlify/core-base/-/core-base-9.2.0-beta.23.tgz#4fc0609c44d66d17d2b98dd2fc8f5adb30f2d495"
+  integrity sha512-sNet9/RpU/qydW1bOwVICYzGIC/SWyV+1gakcSP12XD1tGEiaoI1Ln+6nHh4dICfegR/5XyaoJ7NC4/ukH7/Ew==
+  dependencies:
+    "@intlify/devtools-if" "9.2.0-beta.23"
+    "@intlify/message-compiler" "9.2.0-beta.23"
+    "@intlify/shared" "9.2.0-beta.23"
+    "@intlify/vue-devtools" "9.2.0-beta.23"
+
+"@intlify/devtools-if@9.2.0-beta.23":
+  version "9.2.0-beta.23"
+  resolved "https://registry.yarnpkg.com/@intlify/devtools-if/-/devtools-if-9.2.0-beta.23.tgz#a5dee1d69c2f17c83ca4ae5f2f3d3be93c0fd78c"
+  integrity sha512-f2iY2LFRHTwPnBpT0R/kG8CwZbUWiSccMzfXYLwhjJC1irCcFCXmVtL9Mkz5gc0Elqvl+zOWxk5g9rwhah5bBQ==
+  dependencies:
+    "@intlify/shared" "9.2.0-beta.23"
+
+"@intlify/message-compiler@9.2.0-beta.23":
+  version "9.2.0-beta.23"
+  resolved "https://registry.yarnpkg.com/@intlify/message-compiler/-/message-compiler-9.2.0-beta.23.tgz#8db72181f520f7dd58048916d7ef05abc5f4a9f7"
+  integrity sha512-qmGN8k5yGGdZ5St8yg8U4Tg2K9Sc6h3BhWCdJKAqQVs5jnfZG+nMtsLVgnJUWkDvhjzyg7/rEOhHm2uJcu4vjw==
+  dependencies:
+    "@intlify/shared" "9.2.0-beta.23"
+    source-map "0.6.1"
+
+"@intlify/shared@9.2.0-beta.23":
+  version "9.2.0-beta.23"
+  resolved "https://registry.yarnpkg.com/@intlify/shared/-/shared-9.2.0-beta.23.tgz#0ba032df786f6a7fda33dc24f804167fc76aa145"
+  integrity sha512-3aELL2KTp1MWKGm2gIUKSagthgKzcK5hpQEFzOwkJ1SAthpTXR7BHeWGEaD+Lj+Pbiz3U8cspvp8s2lFWVbYxg==
+
+"@intlify/vue-devtools@9.2.0-beta.23":
+  version "9.2.0-beta.23"
+  resolved "https://registry.yarnpkg.com/@intlify/vue-devtools/-/vue-devtools-9.2.0-beta.23.tgz#182f16adec3abfb038edd727d9977bf1fa958501"
+  integrity sha512-5uGvrtUQhiyEqrMpDYh1FAU5uZviLaiEy1HAs+ypX46EdaDvyEYYpWvhezTWZ7hsDBsbsKJ9ICjgTvZxm6PDcw==
+  dependencies:
+    "@intlify/core-base" "9.2.0-beta.23"
+    "@intlify/shared" "9.2.0-beta.23"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -1469,7 +1507,7 @@
   optionalDependencies:
     prettier "^1.18.2 || ^2.0.0"
 
-"@vue/devtools-api@^6.0.0-beta.18":
+"@vue/devtools-api@^6.0.0-beta.13", "@vue/devtools-api@^6.0.0-beta.18":
   version "6.0.0-beta.20.1"
   resolved "https://registry.yarnpkg.com/@vue/devtools-api/-/devtools-api-6.0.0-beta.20.1.tgz#5b499647e929c35baf2a66a399578f9aa4601142"
   integrity sha512-R2rfiRY+kZugzWh9ZyITaovx+jpU4vgivAEAiz80kvh3yviiTU3CBuGuyWpSwGz9/C7TkSWVM/FtQRGlZ16n8Q==
@@ -7571,15 +7609,15 @@ source-map-url@^0.4.0:
   resolved "https://registry.yarnpkg.com/source-map-url/-/source-map-url-0.4.1.tgz#0af66605a745a5a2f91cf1bbf8a7afbc283dec56"
   integrity sha512-cPiFOTLUKvJFIg4SKVScy4ilPPW6rFgMgfuZJPNoDuMs3nC1HbMUycBoJw77xFIp6z1UJQJOfx6C9GMH80DiTw==
 
+source-map@0.6.1, source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.0, source-map@~0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
+  integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
+
 source-map@^0.5.0, source-map@^0.5.6:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
   integrity sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=
-
-source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.0, source-map@~0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
-  integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
 
 source-map@^0.7.3:
   version "0.7.3"
@@ -8381,6 +8419,16 @@ vue-hot-reload-api@^2.3.0:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
+
+vue-i18n@^9.2.0-beta.23:
+  version "9.2.0-beta.23"
+  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-9.2.0-beta.23.tgz#a07f766ac5d109d93d1367b283fa912d4eb2701a"
+  integrity sha512-9zpylFVjhMDiNnSpa8pFf/lXiALKzxDKEo9QrSV906cN0m6jtyjvjCWw6dRx/7Q4ZJuwXYg0wi/UtUkgu0wkQw==
+  dependencies:
+    "@intlify/core-base" "9.2.0-beta.23"
+    "@intlify/shared" "9.2.0-beta.23"
+    "@intlify/vue-devtools" "9.2.0-beta.23"
+    "@vue/devtools-api" "^6.0.0-beta.13"
 
 "vue-loader-v16@npm:vue-loader@^16.1.0":
   version "16.8.3"
