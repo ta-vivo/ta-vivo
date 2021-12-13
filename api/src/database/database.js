@@ -25,6 +25,4 @@ export const sequelize = new Sequelize(
   }
 );
 
-sequelize.sync({ force: (process.env.FORCE_SYNC == 'true') });
-
 export default { sequelize };
