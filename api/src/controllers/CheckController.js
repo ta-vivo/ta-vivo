@@ -6,6 +6,7 @@ class CheckController {
 
   static async create(req, res) {
     const newCheck = req.body;
+    newCheck.user = req.user;
     try {
       const entityCreated = await CheckService.create(newCheck);
       return res.json(Response.get('Check created', entityCreated));
@@ -18,11 +19,16 @@ class CheckController {
   }
 
   static async getAll(req, res) {
-    const { query } = req;
-
-    let { where, limit, offset, order } = querystringConverterHelper.parseQuery(query);
-
     try {
+      const { query } = req;
+
+      let { where, limit, offset, order } = querystringConverterHelper.parseQuery(query);
+      if (where) {
+        where = { ...where, userId: req.user.userId };
+      } else {
+        where = { userId: req.user.userId };
+      }
+
       const { rows, count, total } = await CheckService.getAll({
         criterions: {
           where,
@@ -41,7 +47,7 @@ class CheckController {
 
   static async getById(req, res) {
     try {
-      const check = await CheckService.getById(req.params.id);
+      const check = await CheckService.getById({ id: req.params.id, user: req.user });
 
       if (check) {
         return res.json(Response.get('Check found', check));
@@ -55,6 +61,7 @@ class CheckController {
   static async update(req, res) {
     const { id } = req.params;
     const check = req.body;
+    check.user = req.user;
 
     try {
       const updateCheck = await CheckService.update(id, check);
@@ -67,7 +74,7 @@ class CheckController {
 
   static async delete(req, res) {
     try {
-      await CheckService.delete(req.params.id);
+      await CheckService.delete({ id: req.params.id, user: req.user });
       return res.json(Response.get('Check deleted', {}));
     } catch (error) {
       return res.json(Response.get('Something goes wrong', error, 500));
