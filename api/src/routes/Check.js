@@ -1,12 +1,13 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import CheckController from '../controllers/CheckController';
+import { verifyToken } from '../middlewares/Auth';
 
 const router = Router();
 
-router.get('/', CheckController.getAll );
-router.get('/:id', CheckController.getById );
-router.put('/:id', CheckController.update );
-router.post('/', CheckController.create );
-router.delete('/:id', CheckController.delete);
+router.get('/', verifyToken, CheckController.getAll);
+router.get('/:id', verifyToken, CheckController.getById);
+router.put('/:id', verifyToken, CheckController.update);
+router.post('/', verifyToken, CheckController.create);
+router.delete('/:id', verifyToken, CheckController.delete);
 
 export default router;
