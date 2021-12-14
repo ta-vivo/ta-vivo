@@ -24,7 +24,7 @@ const Checks = sequelize.define('checks', {
 
 }, {});
 
-Checks.belongsTo(User);
+Checks.belongsTo(User, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
 User.hasMany(Checks);
 
 export default Checks;
