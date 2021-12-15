@@ -14,6 +14,8 @@ const cronTimeTable = [
   { label: '12h', value: '* */12 * * *' },
 ];
 
+let cronJobs = {};
+
 class CheckService {
 
   static async create(newCheck) {
@@ -47,9 +49,16 @@ class CheckService {
         periodToCheck: check.periodToCheck,
         enabled: check.enabled ? check.enabled : false
       };
+      const currentCheck = await Checks.findOne({ where: { id } });
+
       // eslint-disable-next-line no-prototype-builtins
       if (check.hasOwnProperty('enabled')) {
         checkForUpdate.enabled = check.enabled;
+        if (check.enabled === true && currentCheck.enabled === false) {
+          this.runCheck(currentCheck);
+        } else if (check.enabled === false && currentCheck.enabled === true) {
+          this.stopCheck(currentCheck);
+        }
       }
       await Checks.update(checkForUpdate, { where: { id: id } });
       return await this.getById({ id, user: check.user });
@@ -81,9 +90,12 @@ class CheckService {
 
   static async delete({ id, user }) {
     try {
+      const check = await Checks.findOne({ where: { id, userId: user.userId } });
       const rowCount = await Checks.destroy({
         where: { id, userId: user.userId }
       });
+      // stop cron job
+      this.stopCheck(check);
       return { count: rowCount };
     } catch (error) {
       throw error;
@@ -105,7 +117,16 @@ class CheckService {
         // send alert
       }
     });
+    cronJobs = { ...cronJobs, [check.id]: cronJob };
     cronJob.start();
+  }
+
+  static stopCheck(check) {
+    const cronJob = cronJobs[check.id];
+    if (cronJob) {
+      console.log(`stop cron job for ${check.target}`);
+      cronJob.stop();
+    }
   }
 
 }
