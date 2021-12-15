@@ -11,8 +11,8 @@ class CheckController {
       const entityCreated = await CheckService.create(newCheck);
       return res.json(Response.get('Check created', entityCreated));
     } catch (error) {
-      res.status(500).json({
-        message: 'Something goes wrong',
+      res.status(error.status || 500).json({
+        message: error.message || 'Something goes wrong',
         data: error
       });
     }
