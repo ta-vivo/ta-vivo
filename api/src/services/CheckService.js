@@ -1,6 +1,6 @@
 import axios from 'axios';
 import cron from 'cron';
-import { Checks } from '../models/';
+import { Checks, CheckLogs } from '../models/';
 
 const cronTimeTable = [
   { label: '10s', value: '*/10 * * * * *' },
@@ -112,7 +112,15 @@ class CheckService {
           timeout: 5000
         });
         console.log(`✅ ${target} is alive at ${dateTimeString}`);
+        CheckLogs.create({
+          checkId: check.id,
+          status: 'up'
+        });
       } catch (error) {
+        CheckLogs.create({
+          checkId: check.id,
+          status: 'down'
+        });
         console.log(`🔥 send alert for ${check.target} at ${dateTimeString}`);
         // send alert
       }
