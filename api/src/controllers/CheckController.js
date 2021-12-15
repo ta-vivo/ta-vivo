@@ -58,6 +58,31 @@ class CheckController {
     }
   }
 
+  static async getLogsByCheckId(req, res) {
+    try {
+      const { query } = req;
+
+      let { where, limit, offset, order } = querystringConverterHelper.parseQuery(query);
+      const { rows, count, total } = await CheckService.getLogsByCheckId({
+        id: req.params.id,
+        user: req.user,
+        criterions: {
+          where,
+          limit,
+          offset,
+          order,
+        }
+      });
+
+      if (rows) {
+        return res.json(Response.get('Check logs found', rows, 200, { count, total, offset }));
+      }
+      return res.json(Response.get('Check logs not found', {}));
+    } catch (error) {
+      return res.json(Response.get('Something goes wrong', error, 500));
+    }
+  }
+
   static async update(req, res) {
     const { id } = req.params;
     const check = req.body;
