@@ -88,6 +88,24 @@ class CheckService {
     }
   }
 
+  static async getLogsByCheckId({ id, criterions}) {
+    
+    try {
+      if (criterions.where) {
+        criterions.where.checkId = Number(id);
+      } else {
+        criterions.where = { checkId: Number(id) };
+      }
+      console.log(criterions);
+      const { rows } = await CheckLogs.findAndCountAll({
+        ...criterions
+      });
+      return { rows, count: rows.length };
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async delete({ id, user }) {
     try {
       const check = await Checks.findOne({ where: { id, userId: user.userId } });
