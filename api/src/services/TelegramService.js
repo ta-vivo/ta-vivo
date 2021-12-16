@@ -21,6 +21,11 @@ class TelegramService {
     });
   }
 
+  static async sendMessage({message, userId}) {
+    const bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN);
+    bot.sendMessage(userId, message);
+  }
+
 }
 
 export default TelegramService;
