@@ -22,7 +22,7 @@ class querystringConverterHelper {
 
     order = querystringConverterHelper.getOrder(order);
 
-    return { where, limit: 10, offset: page, order };
+    return { where, limit: query.limit || 10, offset: page, order };
   }
 
   static getOffset(where) {

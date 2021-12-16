@@ -11,8 +11,8 @@ class CheckController {
       const entityCreated = await CheckService.create(newCheck);
       return res.json(Response.get('Check created', entityCreated));
     } catch (error) {
-      res.status(500).json({
-        message: 'Something goes wrong',
+      res.status(error.status || 500).json({
+        message: error.message || 'Something goes wrong',
         data: error
       });
     }
@@ -53,6 +53,31 @@ class CheckController {
         return res.json(Response.get('Check found', check));
       }
       return res.json(Response.get('Check not found', {}));
+    } catch (error) {
+      return res.json(Response.get('Something goes wrong', error, 500));
+    }
+  }
+
+  static async getLogsByCheckId(req, res) {
+    try {
+      const { query } = req;
+
+      let { where, limit, offset, order } = querystringConverterHelper.parseQuery(query);
+      const { rows, count, total } = await CheckService.getLogsByCheckId({
+        id: req.params.id,
+        user: req.user,
+        criterions: {
+          where,
+          limit,
+          offset,
+          order,
+        }
+      });
+
+      if (rows) {
+        return res.json(Response.get('Check logs found', rows, 200, { count, total, offset }));
+      }
+      return res.json(Response.get('Check logs not found', {}));
     } catch (error) {
       return res.json(Response.get('Something goes wrong', error, 500));
     }
