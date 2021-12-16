@@ -1,6 +1,7 @@
 import axios from 'axios';
 import cron from 'cron';
-import { Checks, CheckLogs } from '../models/';
+import { Checks, CheckLogs, CheckIntegration, Integration } from '../models/';
+import TelegramService from './TelegramService';
 
 const cronTimeTable = [
   { label: '10s', value: '*/10 * * * * *' },
@@ -35,6 +36,11 @@ class CheckService {
 
       let entityCreated = await Checks.create(checkForCreate);
       entityCreated = JSON.parse(JSON.stringify(entityCreated));
+
+      if (newCheck.addIntegrations) {
+        this.addIntegrations(entityCreated.id, newCheck.addIntegrations);
+      }
+
       this.runCheck(entityCreated);
       return entityCreated;
     } catch (error) {
@@ -42,14 +48,15 @@ class CheckService {
     }
   }
 
-  static async update(id, check) {
+  static async update(id, check, user) {
     try {
       const checkForUpdate = {
         target: check.target,
         periodToCheck: check.periodToCheck,
         enabled: check.enabled ? check.enabled : false
       };
-      const currentCheck = await Checks.findOne({ where: { id } });
+      let currentCheck = await Checks.findOne({ where: { id } });
+      currentCheck = JSON.parse(JSON.stringify(currentCheck));
 
       // eslint-disable-next-line no-prototype-builtins
       if (check.hasOwnProperty('enabled')) {
@@ -60,8 +67,29 @@ class CheckService {
           this.stopCheck(currentCheck);
         }
       }
+
+      if (check.periodToCheck) {
+        checkForUpdate.periodToCheck = cronTimeTable.find(item => item.label === checkForUpdate.periodToCheck).value;
+      }
+
       await Checks.update(checkForUpdate, { where: { id: id } });
-      return await this.getById({ id, user: check.user });
+
+      if (check.addIntegrations) {
+        this.addIntegrations(id, check.addIntegrations);
+      }
+
+      if (check.removeIntegrations) {
+        this.removeIntegrations(id, check.removeIntegrations);
+      }
+
+      let checkUpdated = await this.getById({ id, user });
+      checkUpdated = JSON.parse(JSON.stringify(checkUpdated));
+
+      if (checkForUpdate.target !== currentCheck.target) {
+        this.stopCheck(currentCheck);
+        this.runCheck(checkUpdated);
+      }
+      return checkUpdated;
     } catch (error) {
       throw error;
     }
@@ -81,22 +109,24 @@ class CheckService {
   static async getById({ id, user }) {
 
     try {
-      const check = await Checks.findOne({ where: { id, userId: user.userId } });
+      const check = await Checks.findOne({
+        where: { id, userId: user.userId },
+        include: [{ model: CheckIntegration, include: [{ model: Integration }] }]
+      });
       return check;
     } catch (error) {
       throw error;
     }
   }
 
-  static async getLogsByCheckId({ id, criterions}) {
-    
+  static async getLogsByCheckId({ id, criterions }) {
+
     try {
       if (criterions.where) {
         criterions.where.checkId = Number(id);
       } else {
         criterions.where = { checkId: Number(id) };
       }
-      console.log(criterions);
       const { rows } = await CheckLogs.findAndCountAll({
         ...criterions
       });
@@ -122,7 +152,7 @@ class CheckService {
 
   static runCheck(check) {
     const cronJob = new cron.CronJob(check.periodToCheck, async () => {
-      const { target } = check;
+      const { id, target, userId } = check;
       const dateTime = new Date();
       const dateTimeString = `${dateTime.getDate()}/${dateTime.getMonth()}/${dateTime.getFullYear()} ${dateTime.getHours()}:${dateTime.getMinutes()}:${dateTime.getSeconds()}`;
       try {
@@ -131,16 +161,25 @@ class CheckService {
         });
         console.log(`✅ ${target} is alive at ${dateTimeString}`);
         CheckLogs.create({
-          checkId: check.id,
+          checkId: id,
           status: 'up'
         });
       } catch (error) {
         CheckLogs.create({
-          checkId: check.id,
+          checkId: id,
           status: 'down'
         });
-        console.log(`🔥 send alert for ${check.target} at ${dateTimeString}`);
-        // send alert
+
+        const mostUpdatedCheck = await this.getById({ id: id, user: { userId } });
+        mostUpdatedCheck.check_integrations.forEach(async (integrationCheck) => {
+          if (integrationCheck.integration.type === 'telegram') {
+            TelegramService.sendMessage({
+              userId: integrationCheck.integration.appUserId,
+              message: `🚨 ${target} is down at ${dateTimeString}`
+            });
+          }
+        });
+        console.log(`🔥 send alert for ${target} at ${dateTimeString}`);
       }
     });
     cronJobs = { ...cronJobs, [check.id]: cronJob };
@@ -153,6 +192,33 @@ class CheckService {
       console.log(`stop cron job for ${check.target}`);
       cronJob.stop();
     }
+  }
+
+  static async addIntegrations(checkId, integrations) {
+    const integrationsToAdd = integrations.map(integration => {
+      return {
+        checkId: checkId,
+        integrationId: integration.id
+      };
+    });
+    await CheckIntegration.bulkCreate(integrationsToAdd);
+    return;
+  }
+
+  static async removeIntegrations(checkId, integrations) {
+    const integrationsToRemove = integrations.map(integration => {
+      return {
+        checkId: checkId,
+        integrationId: integration.id
+      };
+    });
+    await CheckIntegration.destroy({
+      where: {
+        checkId: checkId,
+        integrationId: integrationsToRemove.map(item => item.integrationId)
+      }
+    });
+    return;
   }
 
 }
