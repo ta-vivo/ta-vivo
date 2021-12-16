@@ -27,6 +27,21 @@ class IntegrationService {
     }
   }
 
+  static async getAll({ criterions, user}) {
+    try {
+      if (criterions.where) {
+        criterions.where.userId = user.userId;
+      } else {
+        criterions.where = { userId: user.userId };
+      }
+      
+      const { rows } = await Integration.findAndCountAll({ ...criterions });
+      return { rows, count: rows.length };
+    } catch (error) {
+      throw error;
+    }
+  }
+
 }
 
 export default IntegrationService;
