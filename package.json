@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev:ui": "yarn workspace ui serve",
+    "dev:ui": "yarn workspace ui quasar dev",
     "dev:api": "yarn workspace api dev"
   },
   "workspaces": [

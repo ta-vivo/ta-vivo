@@ -1,24 +1,26 @@
-# ui
+# Ta Vivo App (ui)
 
-## Project setup
-```
-yarn install
-```
+A health Check App
 
-### Compiles and hot-reloads for development
-```
-yarn serve
+## Install the dependencies
+```bash
+yarn
 ```
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
+### Start the app in development mode (hot-code reloading, error reporting, etc.)
+```bash
+quasar dev
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Lint the files
+```bash
+yarn run lint
+```
+
+### Build the app for production
+```bash
+quasar build
+```
+
+### Customize the configuration
+See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
