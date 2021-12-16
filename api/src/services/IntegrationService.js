@@ -34,9 +34,20 @@ class IntegrationService {
       } else {
         criterions.where = { userId: user.userId };
       }
-      
+
       const { rows } = await Integration.findAndCountAll({ ...criterions });
       return { rows, count: rows.length };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async delete({ id, user }) {
+    try {
+      const rowCount = await Integration.destroy({
+        where: { id, userId: user.userId }
+      });
+      return { count: rowCount };
     } catch (error) {
       throw error;
     }
