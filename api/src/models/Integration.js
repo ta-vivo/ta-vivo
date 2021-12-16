@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../database/database';
+import { User } from './index';
 
 const Integration = sequelize.define('integrations', {
   id: {
@@ -19,5 +20,8 @@ const Integration = sequelize.define('integrations', {
     allowNull: false
   },
 }, {});
+
+Integration.belongsTo(User, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+User.hasMany(Integration);
 
 export default Integration;
