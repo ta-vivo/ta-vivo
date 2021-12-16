@@ -32,7 +32,12 @@ class CheckService {
         throw ({ status: 400, message: 'periodToCheck is not valid' });
       }
 
-      checkForCreate.periodToCheck = cronTimeTable.find(item => item.label === newCheck.periodToCheck).value;
+      const periodToCheck = cronTimeTable.find(item => item.label === newCheck.periodToCheck).value;
+      if (!periodToCheck) {
+        throw ({ status: 400, message: 'periodToCheck is not valid' });
+      }
+
+      checkForCreate.periodToCheck = periodToCheck;
 
       let entityCreated = await Checks.create(checkForCreate);
       entityCreated = JSON.parse(JSON.stringify(entityCreated));
@@ -55,6 +60,14 @@ class CheckService {
         periodToCheck: check.periodToCheck,
         enabled: check.enabled ? check.enabled : false
       };
+
+      const periodToCheck = cronTimeTable.find(item => item.label === check.periodToCheck).value;
+      if (!periodToCheck) {
+        throw ({ status: 400, message: 'periodToCheck is not valid' });
+      }
+
+      checkForUpdate.periodToCheck = periodToCheck;
+
       let currentCheck = await Checks.findOne({ where: { id } });
       currentCheck = JSON.parse(JSON.stringify(currentCheck));
 
@@ -66,10 +79,6 @@ class CheckService {
         } else if (check.enabled === false && currentCheck.enabled === true) {
           this.stopCheck(currentCheck);
         }
-      }
-
-      if (check.periodToCheck) {
-        checkForUpdate.periodToCheck = cronTimeTable.find(item => item.label === checkForUpdate.periodToCheck).value;
       }
 
       await Checks.update(checkForUpdate, { where: { id: id } });
