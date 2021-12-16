@@ -4,6 +4,7 @@ import Checks from './Checks';
 import CheckLogs from './CheckLogs';
 import Integration from './Integration';
 import CheckNotificationMethod from './CheckNotificationMethod';
+import PendingIntegration from './PendingIntegration';
 
 export {
   User,
@@ -12,4 +13,5 @@ export {
   Integration,
   CheckNotificationMethod,
   UserCredential,
+  PendingIntegration
 };
