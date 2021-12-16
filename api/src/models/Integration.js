@@ -1,15 +1,12 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../database/database';
+import { User } from './index';
 
 const Integration = sequelize.define('integrations', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
     autoIncrement: true
-  },
-  token: {
-    type: Sequelize.STRING,
-    allowNull: false
   },
   name: {
     type: Sequelize.STRING,
@@ -18,6 +15,13 @@ const Integration = sequelize.define('integrations', {
   type: {
     type: Sequelize.ENUM('telegram'),
   },
+  appUserId: {
+    type: Sequelize.TEXT,
+    allowNull: false
+  },
 }, {});
+
+Integration.belongsTo(User, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+User.hasMany(Integration);
 
 export default Integration;

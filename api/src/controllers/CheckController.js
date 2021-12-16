@@ -89,7 +89,7 @@ class CheckController {
     check.user = req.user;
 
     try {
-      const updateCheck = await CheckService.update(id, check);
+      const updateCheck = await CheckService.update(id, check, req.user);
 
       return res.json(Response.get('Check Updated', updateCheck));
     } catch (error) {
