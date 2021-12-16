@@ -45,6 +45,15 @@ class IntegrationsController {
       return res.json(Response.get('Something goes wrong', error, 500));
     }
   }
+
+  static async delete(req, res) {
+    try {
+      await IntegrationService.delete({ id: req.params.id, user: req.user });
+      return res.json(Response.get('Integration deleted', {}));
+    } catch (error) {
+      return res.json(Response.get('Something goes wrong', error, 500));
+    }
+  }
 }
 
 export default IntegrationsController;
