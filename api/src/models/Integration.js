@@ -7,16 +7,16 @@ const Integration = sequelize.define('integrations', {
     primaryKey: true,
     autoIncrement: true
   },
-  token: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
   name: {
     type: Sequelize.STRING,
     allowNull: false
   },
   type: {
     type: Sequelize.ENUM('telegram'),
+  },
+  appUserId: {
+    type: Sequelize.TEXT,
+    allowNull: false
   },
 }, {});
 
