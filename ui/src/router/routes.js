@@ -22,6 +22,17 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/checks',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '', component: () => import('pages/Checks/Index.vue'), meta: {
+          isPublic: false
+        }
+      }
+    ]
+  },
 
   // Always leave this as last one,
   // but you can also remove it
