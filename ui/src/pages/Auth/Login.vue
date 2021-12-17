@@ -34,6 +34,7 @@
           <div class="text-center">
             <q-btn
               push
+              :loading="loading"
               :label="$t('common.login')"
               type="submit"
               color="primary"
@@ -61,13 +62,16 @@ export default {
     const username = ref(null);
     const password = ref(null);
     const accept = ref(false);
+    const loading = ref(false);
 
     return {
       username,
       password,
       accept,
+      loading,
 
       onSubmit() {
+        loading.value = true;
         $store
           .dispatch("auth/login", {
             username: username.value,
@@ -83,6 +87,9 @@ export default {
             position: "top",
             message: error.response.data.message,
           });
+          })
+          .finally(() => {
+            loading.value = false;
           });
       },
     };
