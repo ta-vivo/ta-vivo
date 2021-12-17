@@ -8,6 +8,9 @@ const Checks = sequelize.define('checks', {
     primaryKey: true,
     autoIncrement: true
   },
+  name: {
+    type: Sequelize.STRING
+  },
   target: {
     type: Sequelize.TEXT,
     allowNull: false
