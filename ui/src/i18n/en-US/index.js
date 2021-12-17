@@ -8,5 +8,8 @@ export default {
     password: 'Password',
     checks: 'Checks',
     integrations: 'Integrations',
+    name: 'Name',
+    target: 'Target',
+    period: 'Period',
   }
 }
