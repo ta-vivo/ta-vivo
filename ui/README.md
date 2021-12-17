@@ -22,5 +22,8 @@ yarn run lint
 quasar build
 ```
 
+### Icons
+[Eva Icons](https://akveo.github.io/eva-icons)
+
 ### Customize the configuration
 See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
