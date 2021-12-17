@@ -13,7 +13,7 @@ class AuthService {
       });
 
       if (!user) {
-        throw ('User not found');
+        throw ({status: 400, message: 'Invalid username or password'});
       }
 
       const userCredentials = await UserCredential.findOne({
