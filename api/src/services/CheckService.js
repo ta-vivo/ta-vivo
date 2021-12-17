@@ -21,6 +21,7 @@ class CheckService {
 
   static async create(newCheck) {
     const checkForCreate = {
+      name: newCheck.name,
       target: newCheck.target,
       periodToCheck: newCheck.periodToCheck,
       enabled: newCheck.enabled ? newCheck.enabled : false,
@@ -60,6 +61,10 @@ class CheckService {
         periodToCheck: check.periodToCheck,
         enabled: check.enabled ? check.enabled : false
       };
+
+      if (check.name) {
+        checkForUpdate.name = check.name;
+      }
 
       const periodToCheck = cronTimeTable.find(item => item.label === check.periodToCheck).value;
       if (!periodToCheck) {
@@ -108,7 +113,10 @@ class CheckService {
     const { criterions } = params;
 
     try {
-      const { rows } = await Checks.findAndCountAll({ ...criterions });
+      const { rows } = await Checks.findAndCountAll({
+        ...criterions,
+        include: [{ model: CheckIntegration, include: [{ model: Integration }] }]
+      });
       return { rows, count: rows.length };
     } catch (error) {
       throw error;
