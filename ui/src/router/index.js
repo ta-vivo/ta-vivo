@@ -26,5 +26,27 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE)
   })
 
+  /**
+* Authorization user before enter to any route
+**/
+  Router.beforeEach((to, from, next) => {
+    const token = window.localStorage.getItem('token')
+
+    if (to.meta.isPublic) {
+      next()
+      return
+    } else {
+      if (token === null) {
+        next('/login')
+        return
+      } else {
+        next()
+        return
+      }
+    }
+
+    next()
+  })
+
   return Router
 })
