@@ -12,10 +12,10 @@ const axiosInstanceForAuth = axios.create({
   baseURL: process.env.API
 })
 
-const token = () => 'Bearer ' + window.localStorage.getItem('token')
+const token = () => window.localStorage.getItem('token')
 
 const authInterceptor = (config) => {
-  config.headers.Authorization = token()
+  config.headers['x-access-token'] = token()
   return config
 }
 
