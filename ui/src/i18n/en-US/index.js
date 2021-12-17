@@ -6,5 +6,7 @@ export default {
     login: 'Login',
     username: 'Username',
     password: 'Password',
+    checks: 'Checks',
+    integrations: 'Integrations',
   }
 }
