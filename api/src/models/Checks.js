@@ -19,6 +19,10 @@ const Checks = sequelize.define('checks', {
     type: Sequelize.TEXT,
     allowNull: false
   },
+  periodToCheckLabel: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   enabled: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
