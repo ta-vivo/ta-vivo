@@ -30,7 +30,12 @@ const routes = [
         path: '', component: () => import('pages/Checks/Index.vue'), meta: {
           isPublic: false
         }
-      }
+      },
+      {
+        path: 'add', component: () => import('pages/Checks/Form.vue'), meta: {
+          isPublic: false
+        }
+      },
     ]
   },
 
