@@ -10,9 +10,20 @@ export default {
     integrations: 'Integrations',
     name: 'Name',
     target: 'Target',
-    period: 'Period'
+    period: 'Period',
+    basicInformation: 'Basic Information',
   },
   action: {
     addCheck: 'Add Check',
+    save: 'Save',
+    checkCreated: 'Check created',
+  },
+  messages: {
+    information: {
+      noIntegrationFound: 'No integration found',
+    },
+    errors: {
+      requireField: 'This field is required',
+    }
   }
 }
