@@ -13,14 +13,10 @@
       class="q-mt-lg"
       bordered
       flat
-      icon-first-page="eva-arrowhead-left"
-      icon-prev-page="eva-arrow-ios-back"
-      icon-next-page="eva-arrow-ios-forward"
-      icon-last-page="eva-arrowhead-right"
       :rows-per-page-options="[]"
       :rows="rows"
       :columns="columns"
-      row-key="name"
+      row-key="id"
     >
       <template v-slot:body-cell-check_integrations="props">
         <q-td :props="props">
