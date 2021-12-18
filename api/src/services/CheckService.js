@@ -2,6 +2,7 @@ import axios from 'axios';
 import cron from 'cron';
 import { Checks, CheckLogs, CheckIntegration, Integration } from '../models/';
 import TelegramService from './TelegramService';
+import { Op } from 'sequelize';
 
 const cronTimeTable = [
   { label: '10s', value: '*/10 * * * * *' },
@@ -36,6 +37,11 @@ class CheckService {
       const periodToCheck = cronTimeTable.find(item => item.label === newCheck.periodToCheck).value;
       if (!periodToCheck) {
         throw ({ status: 400, message: 'periodToCheck is not valid' });
+      }
+
+      const exists = await this.isTargetExists(checkForCreate.target, checkForCreate.userId);
+      if (exists) {
+        throw ({ status: 400, message: 'Target already exists' });
       }
 
       checkForCreate.periodToCheck = periodToCheck;
@@ -236,6 +242,18 @@ class CheckService {
       }
     });
     return;
+  }
+
+  static async isTargetExists(target, userId) {
+    const exits = await Checks.findOne({
+      where: {
+        target: {
+          [Op.like]: `%${target}%`
+        },
+        userId
+      }
+    });
+    return exits ? true : false;
   }
 
 }
