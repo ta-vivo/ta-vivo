@@ -79,10 +79,10 @@ export default {
         field: "check_integrations",
       },
       {
-        name: "periodToCheck",
+        name: "periodToCheckLabel",
         align: "center",
         label: $t("common.period"),
-        field: "periodToCheck",
+        field: "periodToCheckLabel",
       },
       {
         name: "actions",
