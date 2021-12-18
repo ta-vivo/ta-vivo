@@ -68,7 +68,7 @@ export default {
       },
       {
         name: "target",
-        align: "center",
+        align: "left",
         label: $t("common.target"),
         field: "target",
       },
