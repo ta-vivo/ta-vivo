@@ -10,6 +10,9 @@ export default {
     integrations: 'Integrations',
     name: 'Name',
     target: 'Target',
-    period: 'Period',
+    period: 'Period'
+  },
+  action: {
+    addCheck: 'Add Check',
   }
 }
