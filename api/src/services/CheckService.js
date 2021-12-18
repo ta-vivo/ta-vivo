@@ -45,6 +45,7 @@ class CheckService {
       }
 
       checkForCreate.periodToCheck = periodToCheck;
+      checkForCreate.periodToCheckLabel = cronTimeTable.find(item => item.label === newCheck.periodToCheck).label;
 
       let entityCreated = await Checks.create(checkForCreate);
       entityCreated = JSON.parse(JSON.stringify(entityCreated));
@@ -78,6 +79,7 @@ class CheckService {
       }
 
       checkForUpdate.periodToCheck = periodToCheck;
+      checkForUpdate.periodToCheckLabel = cronTimeTable.find(item => item.label === checkForUpdate.periodToCheck).label;
 
       let currentCheck = await Checks.findOne({ where: { id } });
       currentCheck = JSON.parse(JSON.stringify(currentCheck));
