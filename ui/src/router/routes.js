@@ -36,6 +36,11 @@ const routes = [
           isPublic: false
         }
       },
+      {
+        path: 'edit/:id', component: () => import('pages/Checks/Edit.vue'), meta: {
+          isPublic: false
+        }
+      },
     ]
   },
 
