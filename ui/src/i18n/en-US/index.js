@@ -17,10 +17,13 @@ export default {
     addCheck: 'Add Check',
     save: 'Save',
     checkCreated: 'Check created',
+    delete: 'Delete',
+    noKeepIt: 'No, keep it',
   },
   messages: {
     information: {
       noIntegrationFound: 'No integration found',
+      areYouSureYouWantToDelete: 'Are you sure you want to delete [ITEM]?',
     },
     errors: {
       requireField: 'This field is required',
