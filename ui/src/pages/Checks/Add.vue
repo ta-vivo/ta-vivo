@@ -99,7 +99,6 @@ export default {
       enabled: true,
       addIntegrations: [],
     });
-    const accept = ref(false);
     const loading = ref(false);
     const integrations = ref([]);
     const periods = ref($store.getters['checks/getPeriods']);
@@ -110,7 +109,6 @@ export default {
 
     return {
       check,
-      accept,
       loading,
       periods,
       integrations,
