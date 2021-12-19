@@ -7,3 +7,7 @@ export function fetchAll(context) {
 export function create(context, payload) {
   return axiosInstance.post('/checks', payload)
 }
+
+export function remove (context, payload) {
+  return axiosInstance.delete(`/checks/${payload.id}`)
+}
