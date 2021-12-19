@@ -12,6 +12,10 @@ export function create(context, payload) {
   return axiosInstance.post('/checks', payload)
 }
 
+export function update(context, payload) {
+  return axiosInstance.put(`/checks/${payload.id}`, payload)
+}
+
 export function remove (context, payload) {
   return axiosInstance.delete(`/checks/${payload.id}`)
 }
