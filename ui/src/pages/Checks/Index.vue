@@ -18,6 +18,15 @@
       :columns="columns"
       row-key="id"
     >
+      <template v-slot:body-cell-enabled="props">
+        <q-td :props="props">
+          <q-chip :color="props.row.enabled ? 'positive' : 'negative'" text-color="white">
+            {{
+              props.row.enabled ? $t("common.enabled") : $t("common.disabled")
+            }}
+          </q-chip>
+        </q-td>
+      </template>
       <template v-slot:body-cell-check_integrations="props">
         <q-td :props="props">
           <template
@@ -47,6 +56,12 @@
       <template v-slot:body-cell-action="props">
         <q-td :props="props">
           <q-btn
+            flat
+            size="sm"
+            icon="eva-eye-outline"
+            :to="`/checks/edit/${props.row.id}`"
+          />
+          <q-btn
             color="negative"
             flat
             size="sm"
@@ -73,6 +88,12 @@ export default {
     const $t = useI18n().t;
     const $q = useQuasar();
     const columns = [
+      {
+        name: "enabled",
+        label: $t("common.status"),
+        align: "center",
+        field: "enabled",
+      },
       {
         name: "name",
         label: $t("common.name"),
@@ -142,26 +163,25 @@ export default {
             outline: true,
           },
           persistent: true,
-        })
-          .onOk(() => {
-            $q.loading.show({});
-            store
-              .dispatch("checks/remove", { id: check.id })
-              .then(() => {
-                loading.value = true;
-                store
-                  .dispatch("checks/fetchAll")
-                  .then((response) => {
-                    rows.value = response.data.data;
-                  })
-                  .finally(() => {
-                    loading.value = false;
-                  });
-              })
-              .finally(() => {
-                $q.loading.hide();
-              });
-          })
+        }).onOk(() => {
+          $q.loading.show({});
+          store
+            .dispatch("checks/remove", { id: check.id })
+            .then(() => {
+              loading.value = true;
+              store
+                .dispatch("checks/fetchAll")
+                .then((response) => {
+                  rows.value = response.data.data;
+                })
+                .finally(() => {
+                  loading.value = false;
+                });
+            })
+            .finally(() => {
+              $q.loading.hide();
+            });
+        });
       },
     };
   },
