@@ -73,13 +73,13 @@ class CheckService {
         checkForUpdate.name = check.name;
       }
 
-      const periodToCheck = cronTimeTable.find(item => item.label === check.periodToCheck).value;
+      const periodToCheck = cronTimeTable.find(item => item.label === checkForUpdate.periodToCheck);
       if (!periodToCheck) {
         throw ({ status: 400, message: 'periodToCheck is not valid' });
       }
 
-      checkForUpdate.periodToCheck = periodToCheck;
-      checkForUpdate.periodToCheckLabel = cronTimeTable.find(item => item.label === checkForUpdate.periodToCheck).label;
+      checkForUpdate.periodToCheck = periodToCheck.value;
+      checkForUpdate.periodToCheckLabel = periodToCheck.label;
 
       let currentCheck = await Checks.findOne({ where: { id } });
       currentCheck = JSON.parse(JSON.stringify(currentCheck));
@@ -113,6 +113,7 @@ class CheckService {
       }
       return checkUpdated;
     } catch (error) {
+      console.log('🚀 ~ file: CheckService.js ~ line 116 ~ CheckService ~ update ~ error', error);
       throw error;
     }
   }
