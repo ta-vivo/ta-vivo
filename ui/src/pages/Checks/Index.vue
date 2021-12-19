@@ -44,6 +44,17 @@
           </template>
         </q-td>
       </template>
+      <template v-slot:body-cell-action="props">
+        <q-td :props="props">
+          <q-btn
+            color="negative"
+            flat
+            size="sm"
+            icon="eva-trash-outline"
+            @click="handleDeleteCheck(props.row)"
+          />
+        </q-td>
+      </template>
       ></q-table
     >
   </q-page>
@@ -54,11 +65,13 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
 import { fabTelegram } from "@quasar/extras/fontawesome-v5";
+import { useQuasar } from "quasar";
 
 export default {
   name: "PageChecks",
   setup() {
     const $t = useI18n().t;
+    const $q = useQuasar();
     const columns = [
       {
         name: "name",
@@ -85,14 +98,14 @@ export default {
         field: "periodToCheckLabel",
       },
       {
-        name: "actions",
-        align: "center",
-        label: " ",
-        field: "actions",
+        name: "action",
+        label: "",
+        field: "action",
       },
     ];
 
     const rows = ref([]);
+    const loading = ref(false);
 
     const store = useStore();
     store.dispatch("checks/fetchAll").then((response) => {
@@ -102,6 +115,7 @@ export default {
     return {
       columns,
       rows,
+      loading,
       getIntegrationIcon(integration) {
         switch (integration) {
           case "telegram":
@@ -109,6 +123,45 @@ export default {
           default:
             return "";
         }
+      },
+      handleDeleteCheck(check) {
+        $q.dialog({
+          title: "Confirm",
+          message: $t("messages.information.areYouSureYouWantToDelete").replace(
+            "[ITEM]",
+            check.name
+          ),
+          cancel: true,
+          ok: {
+            label: $t("action.delete"),
+            color: "negative",
+          },
+          cancel: {
+            label: $t("action.noKeepIt"),
+            color: "primary",
+            outline: true,
+          },
+          persistent: true,
+        })
+          .onOk(() => {
+            $q.loading.show({});
+            store
+              .dispatch("checks/remove", { id: check.id })
+              .then(() => {
+                loading.value = true;
+                store
+                  .dispatch("checks/fetchAll")
+                  .then((response) => {
+                    rows.value = response.data.data;
+                  })
+                  .finally(() => {
+                    loading.value = false;
+                  });
+              })
+              .finally(() => {
+                $q.loading.hide();
+              });
+          })
       },
     };
   },
