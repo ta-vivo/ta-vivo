@@ -11,9 +11,8 @@ class IntegrationsController {
       const entityCreated = await IntegrationService.create({ newIntegration, user: req.user });
       return res.json(Response.get('Integration created', entityCreated));
     } catch (error) {
-      console.log('🚀 ~ file: IntegrationsController.js ~ line 12 ~ IntegrationsController ~ create ~ error', error);
-      res.status(500).json({
-        message: 'Something goes wrong',
+      res.status(error.status || 500).json({
+        message: error.message || 'Something goes wrong',
         data: error
       });
     }
