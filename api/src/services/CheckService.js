@@ -84,16 +84,6 @@ class CheckService {
       let currentCheck = await Checks.findOne({ where: { id } });
       currentCheck = JSON.parse(JSON.stringify(currentCheck));
 
-      // eslint-disable-next-line no-prototype-builtins
-      if (check.hasOwnProperty('enabled')) {
-        checkForUpdate.enabled = check.enabled;
-        if (check.enabled === true && currentCheck.enabled === false) {
-          this.runCheck(currentCheck);
-        } else if (check.enabled === false && currentCheck.enabled === true) {
-          this.stopCheck(currentCheck);
-        }
-      }
-
       await Checks.update(checkForUpdate, { where: { id: id } });
 
       if (check.addIntegrations) {
@@ -107,10 +97,41 @@ class CheckService {
       let checkUpdated = await this.getById({ id, user });
       checkUpdated = JSON.parse(JSON.stringify(checkUpdated));
 
+      let requireUpdateCron = false;
+      let requireStopCron = false;
+
       if (checkForUpdate.target !== currentCheck.target) {
-        this.stopCheck(currentCheck);
+        requireUpdateCron = true;
+      }
+
+      if (checkForUpdate.periodToCheck && checkForUpdate.periodToCheck !== currentCheck.periodToCheck) {
+        requireUpdateCron = true;
+        requireStopCron = true;
+      }
+
+      // eslint-disable-next-line no-prototype-builtins
+      if (check.hasOwnProperty('enabled')) {
+        checkForUpdate.enabled = check.enabled;
+        if (check.enabled === true && currentCheck.enabled === false) {
+          requireUpdateCron = true;
+        } else if (check.enabled === false && currentCheck.enabled === true) {
+          requireStopCron = true;
+        }
+      }
+
+      if (checkForUpdate.enalbed === false && currentCheck.enabled === true) {
+        requireStopCron = true;
+      }
+
+      if (requireStopCron) {
+        this.stopCheck(checkUpdated);
+      }
+
+      if (checkUpdated.enabled && requireUpdateCron) {
         this.runCheck(checkUpdated);
       }
+
+
       return checkUpdated;
     } catch (error) {
       console.log('🚀 ~ file: CheckService.js ~ line 116 ~ CheckService ~ update ~ error', error);
@@ -177,6 +198,7 @@ class CheckService {
   }
 
   static runCheck(check) {
+    console.log('Run cron job for check: ', check.name);
     const cronJob = new cron.CronJob(check.periodToCheck, async () => {
       const { id, target, userId } = check;
       const dateTime = new Date();
