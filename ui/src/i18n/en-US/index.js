@@ -28,6 +28,7 @@ export default {
     delete: 'Delete',
     noKeepIt: 'No, keep it',
     backToTheList: 'Back to the list',
+    integrationCreated: 'Integration created',
   },
   messages: {
     information: {
