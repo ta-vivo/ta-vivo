@@ -43,6 +43,17 @@ const routes = [
       },
     ]
   },
+  {
+    path: '/integrations',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        path: '', component: () => import('pages/Integrations/Index.vue'), meta: {
+          isPublic: false
+        }
+      }
+    ]
+  },
 
   // Always leave this as last one,
   // but you can also remove it
