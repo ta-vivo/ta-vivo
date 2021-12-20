@@ -16,6 +16,7 @@ export default {
     enabled: 'Enabled',
     disabled: 'Disabled',
     assignments: 'Assignments',
+    uniqueCode: 'Unique Code',
   },
   action: {
     addCheck: 'Add Check',
@@ -26,6 +27,7 @@ export default {
     addIntegration: 'Add Integration',
     delete: 'Delete',
     noKeepIt: 'No, keep it',
+    backToTheList: 'Back to the list',
   },
   messages: {
     information: {
