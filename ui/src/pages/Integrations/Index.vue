@@ -111,7 +111,7 @@ export default {
             return "";
         }
       },
-      handleDeleteIntegrations(integration) {
+      handleDeleteIntegration(integration) {
         $q.dialog({
           title: "Confirm",
           message: $t("messages.information.areYouSureYouWantToDelete").replace(
