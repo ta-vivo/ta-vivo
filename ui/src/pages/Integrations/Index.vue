@@ -80,7 +80,7 @@ export default {
       },
       {
         name: "assignments",
-        align: "left",
+        align: "center",
         label: $t("common.assignments"),
         field: row => row.check_integrations.length
       },
