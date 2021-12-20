@@ -15,6 +15,7 @@ export default {
     status: 'Status',
     enabled: 'Enabled',
     disabled: 'Disabled',
+    assignments: 'Assignments',
   },
   action: {
     addCheck: 'Add Check',
@@ -22,6 +23,7 @@ export default {
     save: 'Save',
     checkCreated: 'Check created',
     checkUpdated: 'Check updated',
+    addIntegration: 'Add Integration',
     delete: 'Delete',
     noKeepIt: 'No, keep it',
   },
