@@ -1,8 +1,7 @@
-import { Integration, PendingIntegration } from '../models';
-
+import { Integration, PendingIntegration, CheckIntegration } from '../models';
 class IntegrationService {
 
-  static async create({newIntegration, user}) {
+  static async create({ newIntegration, user }) {
     try {
       const pendingIntegration = await PendingIntegration.findOne({
         where: {
@@ -10,7 +9,7 @@ class IntegrationService {
         }
       });
       if (!pendingIntegration) {
-        throw ({status: 400, message: 'Integration not found'});
+        throw ({ status: 400, message: 'Integration not found' });
       }
 
       const integration = {
@@ -27,7 +26,7 @@ class IntegrationService {
     }
   }
 
-  static async getAll({ criterions, user}) {
+  static async getAll({ criterions, user }) {
     try {
       if (criterions.where) {
         criterions.where.userId = user.userId;
@@ -35,7 +34,12 @@ class IntegrationService {
         criterions.where = { userId: user.userId };
       }
 
-      const { rows } = await Integration.findAndCountAll({ ...criterions });
+      const { rows } = await Integration.findAndCountAll({
+        ...criterions,
+        include: [{
+          model: CheckIntegration
+        }]
+      });
       return { rows, count: rows.length };
     } catch (error) {
       throw error;
