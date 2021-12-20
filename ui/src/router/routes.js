@@ -51,6 +51,11 @@ const routes = [
         path: '', component: () => import('pages/Integrations/Index.vue'), meta: {
           isPublic: false
         }
+      },
+      {
+        path: 'add', component: () => import('pages/Integrations/Add.vue'), meta: {
+          isPublic: false
+        }
       }
     ]
   },
