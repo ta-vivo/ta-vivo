@@ -34,6 +34,7 @@ export default {
     information: {
       noIntegrationFound: 'No integration found',
       areYouSureYouWantToDelete: 'Are you sure you want to delete [ITEM]?',
+      uniqueCodeGetFromTelegram: 'Unique code get from Telegram',
     },
     errors: {
       requireField: 'This field is required',
