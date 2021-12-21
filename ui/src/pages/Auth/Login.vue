@@ -38,6 +38,7 @@
               :label="$t('common.login')"
               type="submit"
               color="primary"
+              icon="eva-log-in-outline"
             />
           </div>
         </q-form>
@@ -51,6 +52,7 @@ import { useQuasar } from "quasar";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import jwtDecode from "jwt-decode";
 
 export default {
   name: "PageLogin",
@@ -78,15 +80,21 @@ export default {
             password: password.value,
           })
           .then((response) => {
-            window.localStorage.setItem("token", response.data.data.token);
+            const token = response.data.data.token;
+            const decoded = jwtDecode(token);
+            $store.commit("auth/SET_USER", {
+              username: decoded.username,
+              id: decoded.id,
+            });
+            window.localStorage.setItem("token", token);
             $router.push("/");
           })
-          .catch(error => {
-          $q.notify({
-            color: "negative",
-            position: "top",
-            message: error.response.data.message,
-          });
+          .catch((error) => {
+            $q.notify({
+              color: "negative",
+              position: "top",
+              message: error.response.data.message,
+            });
           })
           .finally(() => {
             loading.value = false;
