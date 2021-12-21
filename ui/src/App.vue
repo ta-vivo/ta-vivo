@@ -1,5 +1,5 @@
 <template>
-  <router-view style="background-color: #F3F3F5" />
+  <router-view class="constrain-width" />
 </template>
 <script>
 import { defineComponent } from 'vue';
