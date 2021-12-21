@@ -36,6 +36,7 @@
             :label="$t('action.save')"
             type="submit"
             color="primary"
+            icon="eva-save-outline"
           />
         </div>
       </q-form>
