@@ -35,6 +35,10 @@ export default {
       noIntegrationFound: 'No integration found',
       areYouSureYouWantToDelete: 'Are you sure you want to delete [ITEM]?',
       uniqueCodeGetFromTelegram: 'Unique code get from Telegram',
+      telegramSetupInformation: 'You can receive direct messages on Telegram with the integration of the ta-vivo bot.',
+      telegramSetupBot: 'Search Telegram',
+      telegramSetupBotCommand: 'Type /start command. The bot will respond with a unique code.',
+      telegramIntegrationNamePlaceholder: 'The name is to identify it in the list of integrations',
     },
     errors: {
       requireField: 'This field is required',
