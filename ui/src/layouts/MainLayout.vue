@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header class="bg-white text-black" elevated>
+    <q-header class="bg-white text-black" bordered>
       <q-toolbar class="constrain-width">
         <q-btn color="primary" to="/checks" stretch flat icon="eva-activity-outline" :label="$t('common.checks')"></q-btn>
         <q-btn color="primary" to="/integrations" stretch flat icon="eva-briefcase-outline" :label="$t('common.integrations')"></q-btn>
