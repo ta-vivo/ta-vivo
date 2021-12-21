@@ -15,7 +15,7 @@
     />
     <q-input
       type="text"
-      hint="Unique code get via Telegram"
+      :hint="$t('messages.information.uniqueCodeGetFromTelegram')"
       outlined
       v-model="integration.uniqueCode"
       :label="$t('common.uniqueCode')"
