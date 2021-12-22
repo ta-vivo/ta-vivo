@@ -17,6 +17,9 @@ export default {
     disabled: 'Disabled',
     assignments: 'Assignments',
     uniqueCode: 'Unique Code',
+    check: 'Check',
+    at: 'at',
+    date: 'Date',
   },
   action: {
     addCheck: 'Add Check',
