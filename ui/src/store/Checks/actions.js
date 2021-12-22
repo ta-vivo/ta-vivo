@@ -8,6 +8,10 @@ export function fetch(context, payload) {
   return axiosInstance.get(`/checks/${payload.id}`)
 }
 
+export function fetchLogsById(context, payload) {
+  return axiosInstance.get(`/checks/${payload.id}/logs`)
+}
+
 export function create(context, payload) {
   return axiosInstance.post('/checks', payload)
 }
