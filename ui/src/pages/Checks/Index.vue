@@ -20,7 +20,10 @@
     >
       <template v-slot:body-cell-enabled="props">
         <q-td :props="props">
-          <q-chip :color="props.row.enabled ? 'positive' : 'negative'" text-color="white">
+          <q-chip
+            :color="props.row.enabled ? 'positive' : 'negative'"
+            text-color="white"
+          >
             {{
               props.row.enabled ? $t("common.enabled") : $t("common.disabled")
             }}
@@ -58,6 +61,12 @@
           <q-btn
             flat
             size="sm"
+            icon="eva-file-text-outline"
+            @click="handleShowLogs(props.row)"
+          />
+          <q-btn
+            flat
+            size="sm"
             icon="eva-eye-outline"
             :to="`/checks/edit/${props.row.id}`"
           />
@@ -70,8 +79,41 @@
           />
         </q-td>
       </template>
-      ></q-table
-    >
+    </q-table>
+    <q-dialog v-model="showLogsDialog">
+      <q-card style="width: 700px; max-width: 80vw">
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6">
+            {{ $t("common.check") }} logs - {{ tempCheck.name }}
+          </div>
+          <q-space />
+          <q-btn icon="eva-close-outline" flat round dense v-close-popup />
+        </q-card-section>
+
+        <q-card-section>
+          <q-table
+            bordered
+            flat
+            :loading="loadingLogs"
+            :rows-per-page-options="[]"
+            :rows="logs"
+            :columns="logsColumns"
+            row-key="id"
+          >
+            <template v-slot:body-cell-status="props">
+              <q-td :props="props">
+                <q-chip
+                  :color="props.row.status === 'up' ? 'positive' : 'negative'"
+                  text-color="white"
+                >
+                  {{ props.row.status }}
+                </q-chip>
+              </q-td>
+            </template>
+          </q-table>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -81,6 +123,7 @@ import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
 import { fabTelegram } from "@quasar/extras/fontawesome-v5";
 import { useQuasar } from "quasar";
+import { date } from "quasar";
 
 export default {
   name: "PageChecks",
@@ -124,9 +167,30 @@ export default {
         field: "action",
       },
     ];
+    const logsColumns = [
+      {
+        name: "status",
+        label: $t("common.status"),
+        align: "left",
+        field: "status",
+      },
+      {
+        name: "createdAt",
+        label: $t("common.date"),
+        align: "left",
+        field: (row) =>
+          `${date.formatDate(row.createdAt, "DD/MM/YYYY")} ${$t(
+            "common.at"
+          )} ${date.formatDate(row.createdAt, "HH:mm:ss")}`,
+      },
+    ];
 
     const rows = ref([]);
     const loading = ref(false);
+    const showLogsDialog = ref(false);
+    const loadingLogs = ref(false);
+    const logs = ref([]);
+    const tempCheck = ref({});
 
     const store = useStore();
     store.dispatch("checks/fetchAll").then((response) => {
@@ -137,6 +201,25 @@ export default {
       columns,
       rows,
       loading,
+      showLogsDialog,
+      loadingLogs,
+      logs,
+      tempCheck,
+      logsColumns,
+      handleShowLogs(check) {
+        tempCheck.value = check;
+        loadingLogs.value = true;
+        showLogsDialog.value = true;
+
+        store
+          .dispatch("checks/fetchLogsById", { id: check.id })
+          .then((response) => {
+            logs.value = response.data.data;
+          })
+          .finally(() => {
+            loadingLogs.value = false;
+          });
+      },
       getIntegrationIcon(integration) {
         switch (integration) {
           case "telegram":
