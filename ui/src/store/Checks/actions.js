@@ -9,7 +9,7 @@ export function fetch(context, payload) {
 }
 
 export function fetchLogsById(context, payload) {
-  return axiosInstance.get(`/checks/${payload.id}/logs`)
+  return axiosInstance.get(`/checks/${payload.id}/logs${payload.query}`)
 }
 
 export function create(context, payload) {
