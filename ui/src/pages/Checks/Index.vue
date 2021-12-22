@@ -99,6 +99,8 @@
             :rows="logs"
             :columns="logsColumns"
             row-key="id"
+            v-model:pagination="logsPagination"
+            @request="fetchlogs"
           >
             <template v-slot:body-cell-status="props">
               <q-td :props="props">
@@ -184,6 +186,13 @@ export default {
           )} ${date.formatDate(row.createdAt, "HH:mm:ss")}`,
       },
     ];
+    const logsPagination = ref({
+      sortBy: "createdAt",
+      descending: false,
+      page: 1,
+      rowsPerPage: 10,
+      rowsNumber: 0,
+    });
 
     const rows = ref([]);
     const loading = ref(false);
@@ -197,6 +206,33 @@ export default {
       rows.value = response.data.data;
     });
 
+    const handleShowLogs = (check) => {
+      tempCheck.value = check;
+      fetchlogs();
+    };
+
+    const fetchlogs = (props) => {
+      if (props) {
+        const { page, rowsPerPage } = props.pagination;
+        logsPagination.value.rowsPerPage = rowsPerPage;
+        logsPagination.value.page = page;
+      }
+
+      loadingLogs.value = true;
+      showLogsDialog.value = true;
+      const queryString = `?page=${logsPagination.value.page}&limit=${logsPagination.value.rowsPerPage}&sort=-created_at`
+      store
+        .dispatch("checks/fetchLogsById", { id: tempCheck.value.id, query: queryString })
+        .then((response) => {
+          const results = response.data;
+          logsPagination.value.rowsNumber = results.pagination.total;
+          logs.value = results.data;
+        })
+        .finally(() => {
+          loadingLogs.value = false;
+        });
+    };
+
     return {
       columns,
       rows,
@@ -206,20 +242,9 @@ export default {
       logs,
       tempCheck,
       logsColumns,
-      handleShowLogs(check) {
-        tempCheck.value = check;
-        loadingLogs.value = true;
-        showLogsDialog.value = true;
-
-        store
-          .dispatch("checks/fetchLogsById", { id: check.id })
-          .then((response) => {
-            logs.value = response.data.data;
-          })
-          .finally(() => {
-            loadingLogs.value = false;
-          });
-      },
+      logsPagination,
+      handleShowLogs,
+      fetchlogs,
       getIntegrationIcon(integration) {
         switch (integration) {
           case "telegram":
