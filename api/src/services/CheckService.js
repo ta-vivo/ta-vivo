@@ -174,10 +174,10 @@ class CheckService {
       } else {
         criterions.where = { checkId: Number(id) };
       }
-      const { rows } = await CheckLogs.findAndCountAll({
+      const { rows, count } = await CheckLogs.findAndCountAll({
         ...criterions
       });
-      return { rows, count: rows.length };
+      return { rows, count: rows.length, total: count };
     } catch (error) {
       throw error;
     }
