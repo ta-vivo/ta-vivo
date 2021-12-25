@@ -18,6 +18,20 @@ class IntegrationsController {
     }
   }
 
+  static async update(req, res) {
+    const { id } = req.params;
+    const { name } = req.body;
+    try {
+      const entityUpdated = await IntegrationService.update({ id, integration: { name }, user: req.user });
+      return res.json(Response.get('Integration updated', entityUpdated));
+    } catch (error) {
+      res.status(error.status || 500).json({
+        message: error.message || 'Something goes wrong',
+        data: error
+      });
+    }
+  }
+
   static async getAll(req, res) {
     try {
       const { query } = req;
