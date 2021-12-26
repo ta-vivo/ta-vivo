@@ -26,6 +26,20 @@ class IntegrationService {
     }
   }
 
+  static async update({ id, integration, user }) {
+    try {
+      const entityUpdated = await Integration.update(integration, {
+        where: {
+          id,
+          userId: user.userId
+        }
+      });
+      return entityUpdated;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async getAll({ criterions, user }) {
     try {
       if (criterions.where) {
