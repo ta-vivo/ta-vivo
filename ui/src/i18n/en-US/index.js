@@ -32,7 +32,8 @@ export default {
     noKeepIt: 'No, keep it',
     backToTheList: 'Back to the list',
     integrationCreated: 'Integration created',
-    editIntegration: 'Edit Integration'
+    editIntegration: 'Edit Integration',
+    integrationUpdated: 'Integration updated',
   },
   messages: {
     information: {
