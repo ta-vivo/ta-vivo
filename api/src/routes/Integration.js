@@ -6,6 +6,7 @@ const router = Router();
 
 router.get('/', verifyToken, IntegrationController.getAll);
 router.post('/', verifyToken, IntegrationController.create);
+router.put('/:id', verifyToken, IntegrationController.update);
 router.delete('/:id', verifyToken, IntegrationController.delete);
 
 export default router;
