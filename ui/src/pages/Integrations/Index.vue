@@ -27,6 +27,7 @@
               size="lg"
               :icon="getIntegrationIcon(props.row.type).icon"
               :text-color="getIntegrationIcon(props.row.type).color"
+              @click="handleEditIntegration(props.row)"
             />
           </div>
         </q-td>
@@ -37,7 +38,7 @@
             flat
             size="sm"
             icon="eva-eye-outline"
-            :to="`/integrations/edit/${props.row.id}`"
+            @click="handleEditIntegration(props.row)"
           />
           <q-btn
             color="negative"
@@ -48,8 +49,53 @@
           />
         </q-td>
       </template>
-      ></q-table
-    >
+    </q-table>
+    <q-dialog v-model="showEditIntegrationDialog">
+      <q-card style="width: 300px">
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6">{{ $t("action.editIntegration") }}</div>
+          <q-space />
+          <q-btn
+            color="primary"
+            flat
+            round
+            dense
+            v-close-popup
+            text-color="black"
+            icon="eva-close-outline"
+          />
+        </q-card-section>
+
+        <q-card-section>
+          <q-form @submit="saveEditIntegration" class="q-gutter-md">
+            <q-input
+              type="text"
+              :hint="
+                $t('messages.information.telegramIntegrationNamePlaceholder')
+              "
+              outlined
+              v-model="integration.name"
+              :label="$t('common.name')"
+              lazy-rules
+              :rules="[
+                (val) =>
+                  (val && val.length > 0) || $t('messages.errors.requireField'),
+              ]"
+            />
+            <div class="text-center">
+              <q-btn
+                push
+                :loading="loading"
+                :label="$t('action.save')"
+                type="submit"
+                color="primary"
+                icon="eva-save-outline"
+              />
+            </div>
+          </q-form>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -82,7 +128,7 @@ export default {
         name: "assignments",
         align: "center",
         label: $t("common.assignments"),
-        field: row => row.check_integrations.length
+        field: (row) => row.check_integrations.length,
       },
       {
         name: "action",
@@ -93,6 +139,8 @@ export default {
 
     const rows = ref([]);
     const loading = ref(false);
+    const showEditIntegrationDialog = ref(false);
+    const integration = ref({});
 
     const store = useStore();
     store.dispatch("integrations/fetchAll").then((response) => {
@@ -103,6 +151,8 @@ export default {
       columns,
       rows,
       loading,
+      showEditIntegrationDialog,
+      integration,
       getIntegrationIcon(integration) {
         switch (integration) {
           case "telegram":
@@ -148,6 +198,38 @@ export default {
               $q.loading.hide();
             });
         });
+      },
+      handleEditIntegration({ id, name }) {
+        integration.value = { id, name };
+        showEditIntegrationDialog.value = true;
+      },
+      saveEditIntegration() {
+        loading.value = true;
+        store
+          .dispatch("integrations/update", {
+            id: integration.value.id,
+            payload: {
+              name: integration.value.name,
+            },
+          })
+          .then(() => {
+            showEditIntegrationDialog.value = false;
+            $q.notify({
+              color: "positive",
+              message: $t("action.integrationUpdated"),
+            });
+            store
+              .dispatch("integrations/fetchAll")
+              .then((response) => {
+                rows.value = response.data.data;
+              })
+              .finally(() => {
+                loading.value = false;
+              });
+          })
+          .finally(() => {
+            loading.value = false;
+          });
       },
     };
   },
