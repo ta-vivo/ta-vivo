@@ -30,6 +30,12 @@ class CheckService {
     };
 
     try {
+      await axios.get(checkForCreate.target);
+    } catch (error) {
+      throw ({ status: 400, message: 'The target is unreachable' });
+    }
+
+    try {
       if (!cronTimeTable.find(item => item.label === newCheck.periodToCheck)) {
         throw ({ status: 400, message: 'periodToCheck is not valid' });
       }
@@ -62,6 +68,15 @@ class CheckService {
   }
 
   static async update(id, check, user) {
+
+    try {
+      if (check.target) {
+        await axios.get(check.target);
+      }
+    } catch (error) {
+      throw ({ status: 400, message: 'The target is unreachable' });
+    }
+
     try {
       const checkForUpdate = {
         target: check.target,
