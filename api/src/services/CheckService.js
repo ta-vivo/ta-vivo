@@ -4,7 +4,7 @@ import { Checks, CheckLogs, CheckIntegration, Integration } from '../models/';
 import TelegramService from './TelegramService';
 import { Op } from 'sequelize';
 import cronTimeTable from '../utils/cronTimeList';
-
+import { isValidDomain, isValidIpv4, isValidIpv4WithProtocol } from '../utils/validators';
 
 let cronJobs = {};
 
@@ -19,8 +19,13 @@ class CheckService {
       userId: newCheck.user.userId
     };
 
+    // check isValidDomain
+    if (!isValidDomain(newCheck.target) && !isValidIpv4(newCheck.target) && !isValidIpv4WithProtocol(newCheck.target)) {
+      throw ({ status: 400, message: 'The target is not valid' });
+    }
+
     try {
-      await axios.get(checkForCreate.target);
+      await axios.get(checkForCreate.target, { timeout: 5000});
     } catch (error) {
       throw ({ status: 400, message: 'The target is unreachable' });
     }
@@ -59,9 +64,14 @@ class CheckService {
 
   static async update(id, check, user) {
 
+    // check isValidDomain
+    if (check.target && (!isValidDomain(check.target) && !isValidIpv4(check.target) && !isValidIpv4WithProtocol(check.target))) {
+      throw ({ status: 400, message: 'The target is not valid' });
+    }
+
     try {
       if (check.target) {
-        await axios.get(check.target);
+        await axios.get(check.target, { timeout: 5000});
       }
     } catch (error) {
       throw ({ status: 400, message: 'The target is unreachable' });
