@@ -20,6 +20,7 @@ export default {
     check: 'Check',
     at: 'at',
     date: 'Date',
+    mostRecentsLogs: 'Most recent logs'
   },
   action: {
     addCheck: 'Add Check',
