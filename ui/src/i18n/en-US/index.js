@@ -20,7 +20,10 @@ export default {
     check: 'Check',
     at: 'at',
     date: 'Date',
-    mostRecentsLogs: 'Most recent logs'
+    mostRecentsLogs: 'Most recent logs',
+    incidentFound: 'Incident found',
+    noIncident: 'No incident found in the last hour',
+    isNoReachable: 'is not reachable',
   },
   action: {
     addCheck: 'Add Check',
