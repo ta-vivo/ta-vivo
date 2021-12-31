@@ -7,7 +7,7 @@
           spinner-color="white"
           style="height: 40px; max-width: 40px"
           @click="$router.push('/')"
-          class="q-mr-sm"
+          class="q-mr-sm cursor-pointer"
         />
         <q-btn
           color="primary"
