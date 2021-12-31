@@ -39,7 +39,7 @@ class DashboardService {
       data.lastLog = data.recentActivity[0];
 
       // Last issus found in 1 hour
-      data.lastIssus = await CheckLogs.findAll({
+      data.mostRecentIncident = await CheckLogs.findOne({
         where: {
           status: 'down',
           createdAt: {
@@ -60,6 +60,8 @@ class DashboardService {
           ['createdAt', 'DESC']
         ]
       });
+
+      data.mostRecentIncident = data.mostRecentIncident ? data.mostRecentIncident : {};
 
       return data;
     } catch (error) {
