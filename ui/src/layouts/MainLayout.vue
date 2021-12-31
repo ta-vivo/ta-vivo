@@ -2,6 +2,13 @@
   <q-layout view="lHh Lpr lFf">
     <q-header class="bg-white text-black" bordered>
       <q-toolbar class="constrain-width">
+        <q-img
+          src="~assets/main-logo.png"
+          spinner-color="white"
+          style="height: 40px; max-width: 40px"
+          @click="$router.push('/')"
+          class="q-mr-sm"
+        />
         <q-btn
           color="primary"
           to="/checks"
@@ -38,7 +45,7 @@
       </q-toolbar>
     </q-header>
     <q-page-container>
-      <router-view />
+      <router-view :key="$route.fullPath" />
     </q-page-container>
   </q-layout>
 </template>
