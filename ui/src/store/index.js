@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 import auth from './Auth'
 import checks from './Checks'
 import integrations from './Integrations'
-// import example from './module-example'
+import dashboard from './Dashboard'
 
 /*
  * If not building with SSR mode, you can
@@ -19,7 +19,8 @@ export default store(function (/* { ssrContext } */) {
     modules: {
       auth,
       checks,
-      integrations
+      integrations,
+      dashboard
     },
 
     // enable strict mode (adds overhead!)
