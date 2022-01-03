@@ -24,6 +24,7 @@ export default {
     incidentFound: 'Incident found',
     noIncident: 'No incident found in the last hour',
     isNoReachable: 'is not reachable',
+    email: 'Email',
   },
   action: {
     addCheck: 'Add Check',
@@ -51,6 +52,7 @@ export default {
     },
     errors: {
       requireField: 'This field is required',
+      notValidEmail: 'This is not a valid email',
     }
   }
 }
