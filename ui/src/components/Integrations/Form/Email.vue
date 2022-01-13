@@ -1,7 +1,7 @@
 <template>
   <div class="row q-col-gutter-md">
     <div class="col-xs-12 col-md-5">
-      <q-form @submit="onSubmit" class="q-gutter-md">
+      <q-form @submit="requestCodeViaEmail" class="q-gutter-md">
         <div>
           <p class="text-bold">{{ $t("common.basicInformation") }}</p>
         </div>
@@ -19,8 +19,8 @@
         <div class="text-center">
           <q-btn
             push
-            :loading="loading"
-            :label="$t('action.save')"
+            :loading="loadingRequestCode"
+            :label="$t('action.requestCode')"
             type="submit"
             color="primary"
             icon="eva-save-outline"
@@ -42,14 +42,16 @@ export default {
     },
   },
   setup(props, { emit }) {
-    const integration = ref({
-      email: "",
-    });
     return {
-      integration,
       onSubmit() {
         emit("saved", integration.value);
       },
+    };
+  },
+  data() {
+    return {
+      loadingRequestCode: false,
+      integration: { email: "" },
     };
   },
   methods: {
@@ -59,6 +61,24 @@ export default {
         .match(
           /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         );
+    },
+    requestCodeViaEmail() {
+      this.loadingRequestCode = true;
+      this.$store
+        .dispatch("integrations/requestEmailCode", {
+          email: this.integration.email,
+        })
+        .then(() => {})
+        .catch((error) => {
+          $q.notify({
+            color: "negative",
+            message: error.response.data.message,
+            icon: fabTelegram,
+          });
+        })
+        .finally(() => {
+          this.loadingRequestCode = false;
+        });
     },
   },
 };
