@@ -4,11 +4,10 @@
       <q-form
         v-if="activeForm === 'requestCode'"
         @submit="requestCodeViaEmail"
-        class="q-gutter-md"
+        class="q-gutter-md text-center"
+        style="max-width:400px; margin:auto;"
       >
-        <div>
-          <p class="text-bold">{{ $t("common.basicInformation") }}</p>
-        </div>
+        <p class="text-h4">{{ $t("common.basicInformation") }}</p>
         <q-input
           type="text"
           hint="jhon@domain.com"
@@ -34,8 +33,13 @@
       <q-form
         v-if="activeForm === 'confirmEmailCode'"
         @submit="onSubmit"
-        class="q-gutter-md"
+        class="q-gutter-md text-center"
+        style="max-width: 400px; margin: auto"
       >
+        <p class="text-h4">{{ $t("common.emailConfirmationCode") }}</p>
+        <p class="text-italic text-grey-9">
+          {{ $t("messages.information.emailVerification") }}
+        </p>
         <q-input
           type="text"
           outlined
