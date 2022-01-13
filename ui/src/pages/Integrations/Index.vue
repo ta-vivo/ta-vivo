@@ -77,6 +77,7 @@
               v-model="integration.name"
               :label="$t('common.name')"
               lazy-rules
+              :disable="integration.type === 'email'"
               :rules="[
                 (val) =>
                   (val && val.length > 0) || $t('messages.errors.requireField'),
@@ -90,6 +91,7 @@
                 type="submit"
                 color="primary"
                 icon="eva-save-outline"
+                :disable="integration.type === 'email'"
               />
             </div>
           </q-form>
@@ -201,8 +203,8 @@ export default {
             });
         });
       },
-      handleEditIntegration({ id, name }) {
-        integration.value = { id, name };
+      handleEditIntegration({ id, name, type }) {
+        integration.value = { id, name, type };
         showEditIntegrationDialog.value = true;
       },
       saveEditIntegration() {
