@@ -70,7 +70,7 @@ export default {
         })
         .then(() => {})
         .catch((error) => {
-          $q.notify({
+          this.$q.notify({
             color: "negative",
             message: error.response.data.message,
             icon: fabTelegram,
