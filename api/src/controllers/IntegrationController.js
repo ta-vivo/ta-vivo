@@ -18,6 +18,19 @@ class IntegrationsController {
     }
   }
 
+  static async requestEmailConfirmation(req, res) {
+    const { email } = req.body;
+    try {
+      await IntegrationService.requestEmailConfirmation({ email, user: req.user });
+      return res.json(Response.get('Confirmation sent', {}));
+    } catch (error) {
+      res.status(error.status || 500).json({
+        message: error.message || 'Something goes wrong',
+        data: error
+      });
+    }
+  }
+
   static async update(req, res) {
     const { id } = req.params;
     const { name } = req.body;
