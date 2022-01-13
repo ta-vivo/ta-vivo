@@ -1,7 +1,11 @@
 <template>
   <div class="row q-col-gutter-md">
     <div class="col-xs-12 col-md-5">
-      <q-form @submit="requestCodeViaEmail" class="q-gutter-md">
+      <q-form
+        v-if="activeForm === 'requestCode'"
+        @submit="requestCodeViaEmail"
+        class="q-gutter-md"
+      >
         <div>
           <p class="text-bold">{{ $t("common.basicInformation") }}</p>
         </div>
@@ -27,12 +31,37 @@
           />
         </div>
       </q-form>
+      <q-form
+        v-if="activeForm === 'confirmEmailCode'"
+        @submit="onSubmit"
+        class="q-gutter-md"
+      >
+        <q-input
+          type="text"
+          outlined
+          v-model="integration.code"
+          :label="$t('common.uniqueCode')"
+          lazy-rules
+          :rules="[
+            (val) => val.length > 0 || $t('messages.errors.requireField'),
+          ]"
+        />
+        <div class="text-center">
+          <q-btn
+            push
+            :loading="loading"
+            :label="$t('action.save')"
+            type="submit"
+            color="primary"
+            icon="eva-save-outline"
+          />
+        </div>
+      </q-form>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
 export default {
   name: "ComponentEmailForm",
   props: {
@@ -41,20 +70,17 @@ export default {
       default: false,
     },
   },
-  setup(props, { emit }) {
-    return {
-      onSubmit() {
-        emit("saved", integration.value);
-      },
-    };
-  },
   data() {
     return {
       loadingRequestCode: false,
-      integration: { email: "" },
+      integration: { email: "", code: "" },
+      activeForm: "requestCode",
     };
   },
   methods: {
+    onSubmit() {
+      this.$emit("saved", { uniqueCode: this.integration.code });
+    },
     validateEmail(email) {
       return String(email)
         .toLowerCase()
@@ -68,7 +94,9 @@ export default {
         .dispatch("integrations/requestEmailCode", {
           email: this.integration.email,
         })
-        .then(() => {})
+        .then(() => {
+          this.activeForm = "confirmEmailCode";
+        })
         .catch((error) => {
           this.$q.notify({
             color: "negative",
