@@ -1,6 +1,27 @@
 import { Integration, PendingIntegration, CheckIntegration } from '../models';
 class IntegrationService {
 
+  static async requestEmailConfirmation({ email, user }) {
+    try {
+      const uniqueCode = `${user.userId}${Math.random().toString(36).substring(2, 7)}`;
+      await PendingIntegration.create({
+        data: {
+          email: email
+        },
+        uniqueCode,
+        appUserId: user.userId,
+        integrationType: 'email'
+      });
+      return;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+   * Telegram and email for this moment
+   * 
+  */
   static async create({ newIntegration, user }) {
     try {
       const pendingIntegration = await PendingIntegration.findOne({
@@ -16,7 +37,7 @@ class IntegrationService {
         appUserId: pendingIntegration.appUserId,
         type: pendingIntegration.integrationType,
         userId: user.userId,
-        name: newIntegration.name,
+        name: pendingIntegration.integrationType === 'email' ? pendingIntegration.data.email  : newIntegration.name,
       };
       const entityCreated = await Integration.create(integration);
       await pendingIntegration.destroy();

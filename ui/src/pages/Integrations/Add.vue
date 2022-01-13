@@ -48,6 +48,11 @@
           :loading="loading"
           @saved="onSubmit"
         />
+        <EmailForm
+          v-if="selectedIntegration === 'email'"
+          :loading="loading"
+          @saved="onSubmit"
+        />
       </q-card-section>
     </q-card>
   </q-page>
@@ -58,14 +63,16 @@ import { useQuasar } from "quasar";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { fabTelegram } from "@quasar/extras/fontawesome-v5";
+import { fabTelegram, farEnvelope } from "@quasar/extras/fontawesome-v5";
 import { useI18n } from "vue-i18n";
 import TelegramForm from "components/Integrations/Form/Telegram";
+import EmailForm from "components/Integrations/Form/Email";
 
 export default {
   name: "PageAddIntegration",
   components: {
     TelegramForm,
+    EmailForm
   },
   setup() {
     const $q = useQuasar();
@@ -83,6 +90,11 @@ export default {
         name: "telegram",
         icon: fabTelegram,
         color: "blue",
+      },
+      {
+        name: "email",
+        icon: farEnvelope,
+        color: "grey",
       },
     ]);
     const selectedIntegration = ref(null);

@@ -19,6 +19,11 @@ const PendingIntegration = sequelize.define('pending_integrations', {
     type: Sequelize.TEXT,
     allowNull: false
   },
+  // To store temp data like emails, phone numbers or others
+  data: {
+    type: Sequelize.JSON,
+    allowNull: true
+  }
 
 }, {});
 
