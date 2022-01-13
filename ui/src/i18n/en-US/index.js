@@ -24,7 +24,8 @@ export default {
     incidentFound: 'Incident found',
     noIncident: 'No incident found in the last hour',
     isNoReachable: 'is not reachable',
-    email: 'Email'
+    email: 'Email',
+    emailConfirmationCode: 'Email confirmation code'
   },
   action: {
     addCheck: 'Add Check',
@@ -50,6 +51,7 @@ export default {
       telegramSetupBot: 'Search Telegram',
       telegramSetupBotCommand: 'Type /start command. The bot will respond with a unique code.',
       telegramIntegrationNamePlaceholder: 'The name is to identify it in the list of integrations',
+      emailVerification: 'A unique 1-use code was sent to [EMAIL]. Please check your spam folder if you don`t see the email in your main inbox.'
     },
     errors: {
       requireField: 'This field is required',
