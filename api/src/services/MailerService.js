@@ -10,15 +10,19 @@ export default class Mailer {
    * html: boolean for set body as HTML or not
    */
   static async sendMail({ to, subject, body }) {
-
+    
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
       host: process.env.MAIL_HOST,
       port: process.env.MAIL_PORT,
-      secure: true, // true for 465, false for other ports
+      secure: false, // true for 465, false for other ports
       auth: {
         user: process.env.MAIL_EMAIL, // generated ethereal user
         pass: process.env.MAIL_PASSWORD, // generated ethereal password
+      },
+      tls: {
+        minVersion: 'TLSv1',
+        rejectUnauthorized: false,
       },
     });
 
