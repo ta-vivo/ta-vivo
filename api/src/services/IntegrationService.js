@@ -1,4 +1,5 @@
 import { Integration, PendingIntegration, CheckIntegration } from '../models';
+import MailerService from '../services/MailerService';
 class IntegrationService {
 
   static async requestEmailConfirmation({ email, user }) {
@@ -12,8 +13,10 @@ class IntegrationService {
         appUserId: user.userId,
         integrationType: 'email'
       });
+      MailerService.sendMail({ to: email, subject: 'Email confirmation', body: `You unique code is: ${uniqueCode}` });
       return;
     } catch (error) {
+      console.log('🚀 ~ file: IntegrationService.js ~ line 19 ~ IntegrationService ~ requestEmailConfirmation ~ error', error);
       throw error;
     }
   }
@@ -37,7 +40,7 @@ class IntegrationService {
         appUserId: pendingIntegration.appUserId,
         type: pendingIntegration.integrationType,
         userId: user.userId,
-        name: pendingIntegration.integrationType === 'email' ? pendingIntegration.data.email  : newIntegration.name,
+        name: pendingIntegration.integrationType === 'email' ? pendingIntegration.data.email : newIntegration.name,
       };
       const entityCreated = await Integration.create(integration);
       await pendingIntegration.destroy();
