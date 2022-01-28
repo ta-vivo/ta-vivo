@@ -13,7 +13,26 @@ class IntegrationService {
         appUserId: user.userId,
         integrationType: 'email'
       });
-      MailerService.sendMail({ to: email, subject: 'Email confirmation', body: `You unique code is: ${uniqueCode}` });
+
+      const emailBody = `
+      <div style="text-align: center;">
+        <h1>Verification code</h1>
+        <p style="font-size: 30px; letter-spacing: 10px">
+          ${uniqueCode}
+        </p>
+        <div>
+          Here is your email verification code.
+        </div>
+        <div>
+          It will expire in 10 minutes.
+        </div>
+        <p>
+          Sent by Ta-vivo.
+        </p>
+      </div>
+      `;
+
+      MailerService.sendMail({ to: email, subject: 'Email confirmation', body: emailBody });
       return;
     } catch (error) {
       console.log('🚀 ~ file: IntegrationService.js ~ line 19 ~ IntegrationService ~ requestEmailConfirmation ~ error', error);
