@@ -25,7 +25,9 @@ export default {
     noIncident: 'No incident found in the last hour',
     isNoReachable: 'is not reachable',
     email: 'Email',
-    emailConfirmationCode: 'Email confirmation code'
+    emailConfirmationCode: 'Email confirmation code',
+    termsAndConditions: 'Terms and conditions',
+    privacyPolicy: 'Privacy policy'
   },
   action: {
     addCheck: 'Add Check',
