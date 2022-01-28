@@ -59,6 +59,26 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/legal',
+    component: () => import('layouts/Auth.vue'),
+    children: [
+      {
+        path: 'terms-and-conditions',
+        component: () => import('pages/Legal/TermsAndConditions.vue'),
+        meta: {
+          isPublic: true
+        }
+      },
+      {
+        path: 'privacy-policy',
+        component: () => import('pages/Legal/PrivacyPolicy.vue'),
+        meta: {
+          isPublic: true
+        }
+      }
+    ]
+  },
 
   // Always leave this as last one,
   // but you can also remove it
