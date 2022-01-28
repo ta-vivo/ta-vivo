@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": ">= 14.18.3",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  },
   "scripts": {
     "dev": "nodemon --exec \"npm run lint -s && nodemon src/index.js --exec babel-node\"",
     "build": "babel src --out-dir dist",
