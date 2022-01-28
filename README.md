@@ -34,6 +34,13 @@ Create the `.env` file into `api` directory, use the `.env.example` file;
 $ cp ./api/.env.example ./api/.env
 ```
 
+:warning: The default user is on the `.env` file;
+
+```bash
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=secret
+```
+
 Run development server
 
 ```bash
