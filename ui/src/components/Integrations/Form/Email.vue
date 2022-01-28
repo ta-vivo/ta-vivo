@@ -9,7 +9,7 @@
       >
         <p class="text-h4">{{ $t("common.basicInformation") }}</p>
         <q-input
-          type="text"
+          type="email"
           hint="jhon@domain.com"
           outlined
           v-model="integration.email"
