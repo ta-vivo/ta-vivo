@@ -1,5 +1,6 @@
 # Ta vivo - Health Check
 
+![dashbaord](./docs/images/dashboard.png)
 
 # Development
 
@@ -13,7 +14,13 @@ Now you can continue.
 
 ## UI
 
-Run development server
+Set up the env vars;
+
+```bash
+$ cp ./ui/.env.example ./ui/.env
+```
+
+Run development server;
 
 ```bash
 $ yarn dev:ui
@@ -33,6 +40,6 @@ Run development server
 $ yarn dev:api
 ```
 
-# Tools
+---
 
-- UI - [Element plus](https://element-plus.org/en-US/)
+:heart:
