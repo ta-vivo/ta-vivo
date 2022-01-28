@@ -1,6 +1,6 @@
 {
   "name": "ui",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A health Check App",
   "productName": "Ta Vivo App",
   "author": "Albert Hidalgo <alhidalgodev@gmail.com>",
@@ -40,7 +40,7 @@
     "last 5 Opera versions"
   ],
   "engines": {
-    "node": ">= 12.22.1",
+    "node": ">= 14.18.3",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
   }
