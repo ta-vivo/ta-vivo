@@ -4,7 +4,7 @@ import { User, UserCredential } from '../models';
 import { sequelize } from './database';
 
 const MandatoryData = async () => {
-  sequelize.sync({ force: (process.env.FORCE_SYNC == 'true') })
+  return sequelize.sync({ force: (process.env.FORCE_SYNC == 'true') })
     .then(() => {
       console.log('Database & tables created!');
     })
@@ -31,6 +31,7 @@ const MandatoryData = async () => {
     })
     .then(() => {
       console.log('Done!');
+      return;
     });
 };
 
