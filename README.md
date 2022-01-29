@@ -68,7 +68,8 @@ $ cp ./api/.env.example ./api/.env
 now you can run `docker-compose`
 
 ```bash
-$ docker-compose -f ./api/docker-compose.dev.yml up -d
+$ cd ./api
+$ docker-compose -f docker-compose.dev.yml up -d
 ```
 
 
