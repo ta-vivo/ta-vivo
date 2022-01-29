@@ -82,7 +82,7 @@ import { useQuasar } from "quasar";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { fabTelegram } from "@quasar/extras/fontawesome-v5";
+import { fabTelegram, farEnvelope } from "@quasar/extras/fontawesome-v5";
 import { useI18n } from "vue-i18n";
 
 export default {
@@ -152,6 +152,8 @@ export default {
         switch (integration) {
           case "telegram":
             return { icon: fabTelegram, color: "blue" };
+          case "email":
+            return { icon: farEnvelope, color: "grey" };
           default:
             return "";
         }
