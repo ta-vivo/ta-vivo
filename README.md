@@ -28,6 +28,8 @@ $ yarn dev:ui
 
 ## API
 
+### Development
+
 Create the `.env` file into `api` directory, use the `.env.example` file;
 
 ```bash
@@ -45,6 +47,20 @@ Run development server
 
 ```bash
 $ yarn dev:api
+```
+
+#### Docker
+
+Install all dependencies in the root dir;
+
+```
+$ yarn
+```
+
+now you can run `docker-compose`
+
+```bash
+$ docker-compose -f ./api/docker-compose.dev.yml up -d
 ```
 
 ---
