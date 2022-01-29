@@ -9,7 +9,7 @@
     "yarn": ">= 1.21.1"
   },
   "scripts": {
-    "dev": "nodemon --exec \"npm run lint -s && nodemon src/index.js --exec babel-node\"",
+    "dev": "npm run lint -s && nodemon src/index.js --exec babel-node",
     "build": "babel src --out-dir dist",
     "start": "node dist/index.js",
     "lint": "eslint ./src/"
