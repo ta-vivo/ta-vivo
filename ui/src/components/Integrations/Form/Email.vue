@@ -38,7 +38,7 @@
       >
         <p class="text-h4">{{ $t("common.emailConfirmationCode") }}</p>
         <p class="text-italic text-grey-9">
-          {{ $t("messages.information.emailVerification") }}
+          {{ $t("messages.information.emailVerification").replace('[EMAIL]', integration.email) }}
         </p>
         <q-input
           type="text"
