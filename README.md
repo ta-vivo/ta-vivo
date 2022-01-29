@@ -57,11 +57,20 @@ Install all dependencies in the root dir;
 $ yarn
 ```
 
+Create the `.env` file into `api` directory, use the `.env.example` file;
+
+```bash
+$ cp ./api/.env.example ./api/.env
+```
+
+:bulb: Tip: If you want connect to database container, set the env var `DATABASE_HOST=host.docker.internal` 
+
 now you can run `docker-compose`
 
 ```bash
 $ docker-compose -f ./api/docker-compose.dev.yml up -d
 ```
+
 
 ---
 
