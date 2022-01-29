@@ -8,7 +8,7 @@ import {Checks} from './models';
 async function main() {
   await app.listen(process.env.PORT);
 
-  MandatoryData();
+  await MandatoryData();
 
   TelegramService.listenMessages();
 
