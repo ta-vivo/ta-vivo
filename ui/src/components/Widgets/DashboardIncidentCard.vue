@@ -1,5 +1,5 @@
 <template>
-  <q-card flat bordered style="max-width: 200px">
+  <q-card flat bordered style="max-width: 200px; min-height: 220px;">
     <q-card-section class="text-center">
       <q-avatar
         size="50px"
