@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
-    <div class="row q-col-gutter-sm">
-      <div class="col-xs-12 col-sm-4">
+    <div class="row q-col-gutter-sm text-center">
+      <div class="col-sm-4">
         <DashboardCard
           icon="eva-activity-outline"
           color="primary"
@@ -10,7 +10,7 @@
           :loading="loading"
         />
       </div>
-      <div class="col-xs-12 col-sm-4">
+      <div class="col-sm-4">
         <DashboardCard
           class="q-mx-auto"
           icon="eva-briefcase-outline"
@@ -20,7 +20,7 @@
           :loading="loading"
         />
       </div>
-      <div class="col-xs-12 col-sm-4">
+      <div class="col-sm-4">
         <DashboardIncidentCard
           class="q-ml-auto"
           :incident="dashboard.mostRecentIncident"
