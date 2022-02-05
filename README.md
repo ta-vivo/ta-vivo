@@ -26,11 +26,11 @@ Run development server;
 $ quasar dev
 ```
 
---- 
+---
 
 ## API
 
-Repository work in progress...
+Check the respository [https://github.com/itsalb3rt/ta-vivo-api](https://github.com/itsalb3rt/ta-vivo-api)
 
 ---
 
