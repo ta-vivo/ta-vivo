@@ -9,8 +9,6 @@
 /* eslint-env node */
 const ESLintPlugin = require('eslint-webpack-plugin')
 const { configure } = require('quasar/wrappers');
-const envFile = require('dotenv').config().parsed;
-console.log('🚀 ~ file: quasar.conf.js ~ line 13 ~ envFile', envFile)
 
 module.exports = configure(function (ctx) {
   return {
@@ -51,7 +49,7 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: 'history', // available values: 'hash', 'history'
       env: {
-        API: envFile.API
+        API: process.env.API
       },
       // transpile: false,
       // publicPath: '/',
