@@ -8,7 +8,8 @@
   "private": true,
   "scripts": {
     "dev:ui": "yarn workspace ui quasar dev",
-    "dev:api": "yarn workspace api dev"
+    "dev:api": "yarn workspace api dev",
+    "build:ui": "yarn workspace ui quasar build"
   },
   "workspaces": [
     "ui",
