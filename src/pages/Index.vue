@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <div class="row q-col-gutter-sm text-center">
+    <div class="row q-col-gutter-sm text-center" v-if="!$q.screen.xs">
       <div class="col-sm-4">
         <DashboardCard
           icon="eva-activity-outline"
@@ -28,6 +28,37 @@
         />
       </div>
     </div>
+
+    <div class="row q-col-gutter-xs text-center" v-if="$q.screen.xs">
+      <div class="col-xs-4">
+        <DashboardCard
+          icon="eva-activity-outline"
+          color="primary"
+          class="q-mx-auto"
+          :title="$t('common.checks')"
+          :value="dashboard.checks"
+          :loading="loading"
+        />
+      </div>
+      <div class="col-xs-5">
+        <DashboardCard
+          class="q-mx-auto"
+          icon="eva-briefcase-outline"
+          color="positive"
+          :title="$t('common.integrations')"
+          :value="dashboard.integrations"
+          :loading="loading"
+        />
+      </div>
+      <div class="col-xs-4">
+        <DashboardIncidentCard
+          class="q-mx-auto"
+          :incident="dashboard.mostRecentIncident"
+          :loading="loading"
+        />
+      </div>
+    </div>
+
     <div class="row q-col-gutter-sm q-mt-lg">
       <div class="col-12">
         <q-table
