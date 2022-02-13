@@ -40,7 +40,7 @@
           :loading="loading"
         />
       </div>
-      <div class="col-xs-5">
+      <div class="col-xs-4">
         <DashboardCard
           class="q-mx-auto"
           icon="eva-briefcase-outline"
