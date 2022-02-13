@@ -4,7 +4,7 @@
       <q-avatar size="50px" :color="color" text-color="white" :icon="icon" />
     </q-card-section>
     <q-card-section>
-      <p class="text-h6">{{ title }}</p>
+      <p class="text">{{ title }}</p>
       <p class="text-h4">{{ value }}</p>
     </q-card-section>
     <q-inner-loading :showing="loading" label-style="font-size: 1.1em" />
