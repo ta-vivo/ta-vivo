@@ -4,9 +4,12 @@
 export default {
   common: {
     login: 'Login',
+    register: 'Register',
     username: 'Username',
     email: 'Email',
     password: 'Password',
+    confirmPassword: 'Confirm Password',
+    fullname: 'Fullname',
     checks: 'Checks',
     integrations: 'Integrations',
     name: 'Name',
@@ -59,6 +62,7 @@ export default {
     errors: {
       requireField: 'This field is required',
       notValidEmail: 'This is not a valid email',
+      passwordSecurity: 'Password must be at least 8 characters long and contain at least one number and one letter',
     }
   }
 }
