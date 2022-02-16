@@ -41,6 +41,18 @@
               icon="eva-log-in-outline"
             />
           </div>
+          <div class="text-center">
+            <q-separator />
+          </div>
+          <div class="text-center">
+            <q-btn
+              flat
+              to="/auth/register"
+              label="Register"
+              color="primary"
+              icon="eva-person-add-outline"
+            />
+          </div>
         </q-form>
       </q-card-section>
     </q-card>
