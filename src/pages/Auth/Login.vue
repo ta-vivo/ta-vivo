@@ -12,7 +12,7 @@
       <q-card-section>
         <q-form @submit="onSubmit" class="q-gutter-md">
           <q-input
-            type="text"
+            type="email"
             outlined
             v-model="email"
             :label="$t('common.email')"
@@ -48,7 +48,7 @@
             <q-btn
               flat
               to="/auth/register"
-              label="Register"
+              :label="$t('common.register')"
               color="primary"
               icon="eva-person-add-outline"
             />
