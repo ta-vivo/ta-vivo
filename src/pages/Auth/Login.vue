@@ -75,13 +75,11 @@ export default {
 
     const email = ref(null);
     const password = ref(null);
-    const accept = ref(false);
     const loading = ref(false);
 
     return {
       email,
       password,
-      accept,
       loading,
 
       onSubmit() {
