@@ -37,7 +37,7 @@ export default route(function (/* { store, ssrContext } */) {
       return
     } else {
       if (token === null) {
-        next('/login')
+        next('/auth/login')
         return
       } else {
         next()
