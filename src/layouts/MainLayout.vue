@@ -29,7 +29,7 @@
         <q-btn-dropdown
           flat
           color="primary"
-          :label="$store.getters['auth/getUser'].username"
+          :label="$store.getters['auth/getUser'].email"
         >
           <q-list>
             <q-item clickable v-close-popup @click="logout">
@@ -66,7 +66,7 @@ export default defineComponent({
       logout () {
         window.localStorage.removeItem("token");
         $store.commit("auth/SET_USER", {
-          username: '',
+          email: '',
           id: null,
         });
         $router.push("/login");

@@ -5,6 +5,7 @@ export default {
   common: {
     login: 'Login',
     username: 'Username',
+    email: 'Email',
     password: 'Password',
     checks: 'Checks',
     integrations: 'Integrations',

@@ -14,8 +14,8 @@
           <q-input
             type="text"
             outlined
-            v-model="username"
-            :label="$t('common.username')"
+            v-model="email"
+            :label="$t('common.email')"
             lazy-rules
             :rules="[
               (val) => (val && val.length > 0) || 'Please type something',
@@ -61,13 +61,13 @@ export default {
     const $store = useStore();
     const $router = useRouter();
 
-    const username = ref(null);
+    const email = ref(null);
     const password = ref(null);
     const accept = ref(false);
     const loading = ref(false);
 
     return {
-      username,
+      email,
       password,
       accept,
       loading,
@@ -76,14 +76,14 @@ export default {
         loading.value = true;
         $store
           .dispatch("auth/login", {
-            username: username.value,
+            email: email.value,
             password: password.value,
           })
           .then((response) => {
             const token = response.data.data.token;
             const decoded = jwtDecode(token);
             $store.commit("auth/SET_USER", {
-              username: decoded.username,
+              email: decoded.email,
               id: decoded.id,
             });
             window.localStorage.setItem("token", token);

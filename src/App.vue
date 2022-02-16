@@ -17,7 +17,7 @@ export default defineComponent({
     if (token) {
       const decoded = jwtDecode(token);
       this.$store.commit("auth/SET_USER", {
-        username: decoded.username,
+        email: decoded.email,
         id: decoded.id,
       });
     }
