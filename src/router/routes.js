@@ -27,7 +27,13 @@ const routes = [
         meta: {
           isPublic: true
         }
-      }
+      },
+      {
+        path: 'confirm-email', component: () => import('pages/Auth/ConfirmEmail.vue'),
+        meta: {
+          isPublic: true
+        }
+      },
     ]
   },
   {
