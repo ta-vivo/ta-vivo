@@ -94,7 +94,7 @@ export default {
             const decoded = jwtDecode(token);
             $store.commit("auth/SET_USER", {
               email: decoded.email,
-              id: decoded.id,
+              id: decoded.userId,
             });
             window.localStorage.setItem("token", token);
             $router.push("/");
