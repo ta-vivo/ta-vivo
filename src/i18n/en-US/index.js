@@ -31,7 +31,9 @@ export default {
     email: 'Email',
     emailConfirmationCode: 'Email confirmation code',
     termsAndConditions: 'Terms and conditions',
-    privacyPolicy: 'Privacy policy'
+    privacyPolicy: 'Privacy policy',
+    confirmationCode: 'Confirmation code',
+    code: 'Code',
   },
   action: {
     addCheck: 'Add Check',
@@ -46,7 +48,8 @@ export default {
     integrationCreated: 'Integration created',
     editIntegration: 'Edit Integration',
     integrationUpdated: 'Integration updated',
-    requestCode: 'Request code'
+    requestCode: 'Request code',
+    send: 'Send',
   },
   messages: {
     information: {
@@ -57,7 +60,11 @@ export default {
       telegramSetupBot: 'Search Telegram',
       telegramSetupBotCommand: 'Type /start command. The bot will respond with a unique code.',
       telegramIntegrationNamePlaceholder: 'The name is to identify it in the list of integrations',
-      emailVerification: 'A unique 1-use code was sent to [EMAIL]. Please check your spam folder if you don`t see the email in your main inbox.'
+      emailVerification: 'A unique 1-use code was sent to [EMAIL]. Please check your spam folder if you don`t see the email in your main inbox.',
+      verifyYourEmail: 'Verify your email',
+      pleaseConfirmYourEmail: 'Please confirm your email',
+      emailVerificationInformation: 'We already send a code to your email. Please check your spam folder if you don`t see the email in your main inbox.',
+
     },
     errors: {
       requireField: 'This field is required',
