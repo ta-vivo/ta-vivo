@@ -22,7 +22,7 @@ export default defineComponent({
       });
 
       if (!decoded.active) {
-        $router.push("/auth/confirm-email");
+        this.$router.push("/auth/confirm-email");
         return;
       }
     }
