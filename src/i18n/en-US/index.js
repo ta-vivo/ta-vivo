@@ -51,6 +51,7 @@ export default {
     requestCode: 'Request code',
     send: 'Send',
     continueToDashboard: 'Continue to dashboard',
+    requestNewEmail: 'Request new email'
   },
   messages: {
     information: {
@@ -66,6 +67,7 @@ export default {
       pleaseConfirmYourEmail: 'Please confirm your email',
       emailVerificationInformation: 'We already send a code to your email. Please check your spam folder if you don`t see the email in your main inbox.',
       emailSuccessfullyVerified: 'Email successfully verified',
+      emailSent: 'Email sent',
     },
     errors: {
       requireField: 'This field is required',
