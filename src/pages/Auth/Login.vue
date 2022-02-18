@@ -92,11 +92,19 @@ export default {
           .then((response) => {
             const token = response.data.data.token;
             const decoded = jwtDecode(token);
+
             $store.commit("auth/SET_USER", {
               email: decoded.email,
               id: decoded.userId,
             });
+
             window.localStorage.setItem("token", token);
+
+            if (!decoded.active) {
+              $router.push("/auth/confirm-email");
+              return;
+            }
+
             $router.push("/");
           })
           .catch((error) => {
