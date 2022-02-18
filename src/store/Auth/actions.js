@@ -11,3 +11,7 @@ export function register(context, { email, password, confirmPassword, fullname }
 export function registerEmailConfirmation(context, { uniqueCode }) {
   return axiosInstance.post('/auth/register-email-confirmation', { uniqueCode })
 }
+
+export function requestRegisterEmailConfirmation(context) {
+  return axiosInstance.get('/auth/request-register-email-confirmation')
+}
