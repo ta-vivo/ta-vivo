@@ -54,6 +54,15 @@
             />
           </div>
         </q-form>
+        <div class="q-mt-md text-center">
+          <q-btn
+            flat
+            color="primary"
+            :label="$t('action.requestNewEmail')"
+            @click="requestNewEmail()"
+            :loading="loadingRequestNewEmail"
+          />
+        </div>
       </q-card-section>
     </q-card>
   </q-page>
@@ -64,6 +73,7 @@ import { useQuasar } from "quasar";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
 export default {
   name: "PageConfirmEmail",
@@ -71,14 +81,17 @@ export default {
     const $q = useQuasar();
     const $store = useStore();
     const $router = useRouter();
+    const $t = useI18n().t;
 
     const uniqueCode = ref(null);
     const loading = ref(false);
+    const loadingRequestNewEmail = ref(false);
     const success = ref(false);
 
     return {
       uniqueCode,
       loading,
+      loadingRequestNewEmail,
       success,
       onSubmit() {
         loading.value = true;
@@ -86,7 +99,8 @@ export default {
           .dispatch("auth/registerEmailConfirmation", {
             uniqueCode: uniqueCode.value,
           })
-          .then(() => {
+          .then((response) => {
+            // To do, replace the JWT with the new come from the server
             success.value = true;
           })
           .catch((error) => {
@@ -98,6 +112,20 @@ export default {
           })
           .finally(() => {
             loading.value = false;
+          });
+      },
+      requestNewEmail() {
+        loadingRequestNewEmail.value = true;
+        $store
+          .dispatch("auth/requestRegisterEmailConfirmation")
+          .then(() => {
+            $q.notify({
+              message: $t("messages.information.emailSent"),
+              color: "positive",
+            });
+          })
+          .finally(() => {
+            loadingRequestNewEmail.value = false;
           });
       },
     };
