@@ -72,15 +72,14 @@
 import { useQuasar } from "quasar";
 import { ref } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import jwtDecode from "jwt-decode";
 
 export default {
   name: "PageConfirmEmail",
   setup() {
     const $q = useQuasar();
     const $store = useStore();
-    const $router = useRouter();
     const $t = useI18n().t;
 
     const uniqueCode = ref(null);
@@ -100,7 +99,15 @@ export default {
             uniqueCode: uniqueCode.value,
           })
           .then((response) => {
-            // To do, replace the JWT with the new come from the server
+            const token = response.data.data.token;
+            const decoded = jwtDecode(token);
+
+            $store.commit("auth/SET_USER", {
+              email: decoded.email,
+              id: decoded.userId,
+            });
+
+            window.localStorage.setItem("token", token);
             success.value = true;
           })
           .catch((error) => {
