@@ -68,6 +68,7 @@ export default {
       emailVerificationInformation: 'We already send a code to your email. Please check your spam folder if you don`t see the email in your main inbox.',
       emailSuccessfullyVerified: 'Email successfully verified',
       emailSent: 'Email sent',
+      timeForRequestNewCode: 'Time for request new code',
     },
     errors: {
       requireField: 'This field is required',
