@@ -69,7 +69,7 @@ export default defineComponent({
           email: '',
           id: null,
         });
-        $router.push("/login");
+        $router.push("/auth/login");
       },
     }
   },

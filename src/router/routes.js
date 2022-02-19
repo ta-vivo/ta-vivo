@@ -5,21 +5,35 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
-        path: '', component: () => import('pages/Index.vue'), meta: {
+        path: '', component: () => import('pages/Index.vue'),
+        meta: {
           isPublic: false
         }
       }
     ]
   },
   {
-    path: '/login',
+    path: '/auth',
     component: () => import('layouts/Auth.vue'),
     children: [
       {
-        path: '', component: () => import('pages/Auth/Login.vue'), meta: {
+        path: 'login', component: () => import('pages/Auth/Login.vue'),
+        meta: {
           isPublic: true
         }
-      }
+      },
+      {
+        path: 'register', component: () => import('pages/Auth/Register.vue'),
+        meta: {
+          isPublic: true
+        }
+      },
+      {
+        path: 'confirm-email', component: () => import('pages/Auth/ConfirmEmail.vue'),
+        meta: {
+          isPublic: true
+        }
+      },
     ]
   },
   {
@@ -27,17 +41,20 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
-        path: '', component: () => import('pages/Checks/Index.vue'), meta: {
+        path: '', component: () => import('pages/Checks/Index.vue'),
+        meta: {
           isPublic: false
         }
       },
       {
-        path: 'add', component: () => import('pages/Checks/Add.vue'), meta: {
+        path: 'add', component: () => import('pages/Checks/Add.vue'),
+        meta: {
           isPublic: false
         }
       },
       {
-        path: 'edit/:id', component: () => import('pages/Checks/Edit.vue'), meta: {
+        path: 'edit/:id', component: () => import('pages/Checks/Edit.vue'),
+        meta: {
           isPublic: false
         }
       },
@@ -48,12 +65,14 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
-        path: '', component: () => import('pages/Integrations/Index.vue'), meta: {
+        path: '', component: () => import('pages/Integrations/Index.vue'),
+        meta: {
           isPublic: false
         }
       },
       {
-        path: 'add', component: () => import('pages/Integrations/Add.vue'), meta: {
+        path: 'add', component: () => import('pages/Integrations/Add.vue'),
+        meta: {
           isPublic: false
         }
       }

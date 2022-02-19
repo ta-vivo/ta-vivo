@@ -12,7 +12,17 @@
       <q-card-section>
         <q-form @submit="onSubmit" class="q-gutter-md">
           <q-input
-            type="email"
+            type="text"
+            outlined
+            v-model="fullname"
+            :label="$t('common.fullname')"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 5) || 'Please type something',
+            ]"
+          />
+          <q-input
+            type="text"
             outlined
             v-model="email"
             :label="$t('common.email')"
@@ -28,27 +38,26 @@
             :label="$t('common.password')"
             lazy-rules
             :rules="[
-              (val) => (val && val.length > 0) || 'Please type something',
+              val => isPasswordSecure(val) || this.$t('messages.errors.passwordSecurity')
+            ]"
+          />
+          <q-input
+            type="password"
+            outlined
+            v-model="confirmPassword"
+            :label="$t('common.confirmPassword')"
+            lazy-rules
+            :rules="[
+              val => isPasswordSecure(val) || this.$t('messages.errors.passwordSecurity')
             ]"
           />
           <div class="text-center">
             <q-btn
+              :disable="password !== confirmPassword"
               push
               :loading="loading"
-              :label="$t('common.login')"
-              type="submit"
-              color="primary"
-              icon="eva-log-in-outline"
-            />
-          </div>
-          <div class="text-center">
-            <q-separator />
-          </div>
-          <div class="text-center">
-            <q-btn
-              flat
-              to="/auth/register"
               :label="$t('common.register')"
+              type="submit"
               color="primary"
               icon="eva-person-add-outline"
             />
@@ -67,45 +76,50 @@ import { useRouter } from "vue-router";
 import jwtDecode from "jwt-decode";
 
 export default {
-  name: "PageLogin",
-  setup() {
+  name: 'PageRegister',
+  setup () {
     const $q = useQuasar();
     const $store = useStore();
     const $router = useRouter();
 
+    const fullname = ref('')
     const email = ref(null);
     const password = ref(null);
+    const confirmPassword = ref(null);
     const loading = ref(false);
 
     return {
+      fullname,
       email,
       password,
+      confirmPassword,
       loading,
-
+      isPasswordSecure (password) {
+        if (password) {
+          const regex = /^(?=.*[a-z])(?=.*[0-9])(?=.{8,})/
+          return regex.test(password)
+        }
+        // Prevent show error message on empty field
+        return true
+      },
       onSubmit() {
         loading.value = true;
         $store
-          .dispatch("auth/login", {
+          .dispatch("auth/register", {
+            fullname: fullname.value,
             email: email.value,
             password: password.value,
+            confirmPassword: confirmPassword.value
           })
           .then((response) => {
             const token = response.data.data.token;
             const decoded = jwtDecode(token);
-
             $store.commit("auth/SET_USER", {
               email: decoded.email,
               id: decoded.userId,
             });
-
             window.localStorage.setItem("token", token);
-
-            if (!decoded.active) {
-              $router.push("/auth/confirm-email");
-              return;
-            }
-
-            $router.push("/");
+            $router.push("/auth/confirm-email")
           })
           .catch((error) => {
             $q.notify({
@@ -119,6 +133,6 @@ export default {
           });
       },
     };
-  },
-};
+  }
+}
 </script>

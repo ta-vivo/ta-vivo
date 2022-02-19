@@ -4,9 +4,12 @@
 export default {
   common: {
     login: 'Login',
+    register: 'Register',
     username: 'Username',
     email: 'Email',
     password: 'Password',
+    confirmPassword: 'Confirm Password',
+    fullname: 'Fullname',
     checks: 'Checks',
     integrations: 'Integrations',
     name: 'Name',
@@ -28,7 +31,9 @@ export default {
     email: 'Email',
     emailConfirmationCode: 'Email confirmation code',
     termsAndConditions: 'Terms and conditions',
-    privacyPolicy: 'Privacy policy'
+    privacyPolicy: 'Privacy policy',
+    confirmationCode: 'Confirmation code',
+    code: 'Code',
   },
   action: {
     addCheck: 'Add Check',
@@ -43,7 +48,10 @@ export default {
     integrationCreated: 'Integration created',
     editIntegration: 'Edit Integration',
     integrationUpdated: 'Integration updated',
-    requestCode: 'Request code'
+    requestCode: 'Request code',
+    send: 'Send',
+    continueToDashboard: 'Continue to dashboard',
+    requestNewEmail: 'Request new email'
   },
   messages: {
     information: {
@@ -54,11 +62,18 @@ export default {
       telegramSetupBot: 'Search Telegram',
       telegramSetupBotCommand: 'Type /start command. The bot will respond with a unique code.',
       telegramIntegrationNamePlaceholder: 'The name is to identify it in the list of integrations',
-      emailVerification: 'A unique 1-use code was sent to [EMAIL]. Please check your spam folder if you don`t see the email in your main inbox.'
+      emailVerification: 'A unique 1-use code was sent to [EMAIL]. Please check your spam folder if you don`t see the email in your main inbox.',
+      verifyYourEmail: 'Verify your email',
+      pleaseConfirmYourEmail: 'Please confirm your email',
+      emailVerificationInformation: 'We already send a code to your email. Please check your spam folder if you don`t see the email in your main inbox.',
+      emailSuccessfullyVerified: 'Email successfully verified',
+      emailSent: 'Email sent',
+      timeForRequestNewCode: 'Time for request new code',
     },
     errors: {
       requireField: 'This field is required',
       notValidEmail: 'This is not a valid email',
+      passwordSecurity: 'Password must be at least 8 characters long and contain at least one number and one letter',
     }
   }
 }

@@ -5,12 +5,12 @@
 <script>
 import { defineComponent } from "vue";
 import jwtDecode from "jwt-decode";
-import FooterComponent from 'components/Interface/Footer';
+import FooterComponent from "components/Interface/Footer";
 
 export default defineComponent({
   name: "App",
   components: {
-    FooterComponent
+    FooterComponent,
   },
   created() {
     const token = window.localStorage.getItem("token");
@@ -20,6 +20,11 @@ export default defineComponent({
         email: decoded.email,
         id: decoded.id,
       });
+
+      if (!decoded.active) {
+        this.$router.push("/auth/confirm-email");
+        return;
+      }
     }
   },
 });
