@@ -55,13 +55,19 @@
           </div>
         </q-form>
         <div class="q-mt-md text-center">
-          <q-btn
-            flat
-            color="primary"
-            :label="$t('action.requestNewEmail')"
-            @click="requestNewEmail()"
-            :loading="loadingRequestNewEmail"
-          />
+          <div v-if="requestCountDownInMilliseconds === 0">
+            <q-btn
+              flat
+              color="primary"
+              :label="$t('action.requestNewEmail')"
+              @click="requestNewEmail()"
+              :loading="loadingRequestNewEmail"
+            />
+          </div>
+          <div class="text-primary" v-else>
+            {{ $t("messages.information.timeForRequestNewCode") }}
+            {{ countDown() }}
+          </div>
         </div>
       </q-card-section>
     </q-card>
@@ -74,6 +80,7 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
 import jwtDecode from "jwt-decode";
+import Timer from "tiny-timer";
 
 export default {
   name: "PageConfirmEmail",
@@ -81,17 +88,31 @@ export default {
     const $q = useQuasar();
     const $store = useStore();
     const $t = useI18n().t;
+    const timer = new Timer();
 
     const uniqueCode = ref(null);
     const loading = ref(false);
     const loadingRequestNewEmail = ref(false);
     const success = ref(false);
+    const requestCountDownInMilliseconds = ref(0);
+    const startTimer = () => {
+      timer.stop(); // Make a sure the timer is not init
+      timer.on("tick", (ms) => {
+        requestCountDownInMilliseconds.value = ms;
+      });
+      timer.start(120000); // run for 2 minutes
+    };
+
+    startTimer();
 
     return {
       uniqueCode,
       loading,
       loadingRequestNewEmail,
       success,
+      timer,
+      startTimer,
+      requestCountDownInMilliseconds,
       onSubmit() {
         loading.value = true;
         $store
@@ -126,6 +147,7 @@ export default {
         $store
           .dispatch("auth/requestRegisterEmailConfirmation")
           .then(() => {
+            startTimer();
             $q.notify({
               message: $t("messages.information.emailSent"),
               color: "positive",
@@ -134,6 +156,19 @@ export default {
           .finally(() => {
             loadingRequestNewEmail.value = false;
           });
+      },
+
+      countDown() {
+        const minutes = Math.floor(
+          requestCountDownInMilliseconds.value / 60000
+        );
+        const seconds = (
+          (requestCountDownInMilliseconds.value % 60000) /
+          1000
+        ).toFixed(0);
+        return seconds === 60
+          ? minutes + 1 + ":00"
+          : minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
       },
     };
   },
