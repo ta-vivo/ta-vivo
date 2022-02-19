@@ -15,6 +15,7 @@
     "core-js": "^3.6.5",
     "jwt-decode": "^3.1.2",
     "quasar": "^2.0.0",
+    "tiny-timer": "^1.6.0",
     "vue": "^3.0.0",
     "vue-i18n": "^9.0.0",
     "vue-router": "^4.0.0",
