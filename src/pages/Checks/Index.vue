@@ -63,20 +63,32 @@
             size="sm"
             icon="eva-file-text-outline"
             @click="handleShowLogs(props.row)"
-          />
+          >
+            <q-tooltip>
+              {{ $t("action.viewLogs") }}
+            </q-tooltip>
+          </q-btn>
           <q-btn
             flat
             size="sm"
             icon="eva-eye-outline"
             :to="`/checks/edit/${props.row.id}`"
-          />
+          >
+            <q-tooltip>
+              {{ $t("common.details") }}
+            </q-tooltip>
+          </q-btn>
           <q-btn
             color="negative"
             flat
             size="sm"
             icon="eva-trash-outline"
             @click="handleDeleteCheck(props.row)"
-          />
+          >
+            <q-tooltip class="bg-negative">
+              {{ $t("action.delete") }}
+            </q-tooltip>
+          </q-btn>
         </q-td>
       </template>
     </q-table>
@@ -133,7 +145,7 @@ export default {
     const $t = useI18n().t;
     const $q = useQuasar();
 
-    const truncatext  = (text, length) => {
+    const truncatext = (text, length) => {
       if (text.length > length) {
         return text.substring(0, length) + "...";
       }
@@ -150,13 +162,13 @@ export default {
         name: "name",
         label: $t("common.name"),
         align: "left",
-        field: row => truncatext(row.name, 20),
+        field: (row) => truncatext(row.name, 20),
       },
       {
         name: "target",
         align: "left",
         label: $t("common.target"),
-        field: row => truncatext(row.target, 30),
+        field: (row) => truncatext(row.target, 30),
       },
       {
         name: "check_integrations",
@@ -227,9 +239,12 @@ export default {
 
       loadingLogs.value = true;
       showLogsDialog.value = true;
-      const queryString = `?page=${logsPagination.value.page}&limit=${logsPagination.value.rowsPerPage}&sort=-created_at`
+      const queryString = `?page=${logsPagination.value.page}&limit=${logsPagination.value.rowsPerPage}&sort=-created_at`;
       store
-        .dispatch("checks/fetchLogsById", { id: tempCheck.value.id, query: queryString })
+        .dispatch("checks/fetchLogsById", {
+          id: tempCheck.value.id,
+          query: queryString,
+        })
         .then((response) => {
           const results = response.data;
           logsPagination.value.rowsNumber = results.pagination.total;
