@@ -132,6 +132,13 @@ export default {
   setup() {
     const $t = useI18n().t;
     const $q = useQuasar();
+
+    const truncatext  = (text, length) => {
+      if (text.length > length) {
+        return text.substring(0, length) + "...";
+      }
+      return text;
+    };
     const columns = [
       {
         name: "enabled",
@@ -143,13 +150,13 @@ export default {
         name: "name",
         label: $t("common.name"),
         align: "left",
-        field: "name",
+        field: row => truncatext(row.name, 20),
       },
       {
         name: "target",
         align: "left",
         label: $t("common.target"),
-        field: "target",
+        field: row => truncatext(row.target, 30),
       },
       {
         name: "check_integrations",
