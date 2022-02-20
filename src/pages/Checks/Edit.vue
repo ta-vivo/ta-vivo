@@ -22,6 +22,8 @@
               (val) =>
                 (val && val.length > 0) || $t('messages.errors.requireField'),
             ]"
+            maxlength="50"
+            :hint="`${check.name.length}/50`"
           />
           <q-input
             type="text"
