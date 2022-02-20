@@ -34,6 +34,7 @@ export default {
     privacyPolicy: 'Privacy policy',
     confirmationCode: 'Confirmation code',
     code: 'Code',
+    details: 'Details'
   },
   action: {
     addCheck: 'Add Check',
@@ -51,7 +52,8 @@ export default {
     requestCode: 'Request code',
     send: 'Send',
     continueToDashboard: 'Continue to dashboard',
-    requestNewEmail: 'Request new email'
+    requestNewEmail: 'Request new email',
+    viewLogs: 'View logs'
   },
   messages: {
     information: {
