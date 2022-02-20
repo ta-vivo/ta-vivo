@@ -16,6 +16,7 @@
             (val) =>
               (val && val.length > 0) || $t('messages.errors.requireField'),
           ]"
+          maxlength="50"
         />
         <q-input
           type="text"
