@@ -39,14 +39,22 @@
             size="sm"
             icon="eva-eye-outline"
             @click="handleEditIntegration(props.row)"
-          />
+          >
+            <q-tooltip>
+              {{ $t("common.details") }}
+            </q-tooltip>
+          </q-btn>
           <q-btn
             color="negative"
             flat
             size="sm"
             icon="eva-trash-outline"
             @click="handleDeleteIntegration(props.row)"
-          />
+          >
+            <q-tooltip class="bg-negative">
+              {{ $t("action.delete") }}
+            </q-tooltip>
+          </q-btn>
         </q-td>
       </template>
     </q-table>
