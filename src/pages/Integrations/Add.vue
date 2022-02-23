@@ -19,7 +19,15 @@
             :key="integration.name"
           >
             <q-item-section avatar>
+              <q-img
+                class="q-ml-sm"
+                :src="integration.icon"
+                style="width: 23px;"
+                spinner-color="white"
+                v-if="integration.isImage"
+              />
               <q-btn
+                v-else
                 round
                 flat
                 :color="integration.color"
@@ -53,6 +61,11 @@
           :loading="loading"
           @saved="onSubmit"
         />
+        <SlackForm
+          v-if="selectedIntegration === 'slack'"
+          :loading="loading"
+          @saved="onSubmit"
+        />
       </q-card-section>
     </q-card>
   </q-page>
@@ -67,12 +80,15 @@ import { fabTelegram, farEnvelope } from "@quasar/extras/fontawesome-v5";
 import { useI18n } from "vue-i18n";
 import TelegramForm from "components/Integrations/Form/Telegram";
 import EmailForm from "components/Integrations/Form/Email";
+import SlackForm from "components/Integrations/Form/Slack";
+import slackImage from "assets/slack-logo.png";
 
 export default {
   name: "PageAddIntegration",
   components: {
     TelegramForm,
-    EmailForm
+    EmailForm,
+    SlackForm
   },
   setup() {
     const $q = useQuasar();
@@ -95,6 +111,12 @@ export default {
         name: "email",
         icon: farEnvelope,
         color: "grey",
+      },
+      {
+        name: "slack",
+        icon: slackImage,
+        color: "green",
+        isImage: true,
       },
     ]);
     const selectedIntegration = ref(null);
