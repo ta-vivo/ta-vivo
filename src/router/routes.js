@@ -75,7 +75,13 @@ const routes = [
         meta: {
           isPublic: false
         }
-      }
+      },
+      {
+        path: 'slack/success', component: () => import('pages/Integrations/SlackSuccess.vue'),
+        meta: {
+          isPublic: false
+        }
+      },
     ]
   },
   {
