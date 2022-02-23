@@ -37,7 +37,20 @@
             :key="checkIntegration.id"
           >
             <div class="the-integration items-center">
+              <q-img
+                v-if="checkIntegration.integration.type === 'slack'"
+                :src="
+                  getIntegrationIcon(checkIntegration.integration.type).icon
+                "
+                style="width: 14px"
+                spinner-color="white"
+              >
+                <q-tooltip>
+                  {{ checkIntegration.integration.name }}
+                </q-tooltip>
+              </q-img>
               <q-btn
+                v-else
                 round
                 flat
                 size="sm"
@@ -138,6 +151,7 @@ import { useI18n } from "vue-i18n";
 import { fabTelegram, farEnvelope } from "@quasar/extras/fontawesome-v5";
 import { useQuasar } from "quasar";
 import { date } from "quasar";
+import slackImage from "assets/slack-logo.png";
 
 export default {
   name: "PageChecks",
@@ -273,6 +287,8 @@ export default {
             return { icon: fabTelegram, color: "blue" };
           case "email":
             return { icon: farEnvelope, color: "grey" };
+          case "slack":
+            return { icon: slackImage };
           default:
             return "";
         }
