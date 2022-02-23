@@ -54,7 +54,14 @@
                   v-model="check.addIntegrations"
                   :val="integration.id"
                 />
+                <q-img
+                  v-if="integration.type === 'slack'"
+                  :src="getIntegrationIcon(integration.type).icon"
+                  style="width: 14px"
+                  spinner-color="white"
+                />
                 <q-icon
+                  v-else
                   :name="getIntegrationIcon(integration.type).icon"
                   :color="getIntegrationIcon(integration.type).color"
                 />
@@ -86,6 +93,7 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { fabTelegram, farEnvelope } from "@quasar/extras/fontawesome-v5";
 import { useI18n } from "vue-i18n";
+import slackImage from "assets/slack-logo.png";
 
 export default {
   name: "PageCheckForm",
@@ -104,7 +112,7 @@ export default {
     });
     const loading = ref(false);
     const integrations = ref([]);
-    const periods = ref($store.getters['checks/getPeriods']);
+    const periods = ref($store.getters["checks/getPeriods"]);
 
     $store.dispatch("integrations/fetchAll").then((response) => {
       integrations.value = response.data.data;
@@ -156,6 +164,8 @@ export default {
             return { icon: fabTelegram, color: "blue" };
           case "email":
             return { icon: farEnvelope, color: "grey" };
+          case "slack":
+            return { icon: slackImage };
           default:
             return "";
         }
