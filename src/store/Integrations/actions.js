@@ -19,3 +19,7 @@ export function update(context, { id, payload }) {
 export function remove(context, payload) {
   return axiosInstance.delete(`/integrations/${payload.id}`)
 }
+
+export function createSlackIntegration(context, { authorizationCode }) {
+  return axiosInstance.post('/integrations/slack', { authorizationCode })
+}
