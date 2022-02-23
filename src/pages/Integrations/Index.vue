@@ -21,7 +21,15 @@
       <template v-slot:body-cell-icon="props">
         <q-td :props="props">
           <div class="the-integration items-center">
+            <q-img
+              v-if="props.row.type === 'slack'"
+              class="q-ml-sm"
+              :src="getIntegrationIcon(props.row.type).icon"
+              style="width: 23px"
+              spinner-color="white"
+            />
             <q-btn
+              v-else
               round
               flat
               size="lg"
@@ -115,6 +123,7 @@ import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
 import { fabTelegram, farEnvelope } from "@quasar/extras/fontawesome-v5";
 import { useQuasar } from "quasar";
+import slackImage from "assets/slack-logo.png";
 
 export default {
   name: "PageIntegrations",
@@ -169,6 +178,8 @@ export default {
             return { icon: fabTelegram, color: "blue" };
           case "email":
             return { icon: farEnvelope, color: "grey" };
+          case "slack":
+            return { icon: slackImage };
           default:
             return "";
         }
