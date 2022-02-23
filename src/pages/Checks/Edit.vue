@@ -58,7 +58,14 @@
                   :val="integration.id"
                   @update:model-value="onToggleIntegration(integration.id)"
                 />
+                <q-img
+                  v-if="integration.type === 'slack'"
+                  :src="getIntegrationIcon(integration.type).icon"
+                  style="width: 14px"
+                  spinner-color="white"
+                />
                 <q-icon
+                  v-else
                   :name="getIntegrationIcon(integration.type).icon"
                   :color="getIntegrationIcon(integration.type).color"
                 />
@@ -84,6 +91,7 @@
 
 <script>
 import { fabTelegram, farEnvelope } from "@quasar/extras/fontawesome-v5";
+import slackImage from "assets/slack-logo.png";
 
 export default {
   name: "PageCheckEdit",
@@ -189,6 +197,8 @@ export default {
           return { icon: fabTelegram, color: "blue" };
         case "email":
           return { icon: farEnvelope, color: "grey" };
+        case "slack":
+          return { icon: slackImage };
         default:
           return "";
       }
