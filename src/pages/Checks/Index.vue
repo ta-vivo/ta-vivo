@@ -36,35 +36,33 @@
             v-for="checkIntegration in props.value"
             :key="checkIntegration.id"
           >
-            <div class="the-integration items-center">
+            <div class="the-integration items-center q-my-sm">
               <q-img
                 v-if="checkIntegration.integration.type === 'slack'"
                 :src="
                   getIntegrationIcon(checkIntegration.integration.type).icon
                 "
-                style="width: 14px"
+                style="width: 24px"
                 spinner-color="white"
               >
                 <q-tooltip>
                   {{ checkIntegration.integration.name }}
                 </q-tooltip>
               </q-img>
-              <q-btn
+              <q-icon
                 v-else
-                round
-                flat
                 size="sm"
-                :icon="
+                :name="
                   getIntegrationIcon(checkIntegration.integration.type).icon
                 "
-                :text-color="
+                :color="
                   getIntegrationIcon(checkIntegration.integration.type).color
                 "
               >
                 <q-tooltip>
                   {{ checkIntegration.integration.name }}
                 </q-tooltip>
-              </q-btn>
+              </q-icon>
             </div>
           </template>
         </q-td>
