@@ -20,18 +20,15 @@
           >
             <q-item-section avatar>
               <q-img
-                class="q-ml-sm"
                 :src="integration.icon"
                 style="width: 23px;"
                 spinner-color="white"
                 v-if="integration.isImage"
               />
-              <q-btn
+              <q-icon
                 v-else
-                round
-                flat
                 :color="integration.color"
-                :icon="integration.icon"
+                :name="integration.icon"
               />
             </q-item-section>
 
