@@ -23,18 +23,19 @@
           <div class="the-integration items-center">
             <q-img
               v-if="props.row.type === 'slack'"
-              class="q-ml-sm"
+              class="q-ml-sm cursor-pointer"
               :src="getIntegrationIcon(props.row.type).icon"
               style="width: 23px"
               spinner-color="white"
             />
-            <q-btn
+            <q-icon
               v-else
               round
               flat
               size="lg"
-              :icon="getIntegrationIcon(props.row.type).icon"
-              :text-color="getIntegrationIcon(props.row.type).color"
+              class="cursor-pointer"
+              :name="getIntegrationIcon(props.row.type).icon"
+              :color="getIntegrationIcon(props.row.type).color"
               @click="handleEditIntegration(props.row)"
             />
           </div>
