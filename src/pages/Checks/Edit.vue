@@ -58,18 +58,7 @@
                   :val="integration.id"
                   @update:model-value="onToggleIntegration(integration.id)"
                 />
-                <q-img
-                  v-if="integration.type === 'slack'"
-                  :src="getIntegrationIcon(integration.type).icon"
-                  style="width: 14px"
-                  spinner-color="white"
-                />
-                <q-icon
-                  v-else
-                  :name="getIntegrationIcon(integration.type).icon"
-                  :color="getIntegrationIcon(integration.type).color"
-                  :style="getIntegrationIcon(integration.type).style || ''"
-                />
+                <small-Integration-Icon :type="integration.type" />
                 {{ integration.name }}
                 <q-separator />
               </div>
@@ -91,15 +80,11 @@
 </template>
 
 <script>
-import {
-  fabTelegram,
-  farEnvelope,
-  fabDiscord,
-} from "@quasar/extras/fontawesome-v5";
-import slackImage from "assets/slack-logo.png";
+import SmallIntegrationIcon from 'components/Integrations/Icons/Small';
 
 export default {
   name: "PageCheckEdit",
+  components: {SmallIntegrationIcon},
   created() {
     this.$q.loading.show();
 
@@ -188,28 +173,13 @@ export default {
         .catch((error) => {
           this.$q.notify({
             color: "negative",
-            message: error.response.data.message,
-            icon: fabTelegram,
+            message: error.response.data.message
           });
         })
         .finally(() => {
           this.loading = false;
         });
-    },
-    getIntegrationIcon(integration) {
-      switch (integration) {
-        case "telegram":
-          return { icon: fabTelegram, color: "blue" };
-        case "email":
-          return { icon: farEnvelope, color: "grey" };
-        case "slack":
-          return { icon: slackImage };
-        case "discord":
-          return { icon: fabDiscord, style: "color: #5865F2" };
-        default:
-          return "";
-      }
-    },
+    }
   },
 };
 </script>
