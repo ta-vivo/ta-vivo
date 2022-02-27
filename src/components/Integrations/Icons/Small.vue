@@ -2,12 +2,12 @@
   <q-img
     v-if="type === 'slack'"
     :src="getIntegrationIcon(type).icon"
-    style="width: 20px"
+    :style="`width: ${size === 'sm' ? '20px' : '24px'}`"
     spinner-color="white"
   />
   <q-icon
     v-else
-    size="sm"
+    :size="size"
     :name="getIntegrationIcon(type).icon"
     :color="getIntegrationIcon(type).color"
     :style="getIntegrationIcon(type).style || ''"
@@ -30,6 +30,10 @@ export default {
       type: String,
       default: "",
     },
+    size: {
+      type: String,
+      default: "sm",
+    }
   },
   methods: {
     getIntegrationIcon(integration) {
