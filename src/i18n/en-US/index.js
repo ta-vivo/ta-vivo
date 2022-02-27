@@ -54,7 +54,8 @@ export default {
     continueToDashboard: 'Continue to dashboard',
     requestNewEmail: 'Request new email',
     viewLogs: 'View logs',
-    backToIntegrations: 'Back to integrations'
+    backToIntegrations: 'Back to integrations',
+    addToDiscord: 'Add to Discord',
   },
   messages: {
     information: {
@@ -75,7 +76,9 @@ export default {
       slackIntegrationDescription: 'Get notification directly to your Slack channel and get notified when a new incident is found.',
       slackIntegrationInstructions: 'To get notified, you need to add the bot to your Slack channel. Click in "Add to Slack" button and select your channel.',
       slackIntegrationAddedSuccess: 'Slack integration successfully added',
-      discordIntegrationAddedSuccess: 'Discord integration successfully added'
+      discordIntegrationAddedSuccess: 'Discord integration successfully added',
+      discordIntegrationDescription: 'Get notification directly to your Discord channel and get notified when a new incident is found.',
+      discordIntegrationInstructions: 'To get notified, you need to add the "Webhook" to your Discord channel. Click in "Add to Discord" button and select your channel.',
     },
     errors: {
       requireField: 'This field is required',
