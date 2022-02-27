@@ -82,6 +82,12 @@ const routes = [
           isPublic: false
         }
       },
+      {
+        path: 'discord/success', component: () => import('pages/Integrations/DiscordSuccess.vue'),
+        meta: {
+          isPublic: false
+        }
+      },
     ]
   },
   {
