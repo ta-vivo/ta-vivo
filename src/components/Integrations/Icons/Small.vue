@@ -12,6 +12,7 @@
     :color="getIntegrationIcon(type).color"
     :style="getIntegrationIcon(type).style || ''"
   />
+  <slot />
 </template>
 
 <script>
