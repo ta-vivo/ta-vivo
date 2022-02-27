@@ -64,6 +64,7 @@
                   v-else
                   :name="getIntegrationIcon(integration.type).icon"
                   :color="getIntegrationIcon(integration.type).color"
+                  :style="getIntegrationIcon(integration.type).style || ''"
                 />
                 {{ integration.name }}
                 <q-separator />
@@ -91,7 +92,7 @@ import { useQuasar } from "quasar";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { fabTelegram, farEnvelope } from "@quasar/extras/fontawesome-v5";
+import { fabTelegram, farEnvelope, fabDiscord } from "@quasar/extras/fontawesome-v5";
 import { useI18n } from "vue-i18n";
 import slackImage from "assets/slack-logo.png";
 
@@ -166,6 +167,8 @@ export default {
             return { icon: farEnvelope, color: "grey" };
           case "slack":
             return { icon: slackImage };
+          case "discord":
+            return { icon: fabDiscord, style: "color: #5865F2" };
           default:
             return "";
         }

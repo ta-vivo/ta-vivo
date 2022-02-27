@@ -58,6 +58,7 @@
                 :color="
                   getIntegrationIcon(checkIntegration.integration.type).color
                 "
+                :style="getIntegrationIcon(checkIntegration.integration.type).style || ''"
               >
                 <q-tooltip>
                   {{ checkIntegration.integration.name }}
@@ -146,7 +147,7 @@
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
-import { fabTelegram, farEnvelope } from "@quasar/extras/fontawesome-v5";
+import { fabTelegram, farEnvelope, fabDiscord } from "@quasar/extras/fontawesome-v5";
 import { useQuasar } from "quasar";
 import { date } from "quasar";
 import slackImage from "assets/slack-logo.png";
@@ -287,6 +288,8 @@ export default {
             return { icon: farEnvelope, color: "grey" };
           case "slack":
             return { icon: slackImage };
+          case "discord":
+            return { icon: fabDiscord, style: "color: #5865F2" };
           default:
             return "";
         }

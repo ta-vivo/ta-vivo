@@ -68,6 +68,7 @@
                   v-else
                   :name="getIntegrationIcon(integration.type).icon"
                   :color="getIntegrationIcon(integration.type).color"
+                  :style="getIntegrationIcon(integration.type).style || ''"
                 />
                 {{ integration.name }}
                 <q-separator />
@@ -90,7 +91,11 @@
 </template>
 
 <script>
-import { fabTelegram, farEnvelope } from "@quasar/extras/fontawesome-v5";
+import {
+  fabTelegram,
+  farEnvelope,
+  fabDiscord,
+} from "@quasar/extras/fontawesome-v5";
 import slackImage from "assets/slack-logo.png";
 
 export default {
@@ -148,13 +153,13 @@ export default {
       );
       if (isChecked) {
         if (!isOnCurrent) {
-          this.check.addIntegrations.push({id: integrationId});
+          this.check.addIntegrations.push({ id: integrationId });
         }
         this.check.removeIntegrations = this.check.removeIntegrations.filter(
           (integration) => integration.id !== integrationId
         );
       } else {
-        this.check.removeIntegrations.push({id: integrationId});
+        this.check.removeIntegrations.push({ id: integrationId });
         this.check.addIntegrations = this.check.addIntegrations.filter(
           (integration) => integration.id !== integrationId
         );
@@ -172,7 +177,7 @@ export default {
       };
 
       this.$store
-        .dispatch("checks/update", {id: this.check.id, ...updatedCheck})
+        .dispatch("checks/update", { id: this.check.id, ...updatedCheck })
         .then(() => {
           this.$q.notify({
             message: this.$t("action.checkUpdated"),
@@ -199,6 +204,8 @@ export default {
           return { icon: farEnvelope, color: "grey" };
         case "slack":
           return { icon: slackImage };
+        case "discord":
+          return { icon: fabDiscord, style: "color: #5865F2" };
         default:
           return "";
       }
