@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <q-card flat style="max-width: 300px" class="q-mx-auto q-mt-lg">
+    <q-card flat style="max-width: 400px" class="q-mx-auto q-mt-lg">
       <q-card-section class="text-center">
         <q-img
           src="~assets/main-logo.png"
