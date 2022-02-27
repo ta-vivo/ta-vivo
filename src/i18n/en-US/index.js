@@ -9,7 +9,7 @@ export default {
     email: 'Email',
     password: 'Password',
     confirmPassword: 'Confirm Password',
-    fullname: 'Fullname',
+    fullname: 'Full name',
     checks: 'Checks',
     integrations: 'Integrations',
     name: 'Name',
