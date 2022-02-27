@@ -54,17 +54,7 @@
                   v-model="check.addIntegrations"
                   :val="integration.id"
                 />
-                <q-img
-                  v-if="integration.type === 'slack'"
-                  :src="getIntegrationIcon(integration.type).icon"
-                  style="width: 14px"
-                  spinner-color="white"
-                />
-                <q-icon
-                  v-else
-                  :name="getIntegrationIcon(integration.type).icon"
-                  :color="getIntegrationIcon(integration.type).color"
-                />
+                <small-Integration-Icon :type="integration.type" />
                 {{ integration.name }}
                 <q-separator />
               </div>
@@ -91,12 +81,12 @@ import { useQuasar } from "quasar";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { fabTelegram, farEnvelope } from "@quasar/extras/fontawesome-v5";
 import { useI18n } from "vue-i18n";
-import slackImage from "assets/slack-logo.png";
+import SmallIntegrationIcon from 'components/Integrations/Icons/Small';
 
 export default {
   name: "PageCheckForm",
+  components: {SmallIntegrationIcon},
   setup() {
     const $q = useQuasar();
     const $store = useStore();
@@ -150,26 +140,13 @@ export default {
           .catch((error) => {
             $q.notify({
               color: "negative",
-              message: error.response.data.message,
-              icon: fabTelegram,
+              message: error.response.data.message
             });
           })
           .finally(() => {
             loading.value = false;
           });
-      },
-      getIntegrationIcon(integration) {
-        switch (integration) {
-          case "telegram":
-            return { icon: fabTelegram, color: "blue" };
-          case "email":
-            return { icon: farEnvelope, color: "grey" };
-          case "slack":
-            return { icon: slackImage };
-          default:
-            return "";
-        }
-      },
+      }
     };
   },
 };

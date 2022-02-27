@@ -16,27 +16,14 @@
         <q-list bordered>
           <q-item
             v-for="integration in availableIntegrations"
-            :key="integration.name"
+            :key="integration"
           >
             <q-item-section avatar>
-              <q-img
-                class="q-ml-sm"
-                :src="integration.icon"
-                style="width: 23px;"
-                spinner-color="white"
-                v-if="integration.isImage"
-              />
-              <q-btn
-                v-else
-                round
-                flat
-                :color="integration.color"
-                :icon="integration.icon"
-              />
+              <integration-icon :type="integration" size="md" />
             </q-item-section>
 
             <q-item-section class="text-capitalize">{{
-              integration.name
+              integration
             }}</q-item-section>
             <q-item-section side>
               <q-btn
@@ -44,7 +31,7 @@
                 color="primary"
                 :label="$t('action.addIntegration')"
                 icon="eva-plus"
-                @click="selectedIntegration = integration.name"
+                @click="selectedIntegration = integration"
               />
             </q-item-section>
           </q-item>
@@ -61,11 +48,8 @@
           :loading="loading"
           @saved="onSubmit"
         />
-        <SlackForm
-          v-if="selectedIntegration === 'slack'"
-          :loading="loading"
-          @saved="onSubmit"
-        />
+        <SlackForm v-if="selectedIntegration === 'slack'" />
+        <DiscordForm v-if="selectedIntegration === 'discord'" />
       </q-card-section>
     </q-card>
   </q-page>
@@ -76,19 +60,21 @@ import { useQuasar } from "quasar";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { fabTelegram, farEnvelope } from "@quasar/extras/fontawesome-v5";
 import { useI18n } from "vue-i18n";
 import TelegramForm from "components/Integrations/Form/Telegram";
 import EmailForm from "components/Integrations/Form/Email";
 import SlackForm from "components/Integrations/Form/Slack";
-import slackImage from "assets/slack-logo.png";
+import IntegrationIcon from "components/Integrations/Icons/Small";
+import DiscordForm from "components/Integrations/Form/Discord";
 
 export default {
   name: "PageAddIntegration",
   components: {
     TelegramForm,
     EmailForm,
-    SlackForm
+    SlackForm,
+    IntegrationIcon,
+    DiscordForm,
   },
   setup() {
     const $q = useQuasar();
@@ -102,22 +88,10 @@ export default {
     });
     const loading = ref(false);
     const availableIntegrations = ref([
-      {
-        name: "telegram",
-        icon: fabTelegram,
-        color: "blue",
-      },
-      {
-        name: "email",
-        icon: farEnvelope,
-        color: "grey",
-      },
-      {
-        name: "slack",
-        icon: slackImage,
-        color: "green",
-        isImage: true,
-      },
+      "discord",
+      "email",
+      "slack",
+      "telegram",
     ]);
     const selectedIntegration = ref(null);
 
@@ -141,20 +115,11 @@ export default {
             $q.notify({
               color: "negative",
               message: error.response.data.message,
-              icon: fabTelegram,
             });
           })
           .finally(() => {
             loading.value = false;
           });
-      },
-      getIntegrationIcon(integration) {
-        switch (integration) {
-          case "telegram":
-            return { icon: fabTelegram, color: "blue" };
-          default:
-            return "";
-        }
       },
     };
   },

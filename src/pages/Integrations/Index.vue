@@ -21,20 +21,10 @@
       <template v-slot:body-cell-icon="props">
         <q-td :props="props">
           <div class="the-integration items-center">
-            <q-img
-              v-if="props.row.type === 'slack'"
-              class="q-ml-sm"
-              :src="getIntegrationIcon(props.row.type).icon"
-              style="width: 23px"
-              spinner-color="white"
-            />
-            <q-btn
-              v-else
-              round
-              flat
-              size="lg"
-              :icon="getIntegrationIcon(props.row.type).icon"
-              :text-color="getIntegrationIcon(props.row.type).color"
+            <IntegrationIcon
+              class="cursor-pointer"
+              :type="props.row.type"
+              size="md"
               @click="handleEditIntegration(props.row)"
             />
           </div>
@@ -121,12 +111,14 @@
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
-import { fabTelegram, farEnvelope } from "@quasar/extras/fontawesome-v5";
 import { useQuasar } from "quasar";
-import slackImage from "assets/slack-logo.png";
+import IntegrationIcon from "components/Integrations/Icons/Small";
 
 export default {
   name: "PageIntegrations",
+  components: {
+    IntegrationIcon,
+  },
   setup() {
     const $t = useI18n().t;
     const $q = useQuasar();
@@ -172,18 +164,6 @@ export default {
       loading,
       showEditIntegrationDialog,
       integration,
-      getIntegrationIcon(integration) {
-        switch (integration) {
-          case "telegram":
-            return { icon: fabTelegram, color: "blue" };
-          case "email":
-            return { icon: farEnvelope, color: "grey" };
-          case "slack":
-            return { icon: slackImage };
-          default:
-            return "";
-        }
-      },
       handleDeleteIntegration(integration) {
         $q.dialog({
           title: "Confirm",

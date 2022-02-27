@@ -58,17 +58,7 @@
                   :val="integration.id"
                   @update:model-value="onToggleIntegration(integration.id)"
                 />
-                <q-img
-                  v-if="integration.type === 'slack'"
-                  :src="getIntegrationIcon(integration.type).icon"
-                  style="width: 14px"
-                  spinner-color="white"
-                />
-                <q-icon
-                  v-else
-                  :name="getIntegrationIcon(integration.type).icon"
-                  :color="getIntegrationIcon(integration.type).color"
-                />
+                <small-Integration-Icon :type="integration.type" />
                 {{ integration.name }}
                 <q-separator />
               </div>
@@ -90,11 +80,11 @@
 </template>
 
 <script>
-import { fabTelegram, farEnvelope } from "@quasar/extras/fontawesome-v5";
-import slackImage from "assets/slack-logo.png";
+import SmallIntegrationIcon from 'components/Integrations/Icons/Small';
 
 export default {
   name: "PageCheckEdit",
+  components: {SmallIntegrationIcon},
   created() {
     this.$q.loading.show();
 
@@ -148,13 +138,13 @@ export default {
       );
       if (isChecked) {
         if (!isOnCurrent) {
-          this.check.addIntegrations.push({id: integrationId});
+          this.check.addIntegrations.push({ id: integrationId });
         }
         this.check.removeIntegrations = this.check.removeIntegrations.filter(
           (integration) => integration.id !== integrationId
         );
       } else {
-        this.check.removeIntegrations.push({id: integrationId});
+        this.check.removeIntegrations.push({ id: integrationId });
         this.check.addIntegrations = this.check.addIntegrations.filter(
           (integration) => integration.id !== integrationId
         );
@@ -172,7 +162,7 @@ export default {
       };
 
       this.$store
-        .dispatch("checks/update", {id: this.check.id, ...updatedCheck})
+        .dispatch("checks/update", { id: this.check.id, ...updatedCheck })
         .then(() => {
           this.$q.notify({
             message: this.$t("action.checkUpdated"),
@@ -183,26 +173,13 @@ export default {
         .catch((error) => {
           this.$q.notify({
             color: "negative",
-            message: error.response.data.message,
-            icon: fabTelegram,
+            message: error.response.data.message
           });
         })
         .finally(() => {
           this.loading = false;
         });
-    },
-    getIntegrationIcon(integration) {
-      switch (integration) {
-        case "telegram":
-          return { icon: fabTelegram, color: "blue" };
-        case "email":
-          return { icon: farEnvelope, color: "grey" };
-        case "slack":
-          return { icon: slackImage };
-        default:
-          return "";
-      }
-    },
+    }
   },
 };
 </script>

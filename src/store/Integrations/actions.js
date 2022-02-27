@@ -23,3 +23,7 @@ export function remove(context, payload) {
 export function createSlackIntegration(context, { authorizationCode }) {
   return axiosInstance.post('/integrations/slack', { authorizationCode })
 }
+
+export function createDiscordIntegration(context, { authorizationCode }) {
+  return axiosInstance.post('/integrations/discord', { authorizationCode })
+}

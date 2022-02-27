@@ -23,26 +23,9 @@
 </template>
 
 <script>
-import { ref } from "vue";
 export default {
-  name: "ComponentTelegramForm",
-  props: {
-    loading: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  setup(props, { emit }) {
-    const integration = ref({
-      name: "",
-      uniqueCode: "",
-    });
-    return {
-      integration,
-      onSubmit() {
-        emit("saved", integration.value);
-      },
-    };
-  },
+  name: "ComponentSlackForm",
+  setup() {
+  }
 };
 </script>

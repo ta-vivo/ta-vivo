@@ -36,35 +36,12 @@
             v-for="checkIntegration in props.value"
             :key="checkIntegration.id"
           >
-            <div class="the-integration items-center">
-              <q-img
-                v-if="checkIntegration.integration.type === 'slack'"
-                :src="
-                  getIntegrationIcon(checkIntegration.integration.type).icon
-                "
-                style="width: 14px"
-                spinner-color="white"
-              >
+            <div class="the-integration items-center q-my-sm">
+              <small-integration-Icon :type="checkIntegration.integration.type">
                 <q-tooltip>
                   {{ checkIntegration.integration.name }}
                 </q-tooltip>
-              </q-img>
-              <q-btn
-                v-else
-                round
-                flat
-                size="sm"
-                :icon="
-                  getIntegrationIcon(checkIntegration.integration.type).icon
-                "
-                :text-color="
-                  getIntegrationIcon(checkIntegration.integration.type).color
-                "
-              >
-                <q-tooltip>
-                  {{ checkIntegration.integration.name }}
-                </q-tooltip>
-              </q-btn>
+              </small-integration-icon>
             </div>
           </template>
         </q-td>
@@ -148,13 +125,13 @@
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
-import { fabTelegram, farEnvelope } from "@quasar/extras/fontawesome-v5";
 import { useQuasar } from "quasar";
 import { date } from "quasar";
-import slackImage from "assets/slack-logo.png";
+import SmallIntegrationIcon from 'components/Integrations/Icons/Small';
 
 export default {
   name: "PageChecks",
+  components: {SmallIntegrationIcon},
   setup() {
     const $t = useI18n().t;
     const $q = useQuasar();
@@ -281,18 +258,6 @@ export default {
       logsPagination,
       handleShowLogs,
       fetchlogs,
-      getIntegrationIcon(integration) {
-        switch (integration) {
-          case "telegram":
-            return { icon: fabTelegram, color: "blue" };
-          case "email":
-            return { icon: farEnvelope, color: "grey" };
-          case "slack":
-            return { icon: slackImage };
-          default:
-            return "";
-        }
-      },
       handleDeleteCheck(check) {
         $q.dialog({
           title: "Confirm",
