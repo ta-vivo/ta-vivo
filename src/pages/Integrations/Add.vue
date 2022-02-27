@@ -19,17 +19,7 @@
             :key="integration.name"
           >
             <q-item-section avatar>
-              <q-img
-                :src="integration.icon"
-                style="width: 23px;"
-                spinner-color="white"
-                v-if="integration.isImage"
-              />
-              <q-icon
-                v-else
-                :color="integration.color"
-                :name="integration.icon"
-              />
+              <integration-icon :type="integration.name" size="md" />
             </q-item-section>
 
             <q-item-section class="text-capitalize">{{
@@ -73,19 +63,19 @@ import { useQuasar } from "quasar";
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { fabTelegram, farEnvelope } from "@quasar/extras/fontawesome-v5";
 import { useI18n } from "vue-i18n";
 import TelegramForm from "components/Integrations/Form/Telegram";
 import EmailForm from "components/Integrations/Form/Email";
 import SlackForm from "components/Integrations/Form/Slack";
-import slackImage from "assets/slack-logo.png";
+import IntegrationIcon from "components/Integrations/Icons/Small";
 
 export default {
   name: "PageAddIntegration",
   components: {
     TelegramForm,
     EmailForm,
-    SlackForm
+    SlackForm,
+    IntegrationIcon,
   },
   setup() {
     const $q = useQuasar();
@@ -101,17 +91,14 @@ export default {
     const availableIntegrations = ref([
       {
         name: "telegram",
-        icon: fabTelegram,
         color: "blue",
       },
       {
         name: "email",
-        icon: farEnvelope,
         color: "grey",
       },
       {
         name: "slack",
-        icon: slackImage,
         color: "green",
         isImage: true,
       },
@@ -138,20 +125,11 @@ export default {
             $q.notify({
               color: "negative",
               message: error.response.data.message,
-              icon: fabTelegram,
             });
           })
           .finally(() => {
             loading.value = false;
           });
-      },
-      getIntegrationIcon(integration) {
-        switch (integration) {
-          case "telegram":
-            return { icon: fabTelegram, color: "blue" };
-          default:
-            return "";
-        }
       },
     };
   },
