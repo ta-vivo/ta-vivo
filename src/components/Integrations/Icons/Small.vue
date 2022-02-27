@@ -1,18 +1,20 @@
 <template>
-  <q-img
-    v-if="type === 'slack'"
-    :src="getIntegrationIcon(type).icon"
-    :style="`width: ${size === 'sm' ? '20px' : '24px'}`"
-    spinner-color="white"
-  />
-  <q-icon
-    v-else
-    :size="size"
-    :name="getIntegrationIcon(type).icon"
-    :color="getIntegrationIcon(type).color"
-    :style="getIntegrationIcon(type).style || ''"
-  />
-  <slot />
+  <span @click="$emit('click')">
+    <q-img
+      v-if="type === 'slack'"
+      :src="getIntegrationIcon(type).icon"
+      :style="`width: ${size === 'sm' ? '20px' : '24px'}`"
+      spinner-color="white"
+    />
+    <q-icon
+      v-else
+      :size="size"
+      :name="getIntegrationIcon(type).icon"
+      :color="getIntegrationIcon(type).color"
+      :style="getIntegrationIcon(type).style || ''"
+    />
+    <slot />
+  </span>
 </template>
 
 <script>
@@ -33,7 +35,7 @@ export default {
     size: {
       type: String,
       default: "sm",
-    }
+    },
   },
   methods: {
     getIntegrationIcon(integration) {
