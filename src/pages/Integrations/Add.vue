@@ -16,14 +16,14 @@
         <q-list bordered>
           <q-item
             v-for="integration in availableIntegrations"
-            :key="integration.name"
+            :key="integration"
           >
             <q-item-section avatar>
-              <integration-icon :type="integration.name" size="md" />
+              <integration-icon :type="integration" size="md" />
             </q-item-section>
 
             <q-item-section class="text-capitalize">{{
-              integration.name
+              integration
             }}</q-item-section>
             <q-item-section side>
               <q-btn
@@ -31,7 +31,7 @@
                 color="primary"
                 :label="$t('action.addIntegration')"
                 icon="eva-plus"
-                @click="selectedIntegration = integration.name"
+                @click="selectedIntegration = integration"
               />
             </q-item-section>
           </q-item>
@@ -89,19 +89,10 @@ export default {
     });
     const loading = ref(false);
     const availableIntegrations = ref([
-      {
-        name: "telegram",
-        color: "blue",
-      },
-      {
-        name: "email",
-        color: "grey",
-      },
-      {
-        name: "slack",
-        color: "green",
-        isImage: true,
-      },
+      "discord",
+      "email",
+      "slack",
+      "telegram",
     ]);
     const selectedIntegration = ref(null);
 
