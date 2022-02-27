@@ -31,12 +31,11 @@
             />
             <q-icon
               v-else
-              round
-              flat
               size="lg"
               class="cursor-pointer"
               :name="getIntegrationIcon(props.row.type).icon"
               :color="getIntegrationIcon(props.row.type).color"
+              :style="getIntegrationIcon(props.row.type).style || ''"
               @click="handleEditIntegration(props.row)"
             />
           </div>
@@ -123,7 +122,7 @@
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
-import { fabTelegram, farEnvelope } from "@quasar/extras/fontawesome-v5";
+import { fabTelegram, farEnvelope, fabDiscord } from "@quasar/extras/fontawesome-v5";
 import { useQuasar } from "quasar";
 import slackImage from "assets/slack-logo.png";
 
@@ -182,6 +181,8 @@ export default {
             return { icon: farEnvelope, color: "grey" };
           case "slack":
             return { icon: slackImage };
+          case "discord":
+            return { icon: fabDiscord, style: "color: #5865F2" };
           default:
             return "";
         }
