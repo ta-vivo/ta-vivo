@@ -75,6 +75,7 @@ export default {
       slackIntegrationDescription: 'Get notification directly to your Slack channel and get notified when a new incident is found.',
       slackIntegrationInstructions: 'To get notified, you need to add the bot to your Slack channel. Click in "Add to Slack" button and select your channel.',
       slackIntegrationAddedSuccess: 'Slack integration successfully added',
+      discordIntegrationAddedSuccess: 'Discord integration successfully added'
     },
     errors: {
       requireField: 'This field is required',
