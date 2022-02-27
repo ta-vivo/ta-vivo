@@ -48,11 +48,8 @@
           :loading="loading"
           @saved="onSubmit"
         />
-        <SlackForm
-          v-if="selectedIntegration === 'slack'"
-          :loading="loading"
-          @saved="onSubmit"
-        />
+        <SlackForm v-if="selectedIntegration === 'slack'" />
+        <DiscordForm v-if="selectedIntegration === 'discord'" />
       </q-card-section>
     </q-card>
   </q-page>
@@ -68,6 +65,7 @@ import TelegramForm from "components/Integrations/Form/Telegram";
 import EmailForm from "components/Integrations/Form/Email";
 import SlackForm from "components/Integrations/Form/Slack";
 import IntegrationIcon from "components/Integrations/Icons/Small";
+import DiscordForm from "components/Integrations/Form/Discord";
 
 export default {
   name: "PageAddIntegration",
@@ -76,6 +74,7 @@ export default {
     EmailForm,
     SlackForm,
     IntegrationIcon,
+    DiscordForm,
   },
   setup() {
     const $q = useQuasar();
