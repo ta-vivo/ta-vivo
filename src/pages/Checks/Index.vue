@@ -17,6 +17,7 @@
       :rows="rows"
       :columns="columns"
       row-key="id"
+      :loading="loading"
     >
       <template v-slot:body-cell-enabled="props">
         <q-td :props="props">
@@ -41,7 +42,7 @@
                 <q-tooltip>
                   {{ checkIntegration.integration.name }}
                 </q-tooltip>
-              </small-integration-icon>
+              </small-integration-Icon>
             </div>
           </template>
         </q-td>
@@ -127,11 +128,11 @@ import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
 import { useQuasar } from "quasar";
 import { date } from "quasar";
-import SmallIntegrationIcon from 'components/Integrations/Icons/Small';
+import SmallIntegrationIcon from "components/Integrations/Icons/Small";
 
 export default {
   name: "PageChecks",
-  components: {SmallIntegrationIcon},
+  components: { SmallIntegrationIcon },
   setup() {
     const $t = useI18n().t;
     const $q = useQuasar();
@@ -212,9 +213,15 @@ export default {
     const tempCheck = ref({});
 
     const store = useStore();
-    store.dispatch("checks/fetchAll").then((response) => {
-      rows.value = response.data.data;
-    });
+    loading.value = true;
+    store
+      .dispatch("checks/fetchAll")
+      .then((response) => {
+        rows.value = response.data.data;
+      })
+      .finally(() => {
+        loading.value = false;
+      });
 
     const handleShowLogs = (check) => {
       tempCheck.value = check;
