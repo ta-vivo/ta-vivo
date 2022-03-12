@@ -27,6 +27,7 @@
         ></q-btn>
         <q-space />
         <q-btn-dropdown
+          v-if="$q.screen.gt.xs"
           flat
           color="primary"
           :label="$store.getters['auth/getUser'].email"
@@ -63,15 +64,15 @@ export default defineComponent({
     const $router = useRouter();
 
     return {
-      logout () {
+      logout() {
         window.localStorage.removeItem("token");
         $store.commit("auth/SET_USER", {
-          email: '',
+          email: "",
           id: null,
         });
         $router.push("/auth/login");
       },
-    }
+    };
   },
 });
 </script>
