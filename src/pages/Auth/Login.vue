@@ -95,7 +95,7 @@ export default {
 
             $store.commit("auth/SET_USER", {
               email: decoded.email,
-              id: decoded.userId,
+              id: decoded.id,
             });
 
             window.localStorage.setItem("token", token);
