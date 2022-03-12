@@ -17,6 +17,7 @@
       :rows="rows"
       :columns="columns"
       row-key="id"
+      :loading="loading"
     >
       <template v-slot:body-cell-icon="props">
         <q-td :props="props">
@@ -154,9 +155,15 @@ export default {
     const integration = ref({});
 
     const store = useStore();
-    store.dispatch("integrations/fetchAll").then((response) => {
-      rows.value = response.data.data;
-    });
+    loading.value = true;
+    store
+      .dispatch("integrations/fetchAll")
+      .then((response) => {
+        rows.value = response.data.data;
+      })
+      .finally(() => {
+        loading.value = false;
+      });
 
     return {
       columns,
