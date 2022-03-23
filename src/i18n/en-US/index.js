@@ -59,6 +59,7 @@ export default {
     backToIntegrations: 'Back to integrations',
     addToDiscord: 'Add to Discord',
     select: 'Select',
+    backToPlans: 'Back to plans',
   },
   messages: {
     information: {
