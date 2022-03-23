@@ -34,7 +34,9 @@ export default {
     privacyPolicy: 'Privacy policy',
     confirmationCode: 'Confirmation code',
     code: 'Code',
-    details: 'Details'
+    details: 'Details',
+    month: 'Month',
+    plans: 'Plans',
   },
   action: {
     addCheck: 'Add Check',
@@ -56,6 +58,7 @@ export default {
     viewLogs: 'View logs',
     backToIntegrations: 'Back to integrations',
     addToDiscord: 'Add to Discord',
+    select: 'Select',
   },
   messages: {
     information: {
