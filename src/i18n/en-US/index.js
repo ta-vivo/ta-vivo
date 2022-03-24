@@ -38,6 +38,13 @@ export default {
     month: 'Month',
     plans: 'Plans',
     logsHistory: 'Logs history',
+    frequentQuestions: 'Frequent questions',
+  },
+  frequentQuestions: {
+    whatPaymentAccept: 'What payment methods do you accept?',
+    whatPaymentAcceptAnswer: 'We accept all major credit cards, debit cards and PayPal.',
+    whatsTheDifferenceBetWeenPlans: 'What`s the difference between "Free" and "Pay" plans ?',
+    whatsTheDifferenceBetWeenPlansAnswer: 'With the "Pay" plans you help me maintain the project and you get more benefits when you have many projects or you are a company.',
   },
   action: {
     addCheck: 'Add Check',
@@ -89,6 +96,6 @@ export default {
       requireField: 'This field is required',
       notValidEmail: 'This is not a valid email',
       passwordSecurity: 'Password must be at least 8 characters long and contain at least one number and one letter',
-    }
+    },
   }
 }
