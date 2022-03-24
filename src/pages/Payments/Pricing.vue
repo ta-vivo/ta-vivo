@@ -58,6 +58,22 @@
               {{ $t("frequentQuestions.whatsTheDifferenceBetWeenPlansAnswer") }}
             </div>
           </div>
+          <div class="question-container">
+            <div class="text-bold">
+              {{ $t("frequentQuestions.canICancelMyPaymentPlan") }}
+            </div>
+            <div>
+              {{ $t("frequentQuestions.canICancelMyPaymentPlanAnswer") }}
+            </div>
+          </div>
+          <div class="question-container">
+            <div class="text-bold">
+              {{ $t("frequentQuestions.whatIsTheLogsHistoryNumber") }}
+            </div>
+            <div>
+              {{ $t("frequentQuestions.whatIsTheLogsHistoryNumberAnswer") }}
+            </div>
+          </div>
         </q-card-section>
       </q-card>
     </div>
@@ -160,7 +176,7 @@ export default {
   height: 100%;
   width: 200px;
 }
-.questions-container .question-container{
+.questions-container .question-container {
   margin: 20px auto;
 }
 </style>
