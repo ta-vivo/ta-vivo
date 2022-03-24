@@ -45,6 +45,10 @@ export default {
     whatPaymentAcceptAnswer: 'We accept all major credit cards, debit cards and PayPal.',
     whatsTheDifferenceBetWeenPlans: 'What`s the difference between "Free" and "Pay" plans ?',
     whatsTheDifferenceBetWeenPlansAnswer: 'With the "Pay" plans you help me maintain the project and you get more benefits when you have many projects or you are a company.',
+    canICancelMyPaymentPlan: 'Can I cancel my payment plan?',
+    canICancelMyPaymentPlanAnswer: 'Yes, you can cancel your payment plan at any time, but no refunds are provided for prorated periods.',
+    whatIsTheLogsHistoryNumber: 'What is the "logs history" number?',
+    whatIsTheLogsHistoryNumberAnswer: 'Each "check" has a limit of "logs" that it can store. Every time the limit is reached, the oldest ones are deleted.',
   },
   action: {
     addCheck: 'Add Check',
