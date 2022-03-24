@@ -6,7 +6,7 @@
           <p class="text-h3">{{ $t("common.plans") }}</p>
         </div>
       </div>
-      <div class="row justify-center q-col-gutter-md">
+      <div class="row justify-between q-col-gutter-md">
         <div class="col-md-3" v-for="plan in plans" :key="plan.id">
           <q-card flat bordered class="text-center plan-card">
             <q-card-section>
@@ -21,7 +21,8 @@
             <q-separator />
             <q-card-section>
               <div v-for="feature in plan.features" :key="feature.item">
-                <span class="text-bold">{{ feature.quantity }}</span> {{ $t(`common.${feature.item}`) }}
+                <span class="text-bold">{{ feature.quantity }}</span>
+                {{ $t(`common.${feature.item}`) }}
               </div>
             </q-card-section>
             <q-card-section>
@@ -36,6 +37,29 @@
           </q-card>
         </div>
       </div>
+      <q-card flat bordered class="q-mt-lg">
+        <q-card-section>
+          <div class="text-h6">{{ $t("common.frequentQuestions") }}</div>
+        </q-card-section>
+
+        <q-separator />
+        <q-card-section class="questions-container">
+          <div class="question-container">
+            <div class="text-bold">
+              {{ $t("frequentQuestions.whatPaymentAccept") }}
+            </div>
+            <div>{{ $t("frequentQuestions.whatPaymentAcceptAnswer") }}</div>
+          </div>
+          <div class="question-container">
+            <div class="text-bold">
+              {{ $t("frequentQuestions.whatsTheDifferenceBetWeenPlans") }}
+            </div>
+            <div>
+              {{ $t("frequentQuestions.whatsTheDifferenceBetWeenPlansAnswer") }}
+            </div>
+          </div>
+        </q-card-section>
+      </q-card>
     </div>
     <div v-show="showProPaypalButton">
       <q-btn
@@ -135,5 +159,8 @@ export default {
 .plan-card {
   height: 100%;
   width: 200px;
+}
+.questions-container .question-container{
+  margin: 20px auto;
 }
 </style>
