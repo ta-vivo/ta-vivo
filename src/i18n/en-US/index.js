@@ -37,6 +37,7 @@ export default {
     details: 'Details',
     month: 'Month',
     plans: 'Plans',
+    logsHistory: 'Logs history',
   },
   action: {
     addCheck: 'Add Check',
