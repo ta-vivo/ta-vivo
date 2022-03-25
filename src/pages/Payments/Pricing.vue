@@ -137,11 +137,13 @@ export default {
       selectedPlan,
     };
   },
+
+
   mounted() {
     let paypalScript = document.createElement("script");
     paypalScript.setAttribute(
       "src",
-      "https://www.paypal.com/sdk/js?client-id=AVOCNKuZewHvYrimSZpQjinKmOntIGwJXJ60vFUVPsRb-WqlpSZSNTS9k7vJHZoCgGoEmXwmWEJTgMs0&vault=true&intent=subscription"
+      "https://www.paypal.com/sdk/js?client-id=AUgdaQ3bX_YHV4L4HAvLU9xuAOQfJjpk0orF6AD69E3669hnf05TxvTgUzwgSMuBKL9vcSL9tFps7ER1&vault=true&intent=subscription"
     );
     paypalScript.setAttribute("data-sdk-integration-source", "button-factory");
     document.head.appendChild(paypalScript);
