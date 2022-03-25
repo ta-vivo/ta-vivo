@@ -95,7 +95,7 @@
       </div>
       <div
         class="text-center"
-        id="paypal-button-container-P-7PA122898W931520MMI5IDEQ"
+        id="paypal-button-container-P-11L12531082319917MI6TGRI"
       ></div>
     </div>
   </q-page>
@@ -158,7 +158,7 @@ export default {
           createSubscription: function (data, actions) {
             return actions.subscription.create({
               /* Creates the subscription */
-              plan_id: "P-7PA122898W931520MMI5IDEQ",
+              plan_id: "P-11L12531082319917MI6TGRI",
             });
           },
           onApprove: function (data, actions) {
@@ -166,7 +166,7 @@ export default {
             alert(data.subscriptionID); // You can add optional success message for the subscriber here
           },
         })
-        .render("#paypal-button-container-P-7PA122898W931520MMI5IDEQ");
+        .render("#paypal-button-container-P-11L12531082319917MI6TGRI");
     }, 1000);
   },
 };
