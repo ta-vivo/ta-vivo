@@ -37,6 +37,10 @@ export default {
         roleSettings.backgroundColor = "purple";
         roleSettings.role = "Enterprise+";
         break;
+      case 'administrator':
+        roleSettings.backgroundColor = 'red';
+        roleSettings.role = 'Administrator';
+        break;
       default:
         roleSettings.textColor = "black";
         roleSettings.backgroundColor = "primary";
