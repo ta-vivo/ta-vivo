@@ -20,8 +20,7 @@ export default {
       role: "Basic",
     };
 
-    // switch (props.role.toLowerCase()) {
-    switch ('enterprise+') {
+    switch (props.role.toLowerCase()) {
       case "basic":
         roleSettings.backgroundColor = "black";
         roleSettings.role = "Basic";
