@@ -27,10 +27,19 @@
             </q-card-section>
             <q-card-section>
               <q-btn
+                :disable="
+                  $store.getters['auth/getUser'].role ===
+                  plan.name.toLowerCase()
+                "
                 v-if="plan.price > 0"
                 push
                 color="primary"
-                :label="$t('action.select')"
+                :label="
+                  $store.getters['auth/getUser'].role ===
+                  plan.name.toLowerCase()
+                    ? $t('common.subscribed')
+                    : $t('action.select')
+                "
                 @click="selectPlan(plan)"
               />
             </q-card-section>
@@ -106,15 +115,22 @@
             color="positive"
             name="eva-checkmark-circle-outline"
           />
-          <p class="text-h5">{{$t('messages.information.thanksForYourSubscription')}}</p>
+          <p class="text-h5">
+            {{ $t("messages.information.thanksForYourSubscription") }}
+          </p>
         </q-card-section>
 
         <q-card-section class="q-py-none">
-          {{$t('messages.information.subscriptionSuccessDescription')}}
+          {{ $t("messages.information.subscriptionSuccessDescription") }}
         </q-card-section>
 
         <q-card-actions align="center">
-          <q-btn push :label="$t('action.goToHome')" color="primary" @click="$router.push('/')" />
+          <q-btn
+            push
+            :label="$t('action.goToHome')"
+            color="primary"
+            @click="$router.push('/')"
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -206,20 +222,18 @@ export default {
                 this.$q.loading.hide();
               });
 
-            this.$store.dispatch('auth/me')
-              .then(response => {
-                const token = response.data.data.token;
-                const decoded = jwtDecode(token);
+            this.$store.dispatch("auth/me").then((response) => {
+              const token = response.data.data.token;
+              const decoded = jwtDecode(token);
 
-                this.$store.commit("auth/SET_USER", {
-                  email: decoded.email,
-                  id: decoded.userId,
-                  role: decoded.role,
-                });
+              this.$store.commit("auth/SET_USER", {
+                email: decoded.email,
+                id: decoded.userId,
+                role: decoded.role,
+              });
 
-                window.localStorage.setItem("token", token);
-              })
-
+              window.localStorage.setItem("token", token);
+            });
           },
         })
         .render("#paypal-button-container-P-11L12531082319917MI6TGRI");
