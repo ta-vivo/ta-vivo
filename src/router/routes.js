@@ -9,7 +9,14 @@ const routes = [
         meta: {
           isPublic: false
         }
-      }
+      },
+      {
+        path: 'profile',
+        component: () => import('pages/User/Profile.vue'),
+        meta: {
+          isPublic: false
+        }
+      },
     ]
   },
   {
