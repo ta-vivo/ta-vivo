@@ -117,6 +117,7 @@ export default {
             $store.commit("auth/SET_USER", {
               email: decoded.email,
               id: decoded.userId,
+              role: decoded.role
             });
             window.localStorage.setItem("token", token);
             $router.push("/auth/confirm-email")

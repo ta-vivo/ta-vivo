@@ -68,6 +68,7 @@ export default defineComponent({
         $store.commit("auth/SET_USER", {
           email: '',
           id: null,
+          role: 'basic',
         });
         $router.push("/auth/login");
       },

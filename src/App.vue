@@ -19,6 +19,7 @@ export default defineComponent({
       this.$store.commit("auth/SET_USER", {
         email: decoded.email,
         id: decoded.id,
+        role: decoded.role,
       });
 
       if (!decoded.active) {
