@@ -72,6 +72,7 @@ export default {
     addToDiscord: 'Add to Discord',
     select: 'Select',
     backToPlans: 'Back to plans',
+    goToHome: 'Go to home',
   },
   messages: {
     information: {
@@ -95,6 +96,8 @@ export default {
       discordIntegrationAddedSuccess: 'Discord integration successfully added',
       discordIntegrationDescription: 'Get notification directly to your Discord channel and get notified when a new incident is found.',
       discordIntegrationInstructions: 'To get notified, you need to add the "Webhook" to your Discord channel. Click in "Add to Discord" button and select your channel.',
+      thanksForYourSubscription: 'Thanks for your subscription!',
+      subscriptionSuccessDescription: 'All the features of your subscription are activated immediately.'
     },
     errors: {
       requireField: 'This field is required',
