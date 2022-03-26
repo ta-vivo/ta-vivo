@@ -102,10 +102,7 @@
         </span>
         <span>/ ${{ $t("common.month") }}</span>
       </div>
-      <div
-        class="text-center"
-        id="paypal-button-container-P-11L12531082319917MI6TGRI"
-      ></div>
+      <div class="text-center" id="paypal-button-container"></div>
     </div>
     <q-dialog maximized v-model="success">
       <q-card class="text-center">
@@ -137,48 +134,16 @@
   </q-page>
 </template>
 <script>
-import { ref } from "vue";
-import { useStore } from "vuex";
-import { useQuasar } from "quasar";
 import jwtDecode from "jwt-decode";
 
 export default {
   name: "PagePricing",
-  setup() {
-    const plans = ref([]);
-    const $store = useStore();
-    const showProPaypalButton = ref(false);
-    const selectedPlan = ref({});
-    const loading = ref(false);
-    const $q = useQuasar();
-
-    loading.value = true;
-    $store
-      .dispatch("payments/fetchPricing")
-      .then((response) => {
-        plans.value = response.data.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        loading.value = false;
-      });
-
-    const selectPlan = (plan) => {
-      selectedPlan.value = plan;
-      showProPaypalButton.value = true;
-    };
-    return {
-      plans,
-      selectPlan,
-      showProPaypalButton,
-      selectedPlan,
-    };
-  },
   data() {
     return {
       success: false,
+      plans: [],
+      showProPaypalButton: false,
+      selectedPlan: {}
     };
   },
   mounted() {
@@ -189,8 +154,26 @@ export default {
     );
     paypalScript.setAttribute("data-sdk-integration-source", "button-factory");
     document.head.appendChild(paypalScript);
-
-    setTimeout(() => {
+    this.fetchSubscriptionPlans();
+  },
+  methods: {
+    fetchSubscriptionPlans () {
+    this.$store
+      .dispatch("payments/fetchPricing")
+      .then((response) => {
+        this.plans = response.data.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    },
+    selectPlan (plan) {
+      this.selectedPlan = plan;
+      document.querySelector("#paypal-button-container").innerHTML = "";
+      this.createdPaypalButton(plan.id);
+      this.showProPaypalButton = true;
+    },
+    createdPaypalButton(subcriptionId) {
       paypal
         .Buttons({
           style: {
@@ -202,7 +185,7 @@ export default {
           createSubscription: function (data, actions) {
             return actions.subscription.create({
               /* Creates the subscription */
-              plan_id: "P-11L12531082319917MI6TGRI",
+              plan_id: subcriptionId,
             });
           },
           onApprove: async (data) => {
@@ -236,8 +219,8 @@ export default {
             });
           },
         })
-        .render("#paypal-button-container-P-11L12531082319917MI6TGRI");
-    }, 1000);
+        .render(`#paypal-button-container`);
+    },
   },
 };
 </script>
