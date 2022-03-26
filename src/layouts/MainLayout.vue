@@ -26,6 +26,8 @@
           :label="$t('common.integrations')"
         ></q-btn>
         <q-space />
+        <role-badge :role="$store.getters['auth/getUser'].role" />
+
         <q-btn-dropdown
           flat
           color="primary"
@@ -54,10 +56,13 @@
 import { defineComponent } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import RoleBadge from 'components/User/RoleBadge.vue';
 
 export default defineComponent({
   name: "MainLayout",
-
+  components: {
+    RoleBadge,
+  },
   setup() {
     const $store = useStore();
     const $router = useRouter();
