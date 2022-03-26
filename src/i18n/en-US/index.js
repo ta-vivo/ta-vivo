@@ -39,6 +39,7 @@ export default {
     plans: 'Plans',
     logsHistory: 'Logs history',
     frequentQuestions: 'Frequent questions',
+    subscribed: 'Subscribed'
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
