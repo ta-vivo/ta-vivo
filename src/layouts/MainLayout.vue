@@ -26,8 +26,11 @@
           :label="$t('common.integrations')"
         ></q-btn>
         <q-space />
-        <role-badge :role="$store.getters['auth/getUser'].role" />
-
+        <role-badge
+          class="cursor-pointer"
+          @click="$router.push('/pricing')"
+          :role="$store.getters['auth/getUser'].role"
+        />
         <q-btn-dropdown
           flat
           color="primary"
@@ -56,7 +59,7 @@
 import { defineComponent } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import RoleBadge from 'components/User/RoleBadge.vue';
+import RoleBadge from "components/User/RoleBadge.vue";
 
 export default defineComponent({
   name: "MainLayout",
@@ -68,16 +71,16 @@ export default defineComponent({
     const $router = useRouter();
 
     return {
-      logout () {
+      logout() {
         window.localStorage.removeItem("token");
         $store.commit("auth/SET_USER", {
-          email: '',
+          email: "",
           id: null,
-          role: 'basic',
+          role: "basic",
         });
         $router.push("/auth/login");
       },
-    }
+    };
   },
 });
 </script>
