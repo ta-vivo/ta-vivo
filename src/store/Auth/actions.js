@@ -1,5 +1,9 @@
 import { axiosInstanceForAuth, axiosInstance } from 'boot/axios'
 
+export function me(context) {
+  return axiosInstance.get('/auth/me')
+}
+
 export function login(context, { email, password }) {
   return axiosInstanceForAuth.post('/auth/login', { email, password })
 }
