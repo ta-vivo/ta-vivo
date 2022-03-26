@@ -37,6 +37,14 @@
           :label="$store.getters['auth/getUser'].email"
         >
           <q-list>
+            <q-item clickable v-close-popup @click="$router.push('/profile')">
+              <q-item-section>
+                <q-item-label>
+                  <q-icon name="eva-person-outline" />
+                  {{$t('common.profile')}}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
             <q-item clickable v-close-popup @click="logout">
               <q-item-section>
                 <q-item-label class="text-negative">
