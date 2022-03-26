@@ -124,6 +124,7 @@
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useQuasar } from "quasar";
+import jwtDecode from "jwt-decode";
 
 export default {
   name: "PagePricing",
@@ -204,6 +205,21 @@ export default {
               .finally(() => {
                 this.$q.loading.hide();
               });
+
+            this.$store.dispatch('auth/me')
+              .then(response => {
+                const token = response.data.data.token;
+                const decoded = jwtDecode(token);
+
+                this.$store.commit("auth/SET_USER", {
+                  email: decoded.email,
+                  id: decoded.userId,
+                  role: decoded.role,
+                });
+
+                window.localStorage.setItem("token", token);
+              })
+
           },
         })
         .render("#paypal-button-container-P-11L12531082319917MI6TGRI");
