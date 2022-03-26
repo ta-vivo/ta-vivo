@@ -98,11 +98,32 @@
         id="paypal-button-container-P-11L12531082319917MI6TGRI"
       ></div>
     </div>
+    <q-dialog maximized v-model="success">
+      <q-card class="text-center">
+        <q-card-section>
+          <q-icon
+            size="100px"
+            color="positive"
+            name="eva-checkmark-circle-outline"
+          />
+          <p class="text-h5">{{$t('messages.information.thanksForYourSubscription')}}</p>
+        </q-card-section>
+
+        <q-card-section class="q-py-none">
+          {{$t('messages.information.subscriptionSuccessDescription')}}
+        </q-card-section>
+
+        <q-card-actions align="center">
+          <q-btn push :label="$t('action.goToHome')" color="primary" @click="$router.push('/')" />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 <script>
 import { ref } from "vue";
 import { useStore } from "vuex";
+import { useQuasar } from "quasar";
 
 export default {
   name: "PagePricing",
@@ -112,6 +133,7 @@ export default {
     const showProPaypalButton = ref(false);
     const selectedPlan = ref({});
     const loading = ref(false);
+    const $q = useQuasar();
 
     loading.value = true;
     $store
@@ -137,8 +159,11 @@ export default {
       selectedPlan,
     };
   },
-
-
+  data() {
+    return {
+      success: false,
+    };
+  },
   mounted() {
     let paypalScript = document.createElement("script");
     paypalScript.setAttribute(
@@ -163,9 +188,22 @@ export default {
               plan_id: "P-11L12531082319917MI6TGRI",
             });
           },
-          onApprove: function (data, actions) {
-            // send the subcriptionID to the server
-            alert(data.subscriptionID); // You can add optional success message for the subscriber here
+          onApprove: async (data) => {
+            this.$q.loading.show({});
+            // Fetch "me" to set new role
+            this.$store
+              .dispatch("payments/saveSubscription", {
+                subscriptionId: data.subscriptionID,
+              })
+              .then(() => {
+                this.success = true;
+              })
+              .catch((e) => {
+                console.log(e);
+              })
+              .finally(() => {
+                this.$q.loading.hide();
+              });
           },
         })
         .render("#paypal-button-container-P-11L12531082319917MI6TGRI");
