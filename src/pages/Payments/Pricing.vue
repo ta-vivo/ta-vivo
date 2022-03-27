@@ -21,8 +21,7 @@
             <q-separator />
             <q-card-section>
               <div v-for="feature in plan.features" :key="feature.item">
-                <span class="text-bold">{{ feature.quantity }}</span>
-                {{ $t(`common.${feature.item}`) }}
+                <pricing-feature :feature="feature" />
               </div>
             </q-card-section>
             <q-card-section>
@@ -135,9 +134,13 @@
 </template>
 <script>
 import jwtDecode from "jwt-decode";
+import PricingFeature from 'components/Pricing/Feature'
 
 export default {
   name: "PagePricing",
+  components: {
+    PricingFeature
+  },
   data() {
     return {
       success: false,
