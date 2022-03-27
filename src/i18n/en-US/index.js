@@ -41,6 +41,8 @@ export default {
     frequentQuestions: 'Frequent questions',
     subscribed: 'Subscribed',
     profile: 'Profile',
+    subscription: 'Subscription',
+    viewPlans: 'View plans',
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
