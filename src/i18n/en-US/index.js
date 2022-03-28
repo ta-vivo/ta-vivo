@@ -42,7 +42,7 @@ export default {
     subscribed: 'Subscribed',
     profile: 'Profile',
     subscription: 'Subscription',
-    viewPlans: 'View plans',
+    viewAllPlans: 'View all plans'
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
@@ -77,6 +77,7 @@ export default {
     select: 'Select',
     backToPlans: 'Back to plans',
     goToHome: 'Go to home',
+    cancelSubscription: 'Cancel subscription'
   },
   messages: {
     information: {
