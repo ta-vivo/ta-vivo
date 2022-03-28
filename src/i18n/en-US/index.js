@@ -77,7 +77,9 @@ export default {
     select: 'Select',
     backToPlans: 'Back to plans',
     goToHome: 'Go to home',
-    cancelSubscription: 'Cancel subscription'
+    cancelSubscription: 'Cancel subscription',
+    keepSubscription: 'Keep subscription',
+    unsubscribe: 'Unsubscribe',
   },
   messages: {
     information: {
@@ -102,12 +104,16 @@ export default {
       discordIntegrationDescription: 'Get notification directly to your Discord channel and get notified when a new incident is found.',
       discordIntegrationInstructions: 'To get notified, you need to add the "Webhook" to your Discord channel. Click in "Add to Discord" button and select your channel.',
       thanksForYourSubscription: 'Thanks for your subscription!',
-      subscriptionSuccessDescription: 'All the features of your subscription are activated immediately.'
+      subscriptionSuccessDescription: 'All the features of your subscription are activated immediately.',
+      unsubscribeDescription: 'If you unsubscribe your plan will change to "basic" and will have the following features',
     },
     errors: {
       requireField: 'This field is required',
       notValidEmail: 'This is not a valid email',
       passwordSecurity: 'Password must be at least 8 characters long and contain at least one number and one letter',
     },
+    questions: {
+      areYousureYouWantCancelSubscription: 'Are you sure you want to cancel your subscription?',
+    }
   }
 }
