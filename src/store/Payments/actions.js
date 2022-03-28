@@ -7,3 +7,7 @@ export function fetchPricing(context) {
 export function saveSubscription(context, { subscriptionId }) {
   return axiosInstance.post('payments/paypal-subscription', { subscriptionId })
 }
+
+export function cancelSubscription(context, { subscriptionId }) {
+  return axiosInstance.post('payments/paypal-subscription-cancel', { subscriptionId })
+}
