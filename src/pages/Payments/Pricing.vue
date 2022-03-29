@@ -26,16 +26,12 @@
             </q-card-section>
             <q-card-section>
               <q-btn
-                :disable="
-                  user.role ===
-                  plan.name.toLowerCase()
-                "
+                :disable="user.role === plan.name.toLowerCase()"
                 v-if="plan.price > 0"
                 push
                 color="primary"
                 :label="
-                  user.role ===
-                  plan.name.toLowerCase()
+                  user.role === plan.name.toLowerCase()
                     ? $t('common.subscribed')
                     : $t('action.select')
                 "
@@ -125,7 +121,7 @@
             push
             :label="$t('action.goToHome')"
             color="primary"
-            @click="$router.push('/')"
+            @click="goToHome()"
           />
         </q-card-actions>
       </q-card>
@@ -226,6 +222,12 @@ export default {
           },
         })
         .render(`#paypal-button-container`);
+    },
+    goToHome() {
+      this.$router.push("/");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     },
   },
   computed: {
