@@ -39,18 +39,18 @@
           <q-btn
             flat
             v-show="user.role !== 'basic'"
-            @click="showPauseSubscription = true"
+            @click="showCancelSubscription = true"
             color="negative"
-            :label="$t('action.pauseSubscription')"
+            :label="$t('action.cancelSubscription')"
           />
         </div>
       </q-card-section>
     </q-card>
-    <q-dialog v-model="showPauseSubscription">
+    <q-dialog v-model="showCancelSubscription">
       <q-card style="width: 400px">
         <q-card-section>
           <div class="text-h6">
-            {{ $t("messages.questions.areYousureYouWantPauseSubscription") }}
+            {{ $t("messages.questions.areYousureYouWantCancelSubscription") }}
           </div>
         </q-card-section>
 
@@ -74,7 +74,7 @@
             @click="unsubscribe()"
             push
             :loading="loading"
-            :label="$t('action.pauseSubscription')"
+            :label="$t('action.cancelSubscription')"
             color="negative"
           />
         </q-card-actions>
@@ -99,7 +99,7 @@ export default {
       loading: false,
       planDetails: { features: [] },
       basicPlan: { features: [] },
-      showPauseSubscription: false,
+      showCancelSubscription: false,
     };
   },
   async created() {
@@ -153,12 +153,12 @@ export default {
     async unsubscribe() {
       this.loading = true;
       this.$store
-        .dispatch("payments/paypalSubscriptionPause")
+        .dispatch("payments/paypalSubscriptionCancel")
         .then(() => {
-          this.showPauseSubscription = false;
+          this.showCancelSubscription = false;
           this.$q.notify({
             message: this.$t(
-              "messages.information.subscriptionPausedDescription"
+              "messages.information.subscriptionCancelDescription"
             ),
             color: "positive",
           });

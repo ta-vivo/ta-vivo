@@ -8,6 +8,6 @@ export function saveSubscription(context, { subscriptionId }) {
   return axiosInstance.post('payments/paypal-subscription', { subscriptionId })
 }
 
-export function paypalSubscriptionPause(context) {
-  return axiosInstance.post('payments/paypal-subscription-pause')
+export function paypalSubscriptionCancel(context) {
+  return axiosInstance.post('payments/paypal-subscription-cancel')
 }

@@ -78,7 +78,6 @@ export default {
     backToPlans: 'Back to plans',
     goToHome: 'Go to home',
     cancelSubscription: 'Cancel subscription',
-    pauseSubscription: 'Pause subscription',
     keepSubscription: 'Keep subscription',
     unsubscribe: 'Unsubscribe',
   },
@@ -107,7 +106,7 @@ export default {
       thanksForYourSubscription: 'Thanks for your subscription!',
       subscriptionSuccessDescription: 'All the features of your subscription are activated immediately.',
       unsubscribeDescription: 'If you unsubscribe your plan will change to "Basic" and will have the following features',
-      subscriptionPausedDescription: 'Your subscription is paused. You can resume it at any time.',
+      subscriptionCancelDescription: 'Your subscription is cancel. You can resume it at any time.',
     },
     errors: {
       requireField: 'This field is required',
@@ -115,7 +114,7 @@ export default {
       passwordSecurity: 'Password must be at least 8 characters long and contain at least one number and one letter',
     },
     questions: {
-      areYousureYouWantPauseSubscription: 'Are you sure you want to pause your subscription?',
+      areYousureYouWantCancelSubscription: 'Are you sure you want to cancel your subscription?',
     }
   }
 }
