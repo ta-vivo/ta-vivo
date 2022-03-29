@@ -189,7 +189,6 @@ export default {
           },
           onApprove: async (data) => {
             this.$q.loading.show({});
-            // Fetch "me" to set new role
             await this.$store
               .dispatch("payments/saveSubscription", {
                 subscriptionId: data.subscriptionID,
@@ -206,19 +205,6 @@ export default {
                 this.$q.loading.hide();
                 return;
               });
-
-            await this.$store.dispatch("auth/me").then((response) => {
-              const token = response.data.data.token;
-              const decoded = jwtDecode(token);
-
-              this.$store.commit("auth/SET_USER", {
-                email: decoded.email,
-                id: decoded.id,
-                role: decoded.role,
-              });
-
-              window.localStorage.setItem("token", token);
-            });
           },
         })
         .render(`#paypal-button-container`);
