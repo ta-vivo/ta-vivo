@@ -27,14 +27,14 @@
             <q-card-section>
               <q-btn
                 :disable="
-                  $store.getters['auth/getUser'].role ===
+                  user.role ===
                   plan.name.toLowerCase()
                 "
                 v-if="plan.price > 0"
                 push
                 color="primary"
                 :label="
-                  $store.getters['auth/getUser'].role ===
+                  user.role ===
                   plan.name.toLowerCase()
                     ? $t('common.subscribed')
                     : $t('action.select')
@@ -134,19 +134,19 @@
 </template>
 <script>
 import jwtDecode from "jwt-decode";
-import PricingFeature from 'components/Pricing/Feature'
+import PricingFeature from "components/Pricing/Feature";
 
 export default {
   name: "PagePricing",
   components: {
-    PricingFeature
+    PricingFeature,
   },
   data() {
     return {
       success: false,
       plans: [],
       showProPaypalButton: false,
-      selectedPlan: {}
+      selectedPlan: {},
     };
   },
   mounted() {
@@ -160,17 +160,17 @@ export default {
     this.fetchSubscriptionPlans();
   },
   methods: {
-    fetchSubscriptionPlans () {
-    this.$store
-      .dispatch("payments/fetchPricing")
-      .then((response) => {
-        this.plans = response.data.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+    fetchSubscriptionPlans() {
+      this.$store
+        .dispatch("payments/fetchPricing")
+        .then((response) => {
+          this.plans = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    selectPlan (plan) {
+    selectPlan(plan) {
       this.selectedPlan = plan;
       document.querySelector("#paypal-button-container").innerHTML = "";
       this.createdPaypalButton(plan.id);
@@ -194,27 +194,30 @@ export default {
           onApprove: async (data) => {
             this.$q.loading.show({});
             // Fetch "me" to set new role
-            this.$store
+            await this.$store
               .dispatch("payments/saveSubscription", {
                 subscriptionId: data.subscriptionID,
               })
               .then(() => {
                 this.success = true;
+                return;
               })
               .catch((e) => {
                 console.log(e);
+                return;
               })
               .finally(() => {
                 this.$q.loading.hide();
+                return;
               });
 
-            this.$store.dispatch("auth/me").then((response) => {
+            await this.$store.dispatch("auth/me").then((response) => {
               const token = response.data.data.token;
               const decoded = jwtDecode(token);
 
               this.$store.commit("auth/SET_USER", {
                 email: decoded.email,
-                id: decoded.userId,
+                id: decoded.id,
                 role: decoded.role,
               });
 
@@ -223,6 +226,11 @@ export default {
           },
         })
         .render(`#paypal-button-container`);
+    },
+  },
+  computed: {
+    user() {
+      return this.$store.getters["auth/getUser"];
     },
   },
 };
