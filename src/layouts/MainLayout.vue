@@ -29,12 +29,12 @@
         <role-badge
           class="cursor-pointer"
           @click="$router.push('/pricing')"
-          :role="$store.getters['auth/getUser'].role"
+          :role="user.role"
         />
         <q-btn-dropdown
           flat
           color="primary"
-          :label="$store.getters['auth/getUser'].email"
+          :label="user.email"
         >
           <q-list>
             <q-item clickable v-close-popup @click="$router.push('/profile')">
@@ -89,6 +89,11 @@ export default defineComponent({
         $router.push("/auth/login");
       },
     };
+  },
+  computed: {
+    user() {
+      return this.$store.getters["auth/getUser"];
+    },
   },
 });
 </script>
