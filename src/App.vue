@@ -15,17 +15,23 @@ export default defineComponent({
   created() {
     const token = window.localStorage.getItem("token");
     if (token) {
-      const decoded = jwtDecode(token);
-      this.$store.commit("auth/SET_USER", {
-        email: decoded.email,
-        id: decoded.id,
-        role: decoded.role,
-      });
+      this.$store.dispatch("auth/me").then((response) => {
+        const token = response.data.data.token;
+        const decoded = jwtDecode(token);
 
-      if (!decoded.active) {
-        this.$router.push("/auth/confirm-email");
-        return;
-      }
+        this.$store.commit("auth/SET_USER", {
+          email: decoded.email,
+          id: decoded.id,
+          role: decoded.role,
+        });
+
+        if (!decoded.active) {
+          this.$router.push("/auth/confirm-email");
+          return;
+        }
+
+        window.localStorage.setItem("token", token);
+      });
     }
   },
 });
