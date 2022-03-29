@@ -16,7 +16,7 @@
         <role-badge
           class="cursor-pointer"
           @click="$router.push('/pricing')"
-          :role="$store.getters['auth/getUser'].role"
+          :role="user.role"
         />
 
         <div
@@ -30,42 +30,53 @@
 
         <div class="q-mb-lg">
           <q-btn
-            outline
+            flat
+            class="q-pl-none"
             color="primary"
             to="/pricing"
             :label="$t('common.viewAllPlans')"
           />
-        </div>
-        <div v-show="user.role !== 'basic'">
           <q-btn
-            @click="showCancelSubscription = true"
-            push
+            flat
+            v-show="user.role !== 'basic'"
+            @click="showPauseSubscription = true"
             color="negative"
-            :label="$t('action.cancelSubscription')"
+            :label="$t('action.pauseSubscription')"
           />
         </div>
       </q-card-section>
     </q-card>
-    <q-dialog v-model="showCancelSubscription">
-      <q-card style="width:400px">
+    <q-dialog v-model="showPauseSubscription">
+      <q-card style="width: 400px">
         <q-card-section>
           <div class="text-h6">
-            {{ $t("messages.questions.areYousureYouWantCancelSubscription") }}
+            {{ $t("messages.questions.areYousureYouWantPauseSubscription") }}
           </div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          {{$t('messages.information.unsubscribeDescription')}}
+          {{ $t("messages.information.unsubscribeDescription") }}
           <div class="q-my-md">
-          <div v-for="feature in basicPlan.features" :key="feature.item">
-            <pricing-feature :feature="feature" />
-          </div>
+            <div v-for="feature in basicPlan.features" :key="feature.item">
+              <pricing-feature :feature="feature" />
+            </div>
           </div>
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn outline :label="$t('action.keepSubscription')" color="primary" v-close-popup />
-          <q-btn push :label="$t('action.unsubscribe')" color="negative" />
+          <q-btn
+            outline
+            :label="$t('action.keepSubscription')"
+            color="primary"
+            v-close-popup
+          />
+          <q-btn
+            @click="unsubscribe()"
+            push
+            :loading="loading"
+            :label="$t('action.pauseSubscription')"
+            color="negative"
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -73,8 +84,6 @@
 </template>
 
 <script>
-import { useStore } from "vuex";
-import { ref } from "vue";
 import jwtDecode from "jwt-decode";
 import RoleBadge from "components/User/RoleBadge.vue";
 import PricingFeature from "components/Pricing/Feature";
@@ -85,56 +94,87 @@ export default {
     RoleBadge,
     PricingFeature,
   },
-  setup() {
-    const store = useStore();
-    const user = ref({});
-    const planDetails = ref({
-      features: [],
-    });
-    const basicPlan = ref({
-      features: [],
-    });
-    const showCancelSubscription = ref(false);
-
-    store.dispatch("auth/me").then((response) => {
-      const token = response.data.data.token;
-      const decoded = jwtDecode(token);
-
-      user.value = decoded;
-    });
-
-    store
-      .dispatch("payments/fetchPricing")
-      .then((response) => {
-        const plans = response.data.data;
-
-        const found = plans.find(
-          (plan) => plan.name.toLowerCase() === user.value.role
-        );
-
-        if (found) {
-          planDetails.value = found;
-        }
-
-        const basic = plans.find(
-          (plan) => plan.name.toLowerCase() === "basic" || plan.name.toLowerCase() === "free"
-        );
-        console.log('🚀 ~ file: Profile.vue ~ line 122 ~ .then ~ basic', basic)
-
-        if (basic) {
-          basicPlan.value = basic;
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-
+  data() {
     return {
-      user,
-      planDetails,
-      basicPlan,
-      showCancelSubscription
+      loading: false,
+      planDetails: { features: [] },
+      basicPlan: { features: [] },
+      showPauseSubscription: false,
     };
+  },
+  async created() {
+    await this.fetchMe();
+    await this.fetchPlans();
+  },
+  methods: {
+    async fetchMe() {
+      return this.$store.dispatch("auth/me").then((response) => {
+        const token = response.data.data.token;
+        const decoded = jwtDecode(token);
+
+        this.$store.commit("auth/SET_USER", {
+          email: decoded.email,
+          id: decoded.id,
+          role: decoded.role,
+        });
+
+        window.localStorage.setItem("token", token);
+        return;
+      });
+    },
+    async fetchPlans() {
+      return this.$store
+        .dispatch("payments/fetchPricing")
+        .then((response) => {
+          const plans = response.data.data;
+
+          const found = plans.find(
+            (plan) => plan.name.toLowerCase() === this.user.role
+          );
+
+          if (found) {
+            this.planDetails = found;
+          }
+
+          const basic = plans.find(
+            (plan) => plan.name.toLowerCase() === "basic"
+          );
+
+          if (basic) {
+            this.basicPlan = basic;
+          }
+          return;
+        })
+        .catch((error) => {
+          console.log(error);
+          return;
+        });
+    },
+    async unsubscribe() {
+      this.loading = true;
+      this.$store
+        .dispatch("payments/paypalSubscriptionPause")
+        .then(() => {
+          this.showPauseSubscription = false;
+          this.$q.notify({
+            message: this.$t(
+              "messages.information.subscriptionPausedDescription"
+            ),
+            color: "positive",
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+  },
+  computed: {
+    user() {
+      return this.$store.getters["auth/getUser"];
+    },
   },
 };
 </script>
