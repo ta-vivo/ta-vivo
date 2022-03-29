@@ -47,7 +47,7 @@ export default {
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
     whatPaymentAcceptAnswer: 'We accept all major credit cards, debit cards and PayPal.',
-    whatsTheDifferenceBetWeenPlans: 'What`s the difference between "Free" and "Pay" plans ?',
+    whatsTheDifferenceBetWeenPlans: 'What`s the difference between "Basic" and "Pay" plans ?',
     whatsTheDifferenceBetWeenPlansAnswer: 'With the "Pay" plans you help me maintain the project and you get more benefits when you have many projects or you are a company.',
     canICancelMyPaymentPlan: 'Can I cancel my payment plan?',
     canICancelMyPaymentPlanAnswer: 'Yes, you can cancel your payment plan at any time, but no refunds are provided for prorated periods.',
@@ -78,6 +78,7 @@ export default {
     backToPlans: 'Back to plans',
     goToHome: 'Go to home',
     cancelSubscription: 'Cancel subscription',
+    pauseSubscription: 'Pause subscription',
     keepSubscription: 'Keep subscription',
     unsubscribe: 'Unsubscribe',
   },
@@ -105,7 +106,8 @@ export default {
       discordIntegrationInstructions: 'To get notified, you need to add the "Webhook" to your Discord channel. Click in "Add to Discord" button and select your channel.',
       thanksForYourSubscription: 'Thanks for your subscription!',
       subscriptionSuccessDescription: 'All the features of your subscription are activated immediately.',
-      unsubscribeDescription: 'If you unsubscribe your plan will change to "basic" and will have the following features',
+      unsubscribeDescription: 'If you unsubscribe your plan will change to "Basic" and will have the following features',
+      subscriptionPausedDescription: 'Your subscription is paused. You can resume it at any time.',
     },
     errors: {
       requireField: 'This field is required',
@@ -113,7 +115,7 @@ export default {
       passwordSecurity: 'Password must be at least 8 characters long and contain at least one number and one letter',
     },
     questions: {
-      areYousureYouWantCancelSubscription: 'Are you sure you want to cancel your subscription?',
+      areYousureYouWantPauseSubscription: 'Are you sure you want to pause your subscription?',
     }
   }
 }
