@@ -34,7 +34,25 @@ export default {
     privacyPolicy: 'Privacy policy',
     confirmationCode: 'Confirmation code',
     code: 'Code',
-    details: 'Details'
+    details: 'Details',
+    month: 'Month',
+    plans: 'Plans',
+    logsHistory: 'Logs history',
+    frequentQuestions: 'Frequent questions',
+    subscribed: 'Subscribed',
+    profile: 'Profile',
+    subscription: 'Subscription',
+    viewAllPlans: 'View all plans'
+  },
+  frequentQuestions: {
+    whatPaymentAccept: 'What payment methods do you accept?',
+    whatPaymentAcceptAnswer: 'We accept all major credit cards, debit cards and PayPal.',
+    whatsTheDifferenceBetWeenPlans: 'What`s the difference between "Basic" and "Pay" plans ?',
+    whatsTheDifferenceBetWeenPlansAnswer: 'With the "Pay" plans you help me maintain the project and you get more benefits when you have many projects or you are a company.',
+    canICancelMyPaymentPlan: 'Can I cancel my payment plan?',
+    canICancelMyPaymentPlanAnswer: 'Yes, you can cancel your payment plan at any time, but no refunds are provided for prorated periods.',
+    whatIsTheLogsHistoryNumber: 'What is the "logs history" number?',
+    whatIsTheLogsHistoryNumberAnswer: 'Each "check" has a limit of "logs" that it can store. Every time the limit is reached, the oldest ones are deleted.',
   },
   action: {
     addCheck: 'Add Check',
@@ -56,6 +74,12 @@ export default {
     viewLogs: 'View logs',
     backToIntegrations: 'Back to integrations',
     addToDiscord: 'Add to Discord',
+    select: 'Select',
+    backToPlans: 'Back to plans',
+    goToHome: 'Go to home',
+    cancelSubscription: 'Cancel subscription',
+    keepSubscription: 'Keep subscription',
+    unsubscribe: 'Unsubscribe',
   },
   messages: {
     information: {
@@ -79,11 +103,18 @@ export default {
       discordIntegrationAddedSuccess: 'Discord integration successfully added',
       discordIntegrationDescription: 'Get notification directly to your Discord channel and get notified when a new incident is found.',
       discordIntegrationInstructions: 'To get notified, you need to add the "Webhook" to your Discord channel. Click in "Add to Discord" button and select your channel.',
+      thanksForYourSubscription: 'Thanks for your subscription!',
+      subscriptionSuccessDescription: 'All the features of your subscription are activated immediately.',
+      unsubscribeDescription: 'If you unsubscribe your plan will change to "Basic" and will have the following features',
+      subscriptionCancelDescription: 'Your subscription is cancel. You can resume it at any time.',
     },
     errors: {
       requireField: 'This field is required',
       notValidEmail: 'This is not a valid email',
       passwordSecurity: 'Password must be at least 8 characters long and contain at least one number and one letter',
+    },
+    questions: {
+      areYousureYouWantCancelSubscription: 'Are you sure you want to cancel your subscription?',
     }
   }
 }

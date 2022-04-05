@@ -125,7 +125,8 @@ export default {
 
             $store.commit("auth/SET_USER", {
               email: decoded.email,
-              id: decoded.userId,
+              id: decoded.id,
+              role: decoded.role,
             });
 
             window.localStorage.setItem("token", token);
