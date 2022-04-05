@@ -26,12 +26,25 @@
           :label="$t('common.integrations')"
         ></q-btn>
         <q-space />
+        <role-badge
+          class="cursor-pointer"
+          @click="$router.push('/pricing')"
+          :role="user.role"
+        />
         <q-btn-dropdown
           flat
           color="primary"
-          :label="$store.getters['auth/getUser'].email"
+          :label="user.email"
         >
           <q-list>
+            <q-item clickable v-close-popup @click="$router.push('/profile')">
+              <q-item-section>
+                <q-item-label>
+                  <q-icon name="eva-person-outline" />
+                  {{$t('common.profile')}}
+                </q-item-label>
+              </q-item-section>
+            </q-item>
             <q-item clickable v-close-popup @click="logout">
               <q-item-section>
                 <q-item-label class="text-negative">
@@ -54,24 +67,33 @@
 import { defineComponent } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
+import RoleBadge from "components/User/RoleBadge.vue";
 
 export default defineComponent({
   name: "MainLayout",
-
+  components: {
+    RoleBadge,
+  },
   setup() {
     const $store = useStore();
     const $router = useRouter();
 
     return {
-      logout () {
+      logout() {
         window.localStorage.removeItem("token");
         $store.commit("auth/SET_USER", {
-          email: '',
+          email: "",
           id: null,
+          role: "basic",
         });
         $router.push("/auth/login");
       },
-    }
+    };
+  },
+  computed: {
+    user() {
+      return this.$store.getters["auth/getUser"];
+    },
   },
 });
 </script>
