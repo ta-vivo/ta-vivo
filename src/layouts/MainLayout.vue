@@ -32,6 +32,7 @@
           :role="user.role"
         />
         <q-btn-dropdown
+          v-if="$q.screen.gt.xs"
           flat
           color="primary"
           :label="user.email"
