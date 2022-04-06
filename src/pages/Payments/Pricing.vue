@@ -6,7 +6,7 @@
           <p class="text-h3">{{ $t("common.plans") }}</p>
         </div>
       </div>
-      <div class="row justify-between q-col-gutter-md">
+      <div :class="`row ${$q.screen.xs ? 'justify-center' : 'justify-between'} q-col-gutter-md`">
         <div class="col-md-3" v-for="plan in plans" :key="plan.id">
           <q-card flat bordered class="text-center plan-card">
             <q-card-section>
