@@ -112,11 +112,7 @@ export default {
         const token = response.data.data.token;
         const decoded = jwtDecode(token);
 
-        this.$store.commit("auth/SET_USER", {
-          email: decoded.email,
-          id: decoded.id,
-          role: decoded.role,
-        });
+        this.$store.commit("auth/SET_USER", decoded);
 
         window.localStorage.setItem("token", token);
         return;
