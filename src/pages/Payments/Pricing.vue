@@ -129,7 +129,6 @@
   </q-page>
 </template>
 <script>
-import jwtDecode from "jwt-decode";
 import PricingFeature from "components/Pricing/Feature";
 
 export default {
