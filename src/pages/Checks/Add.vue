@@ -83,6 +83,7 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import SmallIntegrationIcon from 'components/Integrations/Icons/Small';
+import jwtDecode from "jwt-decode";
 
 export default {
   name: "PageCheckForm",
@@ -131,6 +132,12 @@ export default {
         $store
           .dispatch("checks/create", newCheck)
           .then(() => {
+            $store.dispatch("auth/me").then((response) => {
+              const token = response.data.data.token;
+              const decoded = jwtDecode(token);
+
+              $store.commit("auth/SET_USER", decoded);
+            })
             $q.notify({
               message: $t("action.checkCreated"),
               color: "positive",
