@@ -66,6 +66,7 @@ import EmailForm from "components/Integrations/Form/Email";
 import SlackForm from "components/Integrations/Form/Slack";
 import IntegrationIcon from "components/Integrations/Icons/Small";
 import DiscordForm from "components/Integrations/Form/Discord";
+import jwtDecode from "jwt-decode";
 
 export default {
   name: "PageAddIntegration",
@@ -105,6 +106,12 @@ export default {
         $store
           .dispatch("integrations/create", newIntegration)
           .then(() => {
+            $store.dispatch("auth/me").then((response) => {
+              const token = response.data.data.token;
+              const decoded = jwtDecode(token);
+
+              $store.commit("auth/SET_USER", decoded);
+            })
             $q.notify({
               message: $t("action.integrationCreated"),
               color: "positive",

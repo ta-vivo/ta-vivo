@@ -7,7 +7,13 @@
         icon="eva-plus"
         :label="$t('action.addIntegration')"
         to="/integrations/add"
+        :disable="reachedTheLimit()"
       />
+      <span :class="`${$q.screen.lt.md ? 'block q-mt-md' : null} q-ml-sm`" v-if="reachedTheLimit()">
+        <q-icon size="sm" name="eva-info-outline" />
+        {{$t('messages.information.reachedLimit')}}.
+        <router-link class="text-primary" to="/pricing">{{$t('common.viewAllPlans')}}</router-link>
+      </span>
     </div>
     <q-table
       class="q-mt-lg"
@@ -114,6 +120,7 @@ import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
 import { useQuasar } from "quasar";
 import IntegrationIcon from "components/Integrations/Icons/Small";
+import jwtDecode from "jwt-decode";
 
 export default {
   name: "PageIntegrations",
@@ -198,6 +205,13 @@ export default {
               store
                 .dispatch("integrations/fetchAll")
                 .then((response) => {
+
+                  store.dispatch("auth/me").then((response) => {
+                    const token = response.data.data.token;
+                    const decoded = jwtDecode(token);
+
+                    store.commit("auth/SET_USER", decoded);
+                  })
                   rows.value = response.data.data;
                 })
                 .finally(() => {
@@ -240,6 +254,14 @@ export default {
           .finally(() => {
             loading.value = false;
           });
+      },
+      reachedTheLimit() {
+        const user = store.getters["auth/getUser"];
+        if (user.settings && user.settings.integrations) {
+          return user.settings.integrations.count >= user.settings.integrations.limit;
+        }
+
+        return false;
       },
     };
   },
