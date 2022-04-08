@@ -7,7 +7,13 @@
         icon="eva-plus"
         :label="$t('action.addCheck')"
         to="/checks/add"
+        :disable="reachedTheLimit()"
       />
+      <span :class="`${$q.screen.lt.md ? 'block q-mt-md' : null} q-ml-sm`" v-if="reachedTheLimit()">
+        <q-icon size="sm" name="eva-info-outline" />
+        {{$t('messages.information.reachedLimit')}}.
+        <router-link class="text-primary" to="/pricing">{{$t('common.viewAllPlans')}}</router-link>
+      </span>
     </div>
     <q-table
       class="q-mt-lg"
@@ -129,6 +135,7 @@ import { useI18n } from "vue-i18n";
 import { useQuasar } from "quasar";
 import { date } from "quasar";
 import SmallIntegrationIcon from "components/Integrations/Icons/Small";
+import jwtDecode from "jwt-decode";
 
 export default {
   name: "PageChecks",
@@ -292,6 +299,12 @@ export default {
               store
                 .dispatch("checks/fetchAll")
                 .then((response) => {
+                  store.dispatch("auth/me").then((response) => {
+                    const token = response.data.data.token;
+                    const decoded = jwtDecode(token);
+
+                    store.commit("auth/SET_USER", decoded);
+                  })
                   rows.value = response.data.data;
                 })
                 .finally(() => {
@@ -302,6 +315,14 @@ export default {
               $q.loading.hide();
             });
         });
+      },
+      reachedTheLimit() {
+        const user = store.getters["auth/getUser"];
+        if (user.settings && user.settings.checks) {
+          return user.settings.checks.count >= user.settings.checks.limit;
+        }
+
+        return false;
       },
     };
   },

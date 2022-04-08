@@ -19,11 +19,7 @@ export default defineComponent({
         const token = response.data.data.token;
         const decoded = jwtDecode(token);
 
-        this.$store.commit("auth/SET_USER", {
-          email: decoded.email,
-          id: decoded.id,
-          role: decoded.role,
-        });
+        this.$store.commit("auth/SET_USER", decoded);
 
         if (!decoded.active) {
           this.$router.push("/auth/confirm-email");
