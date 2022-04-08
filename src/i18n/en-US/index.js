@@ -107,6 +107,7 @@ export default {
       subscriptionSuccessDescription: 'All the features of your subscription are activated immediately.',
       unsubscribeDescription: 'If you unsubscribe your plan will change to "Basic" and will have the following features',
       subscriptionCancelDescription: 'Your subscription is cancel. You can resume it at any time.',
+      reachedLimit: 'You have reached the limit, consider increasing your chances with a plan'
     },
     errors: {
       requireField: 'This field is required',
