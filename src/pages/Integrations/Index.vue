@@ -120,6 +120,7 @@ import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
 import { useQuasar } from "quasar";
 import IntegrationIcon from "components/Integrations/Icons/Small";
+import jwtDecode from "jwt-decode";
 
 export default {
   name: "PageIntegrations",
@@ -204,6 +205,13 @@ export default {
               store
                 .dispatch("integrations/fetchAll")
                 .then((response) => {
+
+                  store.dispatch("auth/me").then((response) => {
+                    const token = response.data.data.token;
+                    const decoded = jwtDecode(token);
+
+                    store.commit("auth/SET_USER", decoded);
+                  })
                   rows.value = response.data.data;
                 })
                 .finally(() => {
