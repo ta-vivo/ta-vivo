@@ -7,7 +7,13 @@
         icon="eva-plus"
         :label="$t('action.addIntegration')"
         to="/integrations/add"
+        :disable="reachedTheLimit()"
       />
+      <span :class="`${$q.screen.lt.md ? 'block q-mt-md' : null} q-ml-sm`" v-if="reachedTheLimit()">
+        <q-icon size="sm" name="eva-info-outline" />
+        {{$t('messages.information.reachedLimit')}}.
+        <router-link class="text-primary" to="/pricing">{{$t('common.viewAllPlans')}}</router-link>
+      </span>
     </div>
     <q-table
       class="q-mt-lg"
@@ -240,6 +246,14 @@ export default {
           .finally(() => {
             loading.value = false;
           });
+      },
+      reachedTheLimit() {
+        const user = store.getters["auth/getUser"];
+        if (user.settings && user.settings.integrations) {
+          return user.settings.integrations.count >= user.settings.integrations.limit;
+        }
+
+        return false;
       },
     };
   },
