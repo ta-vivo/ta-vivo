@@ -192,7 +192,7 @@
       contact us about any of the rights mentioned in the "Your Rights" section
       above, please contact us:
     </p>
-    <p>Email us at: {{ contactEmail }}</p>
+    <p>Email us at: <a :href="`mailto:${contactEmail}`">{{contactEmail}}</a> </p>
     <q-separator class="q-mb-md" />
     <p>
       This "Privacy Policy" is based on the "Creative Commons" licensed policy
