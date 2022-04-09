@@ -53,7 +53,7 @@
     </p>
     <p class="text-h5">Fee Changes</p>
     <p>
-      {{ appNAme }} will provide you with a reasonable prior notice of any
+      {{ appName }} will provide you with a reasonable prior notice of any
       change in Subscription fees to give you an opportunity to terminate your
       Subscription before such change becomes effective.
     </p>
@@ -92,7 +92,7 @@
     </p>
     <p class="text-h5">Limitation Of Liability</p>
     <p>
-      In no event shall {{ appNAme }}, nor its directors, employees, partners,
+      In no event shall {{ appName }}, nor its directors, employees, partners,
       agents, suppliers, or affiliates, be liable for any indirect, incidental,
       special, consequential or punitive damages, including without limitation,
       loss of profits, data, use, goodwill, or other intangible losses,
@@ -140,7 +140,7 @@
     </p>
     <p class="text-h5">Contact Us</p>
     <p>
-      If you have any questions about these Terms, please <a :href="`mailto:${contactEmail}`">contact us</a>.
+      If you have any questions about these Terms, please contact us at <a :href="`mailto:${contactEmail}`">{{contactEmail}}</a>.
     </p>
     <q-separator />
     <p class="q-mt-md">
@@ -154,9 +154,9 @@ export default {
   name: "PageLegalTermsAndConditions",
   setup() {
     return {
-      systemUrl: "https://ta-vivo.do",
-      appName: "Ta-Vivo",
-      contactEmail: 'contact@ta-vivo.do'
+      systemUrl: process.env.VUE_APP_URL,
+      appName: process.env.VUE_APP_NAME,
+      contactEmail: process.env.VUE_APP_CONTACT_EMAIL
     };
   },
 };
