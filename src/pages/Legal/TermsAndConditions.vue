@@ -53,7 +53,7 @@
     </p>
     <p class="text-h5">Fee Changes</p>
     <p>
-      {{ appNAme }} will provide you with a reasonable prior notice of any
+      {{ appName }} will provide you with a reasonable prior notice of any
       change in Subscription fees to give you an opportunity to terminate your
       Subscription before such change becomes effective.
     </p>
@@ -92,7 +92,7 @@
     </p>
     <p class="text-h5">Limitation Of Liability</p>
     <p>
-      In no event shall {{ appNAme }}, nor its directors, employees, partners,
+      In no event shall {{ appName }}, nor its directors, employees, partners,
       agents, suppliers, or affiliates, be liable for any indirect, incidental,
       special, consequential or punitive damages, including without limitation,
       loss of profits, data, use, goodwill, or other intangible losses,
