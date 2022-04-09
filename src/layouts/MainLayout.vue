@@ -27,15 +27,16 @@
         ></q-btn>
         <q-space />
         <role-badge
+          v-if="$q.screen.gt.xs"
           class="cursor-pointer"
           @click="$router.push('/pricing')"
           :role="user.role"
         />
         <q-btn-dropdown
-          v-if="$q.screen.gt.xs"
           flat
           color="primary"
-          :label="user.email"
+          :label="$q.screen.gt.xs ? user.email : null"
+          :icon="$q.screen.xs ? 'eva-person-outline' : null"
         >
           <q-list>
             <q-item clickable v-close-popup @click="$router.push('/profile')">
