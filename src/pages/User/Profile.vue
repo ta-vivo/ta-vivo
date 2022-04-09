@@ -171,6 +171,12 @@ export default {
           field: row => `${row.payer_name.given_name} ${row.payer_name.surname}`
         },
         {
+          name: 'amount',
+          label: this.$t("common.amount"),
+          align: "left",
+          field: row => `${row.amount_with_breakdown.gross_amount.value} ${row.amount_with_breakdown.gross_amount.currency_code}`
+        },
+        {
           name: 'status',
           label: this.$t("common.status"),
           align: "left",
