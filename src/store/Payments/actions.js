@@ -11,3 +11,7 @@ export function saveSubscription(context, { subscriptionId }) {
 export function paypalSubscriptionCancel(context) {
   return axiosInstance.post('payments/paypal-subscription-cancel')
 }
+
+export function paypalSubscriptionTransactions(context) {
+  return axiosInstance.get('payments/paypal-transactions')
+}

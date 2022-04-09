@@ -1,50 +1,97 @@
 <template>
   <q-page padding>
-    <q-card class="my-card">
-      <q-card-section>
-        <p class="text-h6">{{ $t("common.basicInformation") }}</p>
-        <strong>{{ $t("common.fullname") }}:</strong> <span class="q-mr-sm">{{ user.fullname }}</span>
-        <div>
-          <strong>{{ $t("common.email") }}:</strong> {{ user.email }}
-        </div>
-      </q-card-section>
-      <q-separator />
-      <q-card-section>
-        <p class="text-h6">{{ $t("common.subscription") }}</p>
-
-        <role-badge
-          class="cursor-pointer"
-          @click="$router.push('/pricing')"
-          :role="user.role"
-        />
-
-        <div
-          class="plan-features q-my-md"
-          v-show="planDetails.features.length > 0"
+    <q-splitter v-model="splitterModel">
+      <template v-slot:before>
+        <q-tabs
+          v-model="tab"
+          @update:model-value="handleTabChange"
+          vertical
+          class="text-primary"
         >
-          <div v-for="feature in planDetails.features" :key="feature.item">
-            <pricing-feature :feature="feature" />
-          </div>
-        </div>
+          <q-tab
+            name="basic-information"
+            icon="eva-person-outline"
+            :label="$t('common.basicInformation')"
+          />
+          <q-tab
+            name="billing"
+            icon="eva-file-text-outline"
+            :label="$t('common.billing')"
+          />
+        </q-tabs>
+      </template>
 
-        <div class="q-mb-lg">
-          <q-btn
-            flat
-            class="q-pl-none"
-            color="primary"
-            to="/pricing"
-            :label="$t('common.viewAllPlans')"
-          />
-          <q-btn
-            flat
-            v-show="user.role !== 'basic'"
-            @click="showCancelSubscription = true"
-            color="negative"
-            :label="$t('action.cancelSubscription')"
-          />
-        </div>
-      </q-card-section>
-    </q-card>
+      <template v-slot:after>
+        <q-tab-panels
+          v-model="tab"
+          animated
+          swipeable
+          vertical
+          transition-prev="jump-up"
+          transition-next="jump-up"
+        >
+          <q-tab-panel name="basic-information">
+            <div class="text-h4 q-mb-md">{{ $t("common.basicInformation") }}</div>
+            <div>
+              <strong>{{ $t("common.fullname") }}:</strong>
+              <span class="q-mr-sm">{{ user.fullname }}</span>
+              <div>
+                <strong>{{ $t("common.email") }}:</strong> {{ user.email }}
+              </div>
+            </div>
+            <q-separator class="q-my-md" />
+            <div>
+              <div class="text-h4 q-mb-md">{{ $t("common.subscription") }}</div>
+              <role-badge
+                class="cursor-pointer"
+                @click="$router.push('/pricing')"
+                :role="user.role"
+              />
+
+              <div
+                class="plan-features q-my-md"
+                v-show="planDetails.features.length > 0"
+              >
+                <div
+                  v-for="feature in planDetails.features"
+                  :key="feature.item"
+                >
+                  <pricing-feature :feature="feature" />
+                </div>
+              </div>
+
+              <div class="q-mb-lg">
+                <q-btn
+                  flat
+                  class="q-pl-none"
+                  color="primary"
+                  to="/pricing"
+                  :label="$t('common.viewAllPlans')"
+                />
+                <q-btn
+                  flat
+                  v-show="user.role !== 'basic'"
+                  @click="showCancelSubscription = true"
+                  color="negative"
+                  :label="$t('action.cancelSubscription')"
+                />
+              </div>
+            </div>
+          </q-tab-panel>
+
+          <q-tab-panel name="billing">
+            <div class="text-h4 q-mb-md">{{ $t("common.billing") }}</div>
+            <q-table
+              flat
+              :loading="loadingBilling"
+              :rows="billing"
+              :columns="billingColumns"
+              row-key="name"
+            />
+          </q-tab-panel>
+        </q-tab-panels>
+      </template>
+    </q-splitter>
     <q-dialog v-model="showCancelSubscription">
       <q-card style="width: 400px">
         <q-card-section>
@@ -86,6 +133,7 @@
 import jwtDecode from "jwt-decode";
 import RoleBadge from "components/User/RoleBadge.vue";
 import PricingFeature from "components/Pricing/Feature";
+import { date } from "quasar";
 
 export default {
   name: "PageProfile",
@@ -99,6 +147,42 @@ export default {
       planDetails: { features: [] },
       basicPlan: { features: [] },
       showCancelSubscription: false,
+      splitterModel: 20,
+      tab: "basic-information",
+      billing: [],
+      loadingBilling: false,
+      billingColumns: [
+        {
+          name: "id",
+          label: 'ID',
+          align: "left",
+          field: 'id'
+        },
+        {
+          name: "date",
+          label: this.$t("common.date"),
+          align: "left",
+          field: row => this.getDateFormat(row.time)
+        },
+        {
+          name: 'client',
+          label: this.$t("common.name"),
+          align: "left",
+          field: row => `${row.payer_name.given_name} ${row.payer_name.surname}`
+        },
+        {
+          name: 'amount',
+          label: this.$t("common.amount"),
+          align: "left",
+          field: row => `${row.amount_with_breakdown.gross_amount.value} ${row.amount_with_breakdown.gross_amount.currency_code}`
+        },
+        {
+          name: 'status',
+          label: this.$t("common.status"),
+          align: "left",
+          field: 'status'
+        }
+      ],
     };
   },
   async created() {
@@ -165,6 +249,28 @@ export default {
           this.loading = false;
         });
     },
+    handleTabChange(tab) {
+      if (tab === "billing") {
+        this.fetchSubscriptionTransactions();
+      }
+    },
+    fetchSubscriptionTransactions() {
+      this.loadingBilling = true;
+      this.$store
+        .dispatch("payments/paypalSubscriptionTransactions")
+        .then((response) => {
+          this.billing = response.data.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          this.loadingBilling = false;
+        });
+    },
+    getDateFormat(timeStamp) {
+      return date.formatDate(timeStamp, "DD/MM/YYYY");
+    }
   },
   computed: {
     user() {
