@@ -154,9 +154,9 @@ export default {
   name: "PageLegalTermsAndConditions",
   setup() {
     return {
-      systemUrl: "https://ta-vivo.do",
-      appName: "Ta-Vivo",
-      contactEmail: 'contact@ta-vivo.do'
+      systemUrl: process.env.VUE_APP_URL,
+      appName: process.env.VUE_APP_NAME,
+      contactEmail: process.env.VUE_APP_CONTACT_EMAIL
     };
   },
 };
