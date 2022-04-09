@@ -3,8 +3,7 @@
     <q-card class="my-card">
       <q-card-section>
         <p class="text-h6">{{ $t("common.basicInformation") }}</p>
-        <strong>{{ $t("common.fullname") }}:</strong>
-        <span class="q-mr-sm">{{ user.fullname }}</span>
+        <strong>{{ $t("common.fullname") }}:</strong> <span class="q-mr-sm">{{ user.fullname }}</span>
         <div>
           <strong>{{ $t("common.email") }}:</strong> {{ user.email }}
         </div>
