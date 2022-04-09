@@ -258,6 +258,9 @@ export default {
       reachedTheLimit() {
         const user = store.getters["auth/getUser"];
         if (user.settings && user.settings.integrations) {
+          if (user.settings.integrations.limit === 0) {
+            return false
+          }
           return user.settings.integrations.count >= user.settings.integrations.limit;
         }
 

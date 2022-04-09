@@ -319,6 +319,9 @@ export default {
       reachedTheLimit() {
         const user = store.getters["auth/getUser"];
         if (user.settings && user.settings.checks) {
+          if (user.settings.checks.limit === 0) {
+            return false;
+          }
           return user.settings.checks.count >= user.settings.checks.limit;
         }
 
