@@ -43,7 +43,8 @@ export default {
     profile: 'Profile',
     subscription: 'Subscription',
     viewAllPlans: 'View all plans',
-    billing: 'Billing'
+    billing: 'Billing',
+    amount: 'Amount',
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
