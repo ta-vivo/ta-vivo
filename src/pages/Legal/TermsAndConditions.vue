@@ -140,7 +140,7 @@
     </p>
     <p class="text-h5">Contact Us</p>
     <p>
-      If you have any questions about these Terms, please <a :href="`mailto:${contactEmail}`">contact us</a>.
+      If you have any questions about these Terms, please contact us at <a :href="`mailto:${contactEmail}`">{{contactEmail}}</a>.
     </p>
     <q-separator />
     <p class="q-mt-md">
