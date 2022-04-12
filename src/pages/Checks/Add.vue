@@ -39,7 +39,7 @@
             <q-slider
               markers
               label
-              :label-value="periods[check.periodToCheck]"
+              :label-value="periods[check.periodToCheck].value"
               label-always
               v-model="check.periodToCheck"
               :min="0"
@@ -82,12 +82,12 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import SmallIntegrationIcon from 'components/Integrations/Icons/Small';
+import SmallIntegrationIcon from "components/Integrations/Icons/Small";
 import jwtDecode from "jwt-decode";
 
 export default {
   name: "PageCheckForm",
-  components: {SmallIntegrationIcon},
+  components: { SmallIntegrationIcon },
   setup() {
     const $q = useQuasar();
     const $store = useStore();
@@ -103,7 +103,11 @@ export default {
     });
     const loading = ref(false);
     const integrations = ref([]);
-    const periods = ref($store.getters["checks/getPeriods"]);
+    const periods = ref(
+      $store.getters["checks/getPeriods"].filter((period) =>
+        period.roles.includes($store.getters["auth/getUser"].role.toLowerCase())
+      )
+    );
 
     $store.dispatch("integrations/fetchAll").then((response) => {
       integrations.value = response.data.data;
@@ -119,7 +123,7 @@ export default {
         const newCheck = {
           name: check.value.name,
           target: check.value.target,
-          periodToCheck: periods.value[check.value.periodToCheck],
+          periodToCheck: periods.value[check.value.periodToCheck].value,
           enabled: check.value.enabled,
           addIntegrations: check.value.addIntegrations.map((id) => {
             const integration = integrations.value.find((i) => i.id === id);
@@ -137,7 +141,7 @@ export default {
               const decoded = jwtDecode(token);
 
               $store.commit("auth/SET_USER", decoded);
-            })
+            });
             $q.notify({
               message: $t("action.checkCreated"),
               color: "positive",
@@ -147,13 +151,13 @@ export default {
           .catch((error) => {
             $q.notify({
               color: "negative",
-              message: error.response.data.message
+              message: error.response.data.message,
             });
           })
           .finally(() => {
             loading.value = false;
           });
-      }
+      },
     };
   },
 };
