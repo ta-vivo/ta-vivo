@@ -42,7 +42,7 @@
             <q-slider
               markers
               label
-              :label-value="periods[check.periodToCheck]"
+              :label-value="periods[check.periodToCheck].value"
               label-always
               v-model="check.periodToCheck"
               :min="0"
@@ -80,11 +80,11 @@
 </template>
 
 <script>
-import SmallIntegrationIcon from 'components/Integrations/Icons/Small';
+import SmallIntegrationIcon from "components/Integrations/Icons/Small";
 
 export default {
   name: "PageCheckEdit",
-  components: {SmallIntegrationIcon},
+  components: { SmallIntegrationIcon },
   created() {
     this.$q.loading.show();
 
@@ -102,7 +102,7 @@ export default {
           .then((response) => {
             this.check = { ...this.check, ...response.data.data };
             const period = this.periods.findIndex(
-              (period) => period === this.check.periodToCheckLabel
+              (period) => period.value === this.check.periodToCheckLabel
             );
             this.check.periodToCheck = period;
             this.check.currentIntegrations = this.check.check_integrations.map(
@@ -126,7 +126,11 @@ export default {
         removeIntegrations: [],
       },
       loading: false,
-      periods: this.$store.getters["checks/getPeriods"],
+      periods: this.$store.getters["checks/getPeriods"].filter((period) =>
+        period.roles.includes(
+          this.$store.getters["auth/getUser"].role.toLowerCase()
+        )
+      ),
       integrations: [],
     };
   },
@@ -155,7 +159,7 @@ export default {
       const updatedCheck = {
         name: this.check.name,
         target: this.check.target,
-        periodToCheck: this.periods[this.check.periodToCheck],
+        periodToCheck: this.periods[this.check.periodToCheck].value,
         enabled: this.check.enabled,
         addIntegrations: this.check.addIntegrations,
         removeIntegrations: this.check.removeIntegrations,
@@ -173,13 +177,13 @@ export default {
         .catch((error) => {
           this.$q.notify({
             color: "negative",
-            message: error.response.data.message
+            message: error.response.data.message,
           });
         })
         .finally(() => {
           this.loading = false;
         });
-    }
+    },
   },
 };
 </script>
