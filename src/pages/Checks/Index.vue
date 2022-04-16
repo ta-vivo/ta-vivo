@@ -9,10 +9,15 @@
         to="/checks/add"
         :disable="reachedTheLimit()"
       />
-      <span :class="`${$q.screen.lt.md ? 'block q-mt-md' : null} q-ml-sm`" v-if="reachedTheLimit()">
+      <span
+        :class="`${$q.screen.lt.md ? 'block q-mt-md' : null} q-ml-sm`"
+        v-if="reachedTheLimit()"
+      >
         <q-icon size="sm" name="eva-info-outline" />
-        {{$t('messages.information.reachedLimit')}}.
-        <router-link class="text-primary" to="/pricing">{{$t('common.viewAllPlans')}}</router-link>
+        {{ $t("messages.information.reachedLimit") }}.
+        <router-link class="text-primary" to="/pricing">{{
+          $t("common.viewAllPlans")
+        }}</router-link>
       </span>
     </div>
     <q-table
@@ -24,6 +29,8 @@
       :columns="columns"
       row-key="id"
       :loading="loading"
+      v-model:pagination="checksPagination"
+      @request="fetchChecks"
     >
       <template v-slot:body-cell-enabled="props">
         <q-td :props="props">
@@ -212,6 +219,14 @@ export default {
       rowsNumber: 0,
     });
 
+    const checksPagination = ref({
+      sortBy: "createdAt",
+      descending: false,
+      page: 1,
+      rowsPerPage: 10,
+      rowsNumber: 0,
+    });
+
     const rows = ref([]);
     const loading = ref(false);
     const showLogsDialog = ref(false);
@@ -220,15 +235,29 @@ export default {
     const tempCheck = ref({});
 
     const store = useStore();
-    loading.value = true;
-    store
-      .dispatch("checks/fetchAll")
-      .then((response) => {
-        rows.value = response.data.data;
-      })
-      .finally(() => {
-        loading.value = false;
-      });
+
+    const fetchChecks = (props) => {
+      loading.value = true;
+
+      if (props) {
+        const { page, rowsPerPage } = props.pagination;
+        checksPagination.value.rowsPerPage = rowsPerPage;
+        checksPagination.value.page = page;
+      }
+      const queryString = `?page=${checksPagination.value.page}&limit=${checksPagination.value.rowsPerPage}&sort=-created_at`;
+
+      store
+        .dispatch("checks/fetchAll", queryString)
+        .then((response) => {
+          checksPagination.value.rowsNumber = response.data.pagination.total;
+          rows.value = response.data.data;
+        })
+        .finally(() => {
+          loading.value = false;
+        });
+    };
+
+    fetchChecks();
 
     const handleShowLogs = (check) => {
       tempCheck.value = check;
@@ -270,8 +299,10 @@ export default {
       tempCheck,
       logsColumns,
       logsPagination,
+      checksPagination,
       handleShowLogs,
       fetchlogs,
+      fetchChecks,
       handleDeleteCheck(check) {
         $q.dialog({
           title: "Confirm",
@@ -304,7 +335,7 @@ export default {
                     const decoded = jwtDecode(token);
 
                     store.commit("auth/SET_USER", decoded);
-                  })
+                  });
                   rows.value = response.data.data;
                 })
                 .finally(() => {
