@@ -21,6 +21,7 @@
       </span>
     </div>
     <q-table
+      :grid="$q.screen.xs"
       class="q-mt-lg"
       bordered
       flat
@@ -32,6 +33,52 @@
       v-model:pagination="integrationsPagination"
       @request="fetchIntegrations"
     >
+      <!-- Gid -->
+      <template v-slot:item="props">
+        <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
+          <q-card flat>
+            <q-card-section>
+              <div class="q-mb-sm">
+                <div class="the-integration items-center">
+                  <IntegrationIcon
+                    class="cursor-pointer"
+                    :type="props.row.type"
+                    size="md"
+                    @click="handleEditIntegration(props.row)"
+                  />
+                </div>
+              </div>
+              <div class="text-grey-7">
+                {{ $t("common.name") }}
+              </div>
+              <div class="q-mb-sm">{{ props.row.name }}</div>
+              <div class="text-grey-7">{{ $t("common.assignments") }}</div>
+              <div class="q-mb-sm">
+                {{ props.row.check_integrations.length }}
+              </div>
+            </q-card-section>
+            <q-separator />
+            <q-card-section>
+              <q-btn
+                :label="$t('common.details')"
+                flat
+                size="sm"
+                icon="eva-eye-outline"
+                @click="handleEditIntegration(props.row)"
+              />
+              <q-btn
+                :label="$t('action.delete')"
+                color="negative"
+                flat
+                size="sm"
+                icon="eva-trash-outline"
+                @click="handleDeleteIntegration(props.row)"
+              />
+            </q-card-section>
+          </q-card>
+        </div>
+      </template>
+      <!-- Table -->
       <template v-slot:body-cell-icon="props">
         <q-td :props="props">
           <div class="the-integration items-center">
@@ -189,7 +236,8 @@ export default {
       store
         .dispatch("integrations/fetchAll", queryString)
         .then((response) => {
-          integrationsPagination.value.rowsNumber = response.data.pagination.total;
+          integrationsPagination.value.rowsNumber =
+            response.data.pagination.total;
           rows.value = response.data.data;
         })
         .finally(() => {
