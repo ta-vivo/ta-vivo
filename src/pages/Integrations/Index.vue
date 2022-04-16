@@ -19,7 +19,7 @@
       class="q-mt-lg"
       bordered
       flat
-      :rows-per-page-options="[]"
+      :rows-per-page-options="[10]"
       :rows="rows"
       :columns="columns"
       row-key="id"
