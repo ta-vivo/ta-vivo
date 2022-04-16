@@ -9,22 +9,104 @@
         to="/checks/add"
         :disable="reachedTheLimit()"
       />
-      <span :class="`${$q.screen.lt.md ? 'block q-mt-md' : null} q-ml-sm`" v-if="reachedTheLimit()">
+      <span
+        :class="`${$q.screen.lt.md ? 'block q-mt-md' : null} q-ml-sm`"
+        v-if="reachedTheLimit()"
+      >
         <q-icon size="sm" name="eva-info-outline" />
-        {{$t('messages.information.reachedLimit')}}.
-        <router-link class="text-primary" to="/pricing">{{$t('common.viewAllPlans')}}</router-link>
+        {{ $t("messages.information.reachedLimit") }}.
+        <router-link class="text-primary" to="/pricing">{{
+          $t("common.viewAllPlans")
+        }}</router-link>
       </span>
     </div>
     <q-table
+      :grid="$q.screen.xs"
       class="q-mt-lg"
       bordered
       flat
-      :rows-per-page-options="[]"
+      :rows-per-page-options="[10]"
       :rows="rows"
       :columns="columns"
       row-key="id"
       :loading="loading"
+      v-model:pagination="checksPagination"
+      @request="fetchChecks"
     >
+      <!-- Gid -->
+      <template v-slot:item="props">
+        <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
+          <q-card flat>
+            <q-card-section>
+              <div class="text-grey-8">
+                {{ $t("common.status") }}
+              </div>
+              <div class="q-mb-sm">
+                <q-chip
+                  class="q-ml-none"
+                  :color="props.row.enabled ? 'positive' : 'negative'"
+                  text-color="white"
+                >
+                  {{
+                    props.row.enabled
+                      ? $t("common.enabled")
+                      : $t("common.disabled")
+                  }}
+                </q-chip>
+              </div>
+              <div class="text-grey-8">{{ $t("common.name") }}</div>
+              <div class="q-mb-sm">{{ props.row.name }}</div>
+              <div class="text-grey-8">{{ $t("common.target") }}</div>
+              <div class="q-mb-sm">{{ props.row.target }}</div>
+              <div class="text-grey-8">{{ $t("common.integrations") }}</div>
+              <div class="q-mb-sm">
+                <template
+                  v-for="checkIntegration in props.row.check_integrations"
+                  :key="checkIntegration.id"
+                >
+                  <div class="the-integration items-center q-my-sm">
+                    <small-integration-Icon
+                      :type="checkIntegration.integration.type"
+                    >
+                      <q-tooltip>
+                        {{ checkIntegration.integration.name }}
+                      </q-tooltip>
+                    </small-integration-Icon>
+                  </div>
+                </template>
+              </div>
+              <div class="text-grey-8">{{ $t("common.period") }}</div>
+              <div class="q-mb-sm">{{ props.row.periodToCheckLabel }}</div>
+            </q-card-section>
+            <q-separator />
+            <q-card-actions>
+              <q-btn
+                :label="$t('action.viewLogs')"
+                flat
+                size="sm"
+                icon="eva-file-text-outline"
+                @click="handleShowLogs(props.row)"
+              />
+              <q-btn
+                :label="$t('common.details')"
+                flat
+                size="sm"
+                icon="eva-eye-outline"
+                :to="`/checks/edit/${props.row.id}`"
+              />
+              <q-btn
+                :label="$t('action.delete')"
+                color="negative"
+                flat
+                size="sm"
+                icon="eva-trash-outline"
+                @click="handleDeleteCheck(props.row)"
+              />
+            </q-card-actions>
+          </q-card>
+        </div>
+      </template>
+      <!-- Table -->
       <template v-slot:body-cell-enabled="props">
         <q-td :props="props">
           <q-chip
@@ -212,6 +294,14 @@ export default {
       rowsNumber: 0,
     });
 
+    const checksPagination = ref({
+      sortBy: "createdAt",
+      descending: false,
+      page: 1,
+      rowsPerPage: 10,
+      rowsNumber: 0,
+    });
+
     const rows = ref([]);
     const loading = ref(false);
     const showLogsDialog = ref(false);
@@ -220,15 +310,29 @@ export default {
     const tempCheck = ref({});
 
     const store = useStore();
-    loading.value = true;
-    store
-      .dispatch("checks/fetchAll")
-      .then((response) => {
-        rows.value = response.data.data;
-      })
-      .finally(() => {
-        loading.value = false;
-      });
+
+    const fetchChecks = (props) => {
+      loading.value = true;
+
+      if (props) {
+        const { page, rowsPerPage } = props.pagination;
+        checksPagination.value.rowsPerPage = rowsPerPage;
+        checksPagination.value.page = page;
+      }
+      const queryString = `?page=${checksPagination.value.page}&limit=${checksPagination.value.rowsPerPage}&sort=-created_at`;
+
+      store
+        .dispatch("checks/fetchAll", queryString)
+        .then((response) => {
+          checksPagination.value.rowsNumber = response.data.pagination.total;
+          rows.value = response.data.data;
+        })
+        .finally(() => {
+          loading.value = false;
+        });
+    };
+
+    fetchChecks();
 
     const handleShowLogs = (check) => {
       tempCheck.value = check;
@@ -270,8 +374,10 @@ export default {
       tempCheck,
       logsColumns,
       logsPagination,
+      checksPagination,
       handleShowLogs,
       fetchlogs,
+      fetchChecks,
       handleDeleteCheck(check) {
         $q.dialog({
           title: "Confirm",
@@ -304,7 +410,7 @@ export default {
                     const decoded = jwtDecode(token);
 
                     store.commit("auth/SET_USER", decoded);
-                  })
+                  });
                   rows.value = response.data.data;
                 })
                 .finally(() => {
