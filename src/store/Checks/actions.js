@@ -1,7 +1,7 @@
 import { axiosInstance } from 'boot/axios'
 
-export function fetchAll(context) {
-  return axiosInstance.get('/checks?limit=100')
+export function fetchAll(context, queryString) {
+  return axiosInstance.get(`/checks${queryString || ''}`)
 }
 
 export function fetch(context, payload) {
