@@ -21,6 +21,7 @@
       </span>
     </div>
     <q-table
+      :grid="$q.screen.xs"
       class="q-mt-lg"
       bordered
       flat
@@ -32,6 +33,80 @@
       v-model:pagination="checksPagination"
       @request="fetchChecks"
     >
+      <!-- Gid -->
+      <template v-slot:item="props">
+        <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
+          <q-card flat>
+            <q-card-section>
+              <div class="text-grey-8">
+                {{ $t("common.status") }}
+              </div>
+              <div class="q-mb-sm">
+                <q-chip
+                  class="q-ml-none"
+                  :color="props.row.enabled ? 'positive' : 'negative'"
+                  text-color="white"
+                >
+                  {{
+                    props.row.enabled
+                      ? $t("common.enabled")
+                      : $t("common.disabled")
+                  }}
+                </q-chip>
+              </div>
+              <div class="text-grey-8">{{ $t("common.name") }}</div>
+              <div class="q-mb-sm">{{ props.row.name }}</div>
+              <div class="text-grey-8">{{ $t("common.target") }}</div>
+              <div class="q-mb-sm">{{ props.row.target }}</div>
+              <div class="text-grey-8">{{ $t("common.integrations") }}</div>
+              <div class="q-mb-sm">
+                <template
+                  v-for="checkIntegration in props.row.check_integrations"
+                  :key="checkIntegration.id"
+                >
+                  <div class="the-integration items-center q-my-sm">
+                    <small-integration-Icon
+                      :type="checkIntegration.integration.type"
+                    >
+                      <q-tooltip>
+                        {{ checkIntegration.integration.name }}
+                      </q-tooltip>
+                    </small-integration-Icon>
+                  </div>
+                </template>
+              </div>
+              <div class="text-grey-8">{{ $t("common.period") }}</div>
+              <div class="q-mb-sm">{{ props.row.periodToCheckLabel }}</div>
+            </q-card-section>
+            <q-separator />
+            <q-card-actions>
+              <q-btn
+                :label="$t('action.viewLogs')"
+                flat
+                size="sm"
+                icon="eva-file-text-outline"
+                @click="handleShowLogs(props.row)"
+              />
+              <q-btn
+                :label="$t('common.details')"
+                flat
+                size="sm"
+                icon="eva-eye-outline"
+                :to="`/checks/edit/${props.row.id}`"
+              />
+              <q-btn
+                :label="$t('action.delete')"
+                color="negative"
+                flat
+                size="sm"
+                icon="eva-trash-outline"
+                @click="handleDeleteCheck(props.row)"
+              />
+            </q-card-actions>
+          </q-card>
+        </div>
+      </template>
+      <!-- Table -->
       <template v-slot:body-cell-enabled="props">
         <q-td :props="props">
           <q-chip
