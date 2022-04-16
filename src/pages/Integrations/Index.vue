@@ -9,10 +9,15 @@
         to="/integrations/add"
         :disable="reachedTheLimit()"
       />
-      <span :class="`${$q.screen.lt.md ? 'block q-mt-md' : null} q-ml-sm`" v-if="reachedTheLimit()">
+      <span
+        :class="`${$q.screen.lt.md ? 'block q-mt-md' : null} q-ml-sm`"
+        v-if="reachedTheLimit()"
+      >
         <q-icon size="sm" name="eva-info-outline" />
-        {{$t('messages.information.reachedLimit')}}.
-        <router-link class="text-primary" to="/pricing">{{$t('common.viewAllPlans')}}</router-link>
+        {{ $t("messages.information.reachedLimit") }}.
+        <router-link class="text-primary" to="/pricing">{{
+          $t("common.viewAllPlans")
+        }}</router-link>
       </span>
     </div>
     <q-table
@@ -24,6 +29,8 @@
       :columns="columns"
       row-key="id"
       :loading="loading"
+      v-model:pagination="integrationsPagination"
+      @request="fetchIntegrations"
     >
       <template v-slot:body-cell-icon="props">
         <q-td :props="props">
@@ -160,24 +167,46 @@ export default {
     const loading = ref(false);
     const showEditIntegrationDialog = ref(false);
     const integration = ref({});
+    const integrationsPagination = ref({
+      sortBy: "createdAt",
+      descending: false,
+      page: 1,
+      rowsPerPage: 10,
+      rowsNumber: 0,
+    });
 
     const store = useStore();
-    loading.value = true;
-    store
-      .dispatch("integrations/fetchAll")
-      .then((response) => {
-        rows.value = response.data.data;
-      })
-      .finally(() => {
-        loading.value = false;
-      });
+    const fetchIntegrations = (props) => {
+      loading.value = true;
+
+      if (props) {
+        const { page, rowsPerPage } = props.pagination;
+        integrationsPagination.value.rowsPerPage = rowsPerPage;
+        integrationsPagination.value.page = page;
+      }
+      const queryString = `?page=${integrationsPagination.value.page}&limit=${integrationsPagination.value.rowsPerPage}&sort=-created_at`;
+
+      store
+        .dispatch("integrations/fetchAll", queryString)
+        .then((response) => {
+          integrationsPagination.value.rowsNumber = response.data.pagination.total;
+          rows.value = response.data.data;
+        })
+        .finally(() => {
+          loading.value = false;
+        });
+    };
+
+    fetchIntegrations();
 
     return {
       columns,
       rows,
       loading,
       showEditIntegrationDialog,
+      integrationsPagination,
       integration,
+      fetchIntegrations,
       handleDeleteIntegration(integration) {
         $q.dialog({
           title: "Confirm",
@@ -205,13 +234,12 @@ export default {
               store
                 .dispatch("integrations/fetchAll")
                 .then((response) => {
-
                   store.dispatch("auth/me").then((response) => {
                     const token = response.data.data.token;
                     const decoded = jwtDecode(token);
 
                     store.commit("auth/SET_USER", decoded);
-                  })
+                  });
                   rows.value = response.data.data;
                 })
                 .finally(() => {
@@ -259,9 +287,11 @@ export default {
         const user = store.getters["auth/getUser"];
         if (user.settings && user.settings.integrations) {
           if (user.settings.integrations.limit === 0) {
-            return false
+            return false;
           }
-          return user.settings.integrations.count >= user.settings.integrations.limit;
+          return (
+            user.settings.integrations.count >= user.settings.integrations.limit
+          );
         }
 
         return false;
