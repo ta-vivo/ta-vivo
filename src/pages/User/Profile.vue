@@ -11,12 +11,12 @@
           <q-tab
             name="basic-information"
             icon="eva-person-outline"
-            :label="$t('common.basicInformation')"
+            :label="$q.screen.gt.xs ? $t('common.basicInformation'):null"
           />
           <q-tab
             name="billing"
             icon="eva-file-text-outline"
-            :label="$t('common.billing')"
+            :label="$q.screen.gt.xs ? $t('common.billing'):null"
           />
         </q-tabs>
       </template>
@@ -69,6 +69,7 @@
                   :label="$t('common.viewAllPlans')"
                 />
                 <q-btn
+                  :class="$q.screen.gt.xs ? null : 'q-pl-none'"
                   flat
                   v-show="user.role !== 'basic'"
                   @click="showCancelSubscription = true"
