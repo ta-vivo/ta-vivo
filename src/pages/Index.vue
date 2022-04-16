@@ -62,6 +62,7 @@
     <div class="row q-col-gutter-sm q-mt-lg">
       <div class="col-12">
         <q-table
+          :grid="$q.screen.xs"
           :loading="loading"
           flat
           bordered
@@ -72,6 +73,35 @@
           :columns="columns"
           row-key="id"
         >
+          <!-- Grid -->
+          <template v-slot:item="props">
+            <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
+              <q-card flat>
+                <q-card-section>
+                  <div class="q-mb-sm">
+                    <q-chip
+                      class="q-ml-none"
+                      :color="props.row.status === 'up' ? 'positive' : 'negative'"
+                      text-color="white"
+                    >
+                      {{ props.row.status }}
+                    </q-chip>
+                  </div>
+                  <div class="text-grey-7">
+                    {{ $t("common.check") }}
+                  </div>
+                  <div class="q-mb-sm">{{ props.row.check.name }}</div>
+                  <div class="text-grey-7">
+                    {{ $t("common.date") }}
+                  </div>
+                  <div>
+                    {{ formatDate(props.row.createdAt) }}
+                  </div>
+                </q-card-section>
+              </q-card>
+            </div>
+          </template>
+          <!-- Table -->
           <template v-slot:body-cell-status="props">
             <q-td :props="props">
               <q-chip
@@ -141,13 +171,17 @@ export default defineComponent({
           name: "createdAt",
           label: this.$t("common.date"),
           align: "left",
-          field: (row) =>
-            `${date.formatDate(row.createdAt, "DD/MM/YYYY")} ${this.$t(
-              "common.at"
-            )} ${date.formatDate(row.createdAt, "HH:mm:ss")}`,
+          field: (row) => this.formatDate(row.createdAt),
         },
       ],
     };
+  },
+  methods: {
+    formatDate(timestamp) {
+      return `${date.formatDate(timestamp, "DD/MM/YYYY")} ${this.$t(
+        "common.at"
+      )} ${date.formatDate(timestamp, "HH:mm:ss")}`;
+    },
   },
 });
 </script>
