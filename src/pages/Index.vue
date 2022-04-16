@@ -66,7 +66,7 @@
           flat
           bordered
           row-per-page="10"
-          :rows-per-page-options="[]"
+          :rows-per-page-options="[10]"
           :title="$t('common.mostRecentsLogs')"
           :rows="dashboard.recentActivity"
           :columns="columns"
