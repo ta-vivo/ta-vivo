@@ -45,6 +45,7 @@ export default {
     viewAllPlans: 'View all plans',
     billing: 'Billing',
     amount: 'Amount',
+    TimeInterval: 'Time interval'
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
