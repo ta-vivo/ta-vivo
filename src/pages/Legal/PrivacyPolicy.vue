@@ -204,17 +204,18 @@
 </template>
 
 <script>
-const appName = process.env.VUE_APP_NAME;
-const systemUrl = process.env.VUE_APP_URL;
-const contactEmail = process.env.VUE_APP_CONTACT_EMAIL;
-
 export default {
   name: "PagePrivacyPolicy",
-  setup() {
+  mounted() {
+    this.appName = process.env.VUE_APP_NAME;
+    this.contactEmail = process.env.VUE_APP_CONTACT_EMAIL;
+    this.systemUrl = process.env.VUE_APP_URL;
+  },
+  data() {
     return {
-      appName: appName,
-      systemUrl: systemUrl,
-      contactEmail: contactEmail,
+      appName: "",
+      systemUrl: "",
+      contactEmail: "",
     };
   },
 };
