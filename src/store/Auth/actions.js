@@ -19,3 +19,7 @@ export function registerEmailConfirmation(context, { uniqueCode }) {
 export function requestRegisterEmailConfirmation(context) {
   return axiosInstance.get('/auth/request-register-email-confirmation')
 }
+
+export function changePassword(context, { oldPassword, password, confirmPassword }) {
+  return axiosInstance.post('/auth/change-password', { oldPassword, password, confirmPassword })
+}
