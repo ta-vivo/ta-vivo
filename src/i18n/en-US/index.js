@@ -9,6 +9,7 @@ export default {
     email: 'Email',
     password: 'Password',
     confirmPassword: 'Confirm Password',
+    oldPassword: 'Old Password',
     fullname: 'Full name',
     checks: 'Checks',
     integrations: 'Integrations',
@@ -45,7 +46,8 @@ export default {
     viewAllPlans: 'View all plans',
     billing: 'Billing',
     amount: 'Amount',
-    TimeInterval: 'Time interval'
+    TimeInterval: 'Time interval',
+    changePassword: 'Change password'
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
@@ -110,12 +112,14 @@ export default {
       subscriptionSuccessDescription: 'All the features of your subscription are activated immediately.',
       unsubscribeDescription: 'If you unsubscribe your plan will change to "Basic" and will have the following features',
       subscriptionCancelDescription: 'Your subscription is cancel. You can resume it at any time.',
-      reachedLimit: 'You have reached the limit, consider increasing your chances with a plan'
+      reachedLimit: 'You have reached the limit, consider increasing your chances with a plan',
+      passwordChanged: 'Password changed',
     },
     errors: {
       requireField: 'This field is required',
       notValidEmail: 'This is not a valid email',
       passwordSecurity: 'Password must be at least 8 characters long and contain at least one number and one letter',
+      pleaseTypeTheOldPassword: 'Please type the old password'
     },
     questions: {
       areYousureYouWantCancelSubscription: 'Are you sure you want to cancel your subscription?',
