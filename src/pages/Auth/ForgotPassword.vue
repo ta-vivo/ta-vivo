@@ -124,13 +124,18 @@
       </template>
       <template v-else-if="showSuccess">
         <q-card-section>
-          <div class="text-center">
-            <q-icon
-              name="eva-checkmark-circle-outline"
-              color="positive"
-              size="150px"
-            />
-          </div>
+          <transition
+            appear
+            enter-active-class="animated flipInX"
+          >
+            <div class="text-center">
+              <q-icon
+                name="eva-checkmark-circle-outline"
+                color="positive"
+                size="150px"
+              />
+            </div>
+          </transition>
           <p class="q-my-md text-center">
             {{ $t("messages.information.recoveryPasswordSuccess") }}
           </p>
