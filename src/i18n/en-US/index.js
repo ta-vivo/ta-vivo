@@ -47,7 +47,9 @@ export default {
     billing: 'Billing',
     amount: 'Amount',
     TimeInterval: 'Time interval',
-    changePassword: 'Change password'
+    changePassword: 'Change password',
+    forgotPassword: 'Forgot password ?',
+    recoveryPassword: 'Recovery password'
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
@@ -85,6 +87,9 @@ export default {
     cancelSubscription: 'Cancel subscription',
     keepSubscription: 'Keep subscription',
     unsubscribe: 'Unsubscribe',
+    sendEmail: 'Send email',
+    continue: 'Continue',
+    goToLogin: 'Go to login',
   },
   messages: {
     information: {
@@ -114,6 +119,10 @@ export default {
       subscriptionCancelDescription: 'Your subscription is cancel. You can resume it at any time.',
       reachedLimit: 'You have reached the limit, consider increasing your chances with a plan',
       passwordChanged: 'Password changed',
+      recoveryPasswordDescription: 'A unique 1-use code was sent to [EMAIL]. Please check your spam folder if you don`t see the email in your main inbox.',
+      recoveryPasswordInitialDescription: 'Please enter your email and we will send you a one-time code so you can recover your password',
+      changePasswordRules: 'Your password must be at least 8 characters long and contain at least one number and one letter.',
+      recoveryPasswordSuccess: 'Recovery password successfully',
     },
     errors: {
       requireField: 'This field is required',

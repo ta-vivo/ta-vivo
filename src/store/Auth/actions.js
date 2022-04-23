@@ -23,3 +23,11 @@ export function requestRegisterEmailConfirmation(context) {
 export function changePassword(context, { oldPassword, password, confirmPassword }) {
   return axiosInstance.post('/auth/change-password', { oldPassword, password, confirmPassword })
 }
+
+export function forgotPassword(context, { email }) {
+  return axiosInstance.post('/auth/forgot-password', { email })
+}
+
+export function recoverPassword(context, { email, uniqueCode, password, confirmPassword }) {
+  return axiosInstance.post('/auth/recover-password', { email, uniqueCode, password, confirmPassword })
+}

@@ -31,6 +31,16 @@
               (val) => (val && val.length > 0) || 'Please type something',
             ]"
           />
+          <div class="text-right q-my-none">
+            <q-btn
+              to="/auth/forgot-password"
+              class="q-my-none"
+              dense
+              flat
+              color="primary"
+              :label="$t('common.forgotPassword')"
+            />
+          </div>
           <div class="text-center">
             <q-btn
               push

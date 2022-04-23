@@ -41,6 +41,12 @@ const routes = [
           isPublic: true
         }
       },
+      {
+        path: 'forgot-password', component: () => import('pages/Auth/ForgotPassword.vue'),
+        meta: {
+          isPublic: true
+        }
+      },
     ]
   },
   {
