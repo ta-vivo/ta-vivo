@@ -11,12 +11,12 @@
           <q-tab
             name="basic-information"
             icon="eva-person-outline"
-            :label="$q.screen.gt.xs ? $t('common.basicInformation'):null"
+            :label="$q.screen.gt.xs ? $t('common.basicInformation') : null"
           />
           <q-tab
             name="billing"
             icon="eva-file-text-outline"
-            :label="$q.screen.gt.xs ? $t('common.billing'):null"
+            :label="$q.screen.gt.xs ? $t('common.billing') : null"
           />
         </q-tabs>
       </template>
@@ -31,12 +31,36 @@
           transition-next="jump-up"
         >
           <q-tab-panel name="basic-information">
-            <div class="text-h4 q-mb-md">{{ $t("common.basicInformation") }}</div>
+            <div class="text-h4 q-mb-md">
+              {{ $t("common.basicInformation") }}
+            </div>
             <div>
               <strong>{{ $t("common.fullname") }}:</strong>
               <span class="q-mr-sm">{{ user.fullname }}</span>
               <div>
                 <strong>{{ $t("common.email") }}:</strong> {{ user.email }}
+              </div>
+              <div>
+                <q-btn
+                  class="q-pl-none"
+                  color="primary"
+                  flat
+                  :label="$t('common.changePassword')"
+                  @click="showChangePassword = true"
+                />
+                <q-dialog v-model="showChangePassword">
+                  <q-card style="width: 500px">
+                    <q-card-section class="row items-center q-pb-none">
+                      <div class="text-h6">{{$t('common.changePassword')}}</div>
+                      <q-space />
+                      <q-btn icon="eva-close-outline" flat round dense v-close-popup />
+                    </q-card-section>
+
+                    <q-card-section>
+                      <change-password @success="showChangePassword = false" />
+                    </q-card-section>
+                  </q-card>
+                </q-dialog>
               </div>
             </div>
             <q-separator class="q-my-md" />
@@ -135,16 +159,19 @@ import jwtDecode from "jwt-decode";
 import RoleBadge from "components/User/RoleBadge.vue";
 import PricingFeature from "components/Pricing/Feature";
 import { date } from "quasar";
+import ChangePassword from 'components/User/ChangePassword';
 
 export default {
   name: "PageProfile",
   components: {
     RoleBadge,
     PricingFeature,
+    ChangePassword
   },
   data() {
     return {
       loading: false,
+      showChangePassword: false,
       planDetails: { features: [] },
       basicPlan: { features: [] },
       showCancelSubscription: false,
@@ -155,34 +182,36 @@ export default {
       billingColumns: [
         {
           name: "id",
-          label: 'ID',
+          label: "ID",
           align: "left",
-          field: 'id'
+          field: "id",
         },
         {
           name: "date",
           label: this.$t("common.date"),
           align: "left",
-          field: row => this.getDateFormat(row.time)
+          field: (row) => this.getDateFormat(row.time),
         },
         {
-          name: 'client',
+          name: "client",
           label: this.$t("common.name"),
           align: "left",
-          field: row => `${row.payer_name.given_name} ${row.payer_name.surname}`
+          field: (row) =>
+            `${row.payer_name.given_name} ${row.payer_name.surname}`,
         },
         {
-          name: 'amount',
+          name: "amount",
           label: this.$t("common.amount"),
           align: "left",
-          field: row => `${row.amount_with_breakdown.gross_amount.value} ${row.amount_with_breakdown.gross_amount.currency_code}`
+          field: (row) =>
+            `${row.amount_with_breakdown.gross_amount.value} ${row.amount_with_breakdown.gross_amount.currency_code}`,
         },
         {
-          name: 'status',
+          name: "status",
           label: this.$t("common.status"),
           align: "left",
-          field: 'status'
-        }
+          field: "status",
+        },
       ],
     };
   },
@@ -271,7 +300,7 @@ export default {
     },
     getDateFormat(timeStamp) {
       return date.formatDate(timeStamp, "DD/MM/YYYY");
-    }
+    },
   },
   computed: {
     user() {
