@@ -140,23 +140,27 @@
     </p>
     <p class="text-h5">Contact Us</p>
     <p>
-      If you have any questions about these Terms, please contact us at <a :href="`mailto:${contactEmail}`">{{contactEmail}}</a>.
+      If you have any questions about these Terms, please contact us at
+      <a :href="`mailto:${contactEmail}`">{{ contactEmail }}</a
+      >.
     </p>
     <q-separator />
-    <p class="q-mt-md">
-      This document was last updated on April 8, 2022
-    </p>
+    <p class="q-mt-md">This document was last updated on April 8, 2022</p>
   </q-page>
 </template>
 
 <script>
+const appName = process.env.VUE_APP_NAME;
+const systemUrl = process.env.VUE_APP_URL;
+const contactEmail = process.env.VUE_APP_CONTACT_EMAIL;
+
 export default {
   name: "PageLegalTermsAndConditions",
   setup() {
     return {
-      systemUrl: process.env.VUE_APP_URL,
-      appName: process.env.VUE_APP_NAME,
-      contactEmail: process.env.VUE_APP_CONTACT_EMAIL
+      appName: appName,
+      systemUrl: systemUrl,
+      contactEmail: contactEmail,
     };
   },
 };
