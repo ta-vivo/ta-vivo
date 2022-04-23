@@ -192,7 +192,9 @@
       contact us about any of the rights mentioned in the "Your Rights" section
       above, please contact us:
     </p>
-    <p>Email us at: <a :href="`mailto:${contactEmail}`">{{contactEmail}}</a> </p>
+    <p>
+      Email us at: <a :href="`mailto:${contactEmail}`">{{ contactEmail }}</a>
+    </p>
     <q-separator class="q-mb-md" />
     <p>
       This "Privacy Policy" is based on the "Creative Commons" licensed policy
@@ -202,13 +204,17 @@
 </template>
 
 <script>
+const appName = process.env.VUE_APP_NAME;
+const systemUrl = process.env.VUE_APP_URL;
+const contactEmail = process.env.VUE_APP_CONTACT_EMAIL;
+
 export default {
   name: "PagePrivacyPolicy",
   setup() {
     return {
-      appName: process.env.VUE_APP_NAME,
-      systemUrl: process.env.VUE_APP_URL,
-      contactEmail: process.env.VUE_APP_CONTACT_EMAIL,
+      appName: appName,
+      systemUrl: systemUrl,
+      contactEmail: contactEmail,
     };
   },
 };
