@@ -153,9 +153,9 @@
 export default {
   name: "PageLegalTermsAndConditions",
   mounted() {
-    this.appName = process.env.VUE_APP_NAME;
-    this.contactEmail = process.env.VUE_APP_CONTACT_EMAIL;
-    this.systemUrl = process.env.VUE_APP_URL;
+    this.appName = process.env.CUSTOM_APP_NAME;
+    this.contactEmail = process.env.CUSTOM_APP_URL;
+    this.systemUrl = process.env.CONTACT_EMAIL;
   },
   data() {
     return {

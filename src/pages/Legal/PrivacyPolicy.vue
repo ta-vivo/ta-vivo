@@ -207,9 +207,9 @@
 export default {
   name: "PagePrivacyPolicy",
   mounted() {
-    this.appName = `${process.env.CUSTOM_APP_NAME}`;
-    this.contactEmail = `${process.env.CUSTOM_APP_URL}`;
-    this.systemUrl = `${process.env.CONTACT_EMAIL}`;
+    this.appName = process.env.CUSTOM_APP_NAME;
+    this.contactEmail = process.env.CUSTOM_APP_URL;
+    this.systemUrl = process.env.CONTACT_EMAIL;
   },
   data() {
     return {
