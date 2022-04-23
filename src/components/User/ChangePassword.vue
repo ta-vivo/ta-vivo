@@ -12,7 +12,7 @@
       ]"
     />
     <q-input
-      type="password"
+      :type="showPassword ? 'text' : 'password'"
       outlined
       v-model="password"
       :label="$t('common.password')"
@@ -21,9 +21,19 @@
         (val) =>
           isPasswordSecure(val) || this.$t('messages.errors.passwordSecurity'),
       ]"
-    />
+    >
+      <template v-slot:append>
+        <q-btn
+          @click="showPassword = !showPassword"
+          flat
+          dense
+          round
+          :icon="showPassword ? 'eva-eye-off-outline' : 'eva-eye-outline'"
+        />
+      </template>
+    </q-input>
     <q-input
-      type="password"
+      :type="showPassword ? 'text' : 'password'"
       outlined
       v-model="confirmPassword"
       :label="$t('common.confirmPassword')"
@@ -32,7 +42,17 @@
         (val) =>
           isPasswordSecure(val) || this.$t('messages.errors.passwordSecurity'),
       ]"
-    />
+    >
+      <template v-slot:append>
+        <q-btn
+          @click="showPassword = !showPassword"
+          flat
+          dense
+          round
+          :icon="showPassword ? 'eva-eye-off-outline' : 'eva-eye-outline'"
+        />
+      </template>
+    </q-input>
     <div class="text-center">
       <q-btn
         :disable="!oldPassword || !password || !confirmPassword"
@@ -58,6 +78,7 @@ export default {
     const oldPassword = ref("");
     const password = ref("");
     const confirmPassword = ref("");
+    const showPassword = ref(false);
     const loading = ref(false);
     const $store = useStore();
     const $q = useQuasar();
@@ -68,6 +89,7 @@ export default {
       password,
       confirmPassword,
       loading,
+      showPassword,
       handleChangePassword() {
         loading.value = true;
         $store

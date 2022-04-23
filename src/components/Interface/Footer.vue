@@ -18,7 +18,19 @@
         >
           {{ $t("common.termsAndConditions") }}
         </span>
-        <span class="link text-grey-7" @click="$router.push('/legal/privacy-policy')" > {{ $t("common.privacyPolicy") }} </span>
+        <span
+          class="link text-grey-7"
+          @click="$router.push('/legal/privacy-policy')"
+        >
+          {{ $t("common.privacyPolicy") }}
+        </span>
+        <span
+          v-show="$store.getters['auth/getUser'].id"
+          class="link text-grey-7"
+          @click="$router.push('/pricing')"
+        >
+          {{ $t("common.pricing") }}
+        </span>
       </div>
     </div>
   </div>
