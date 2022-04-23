@@ -51,9 +51,9 @@ module.exports = configure(function (ctx) {
       env: {
         API: process.env.API,
         PAYPAL_CLIENT_ID: process.env.PAYPAL_CLIENT_ID,
-        APP_NAME: process.env.VUE_APP_NAME,
-        APP_URL: process.env.VUE_APP_URL,
-        APP_CONTACT_EMAIL: process.env.VUE_APP_CONTACT_EMAIL
+        CUSTOM_APP_NAME: process.env.CUSTOM_APP_NAME,
+        CUSTOM_APP_URL: process.env.CUSTOM_APP_URL,
+        CONTACT_EMAIL: process.env.CONTACT_EMAIL
       },
       // transpile: false,
       // publicPath: '/',
