@@ -49,7 +49,8 @@ export default {
     TimeInterval: 'Time interval',
     changePassword: 'Change password',
     forgotPassword: 'Forgot password ?',
-    recoveryPassword: 'Recovery password'
+    recoveryPassword: 'Recovery password',
+    pricing: 'Pricing',
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
