@@ -86,7 +86,7 @@
           </div>
           <q-form @submit="handleChangePassword" class="q-gutter-md q-mt-md">
             <q-input
-              type="password"
+              :type="showPassword ? 'text' : 'password'"
               outlined
               v-model="password"
               :label="$t('common.password')"
@@ -96,9 +96,21 @@
                   isPasswordSecure(val) ||
                   this.$t('messages.errors.passwordSecurity'),
               ]"
-            />
+            >
+              <template v-slot:append>
+                <q-btn
+                  @click="showPassword = !showPassword"
+                  flat
+                  dense
+                  round
+                  :icon="
+                    showPassword ? 'eva-eye-off-outline' : 'eva-eye-outline'
+                  "
+                />
+              </template>
+            </q-input>
             <q-input
-              type="password"
+              :type="showPassword ? 'text' : 'password'"
               outlined
               v-model="confirmPassword"
               :label="$t('common.confirmPassword')"
@@ -108,7 +120,19 @@
                   isPasswordSecure(val) ||
                   this.$t('messages.errors.passwordSecurity'),
               ]"
-            />
+            >
+              <template v-slot:append>
+                <q-btn
+                  @click="showPassword = !showPassword"
+                  flat
+                  dense
+                  round
+                  :icon="
+                    showPassword ? 'eva-eye-off-outline' : 'eva-eye-outline'
+                  "
+                />
+              </template>
+            </q-input>
             <div class="text-center">
               <q-btn
                 :disable="!password || !confirmPassword"
@@ -124,10 +148,7 @@
       </template>
       <template v-else-if="showSuccess">
         <q-card-section>
-          <transition
-            appear
-            enter-active-class="animated flipInX"
-          >
+          <transition appear enter-active-class="animated flipInX">
             <div class="text-center">
               <q-icon
                 name="eva-checkmark-circle-outline"
@@ -161,15 +182,19 @@ import { useQuasar } from "quasar";
 export default {
   name: "PageForgotPassword",
   setup() {
-    const email = ref("");
     const loading = ref(false);
+    const showPassword = ref(false);
+    // Sections to show
     const showEmailRecoveryForm = ref(true);
     const showUnicodeEntry = ref(false);
     const showChangePasswordForm = ref(false);
     const showSuccess = ref(false);
+    // Data to send
+    const email = ref("");
     const password = ref("");
     const confirmPassword = ref("");
     const uniqueCode = ref("");
+
     const $store = useStore();
     const $q = useQuasar();
 
@@ -183,6 +208,7 @@ export default {
       password,
       confirmPassword,
       showSuccess,
+      showPassword,
       isPasswordSecure(password) {
         if (password) {
           const regex = /^(?=.*[a-z])(?=.*[0-9])(?=.{8,})/;
