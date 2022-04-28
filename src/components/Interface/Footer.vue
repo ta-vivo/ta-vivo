@@ -31,6 +31,12 @@
         >
           {{ $t("common.pricing") }}
         </span>
+        <span
+          class="link text-grey-7"
+          @click="$router.push('/about')"
+        >
+          {{ $t("common.about") }}
+        </span>
       </div>
     </div>
   </div>
