@@ -20,6 +20,20 @@ const routes = [
     ]
   },
   {
+    path: '/',
+    component: () => import('layouts/Auth.vue'),
+    children: [
+
+      {
+        path: 'about',
+        component: () => import('pages/About.vue'),
+        meta: {
+          isPublic: true
+        }
+      }
+    ]
+  },
+  {
     path: '/auth',
     component: () => import('layouts/Auth.vue'),
     children: [
