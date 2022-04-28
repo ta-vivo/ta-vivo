@@ -51,6 +51,10 @@ export default {
     forgotPassword: 'Forgot password ?',
     recoveryPassword: 'Recovery password',
     pricing: 'Pricing',
+    about: 'About',
+    openSource: 'Open source',
+    contact: 'Contact',
+    phone: 'Phone',
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
@@ -133,6 +137,13 @@ export default {
     },
     questions: {
       areYousureYouWantCancelSubscription: 'Are you sure you want to cancel your subscription?',
+    },
+    about: {
+      aboutTheProject: 'Online service that was born from an idea I had with a client, I wanted to know when the servers I had with odoo instances went down due to the load of the database, and in addition to this, receive notifications via telegram. From there I got more creative and added ideas to the draft.',
+      theProjectIsOpenSource: 'The project is open source and you can find it on',
+      GuaranteeOfOperationAndDataIntegrity: 'Guarantee of operation and data integrity',
+      guaranteeOfOperationAndDataIntegrityDescription: 'Thanks to Quasar (Vue) the Frontend is hosted in Netlify, the Backend that is made in NodeJS is in Digital ocean.',
+      databaseAndBackups: 'The database is on Digital Ocean servers and Backups are made every day and sent to Supabase buckets.',
     }
   }
 }
