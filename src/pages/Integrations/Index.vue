@@ -60,6 +60,13 @@
             <q-separator />
             <q-card-section>
               <q-btn
+                @click="handleSendTestIntegration(props.row)"
+                :label="$t('action.testIntegration')"
+                flat
+                size="sm"
+                icon="eva-activity-outline"
+              />
+              <q-btn
                 :label="$t('common.details')"
                 flat
                 size="sm"
@@ -93,6 +100,16 @@
       </template>
       <template v-slot:body-cell-action="props">
         <q-td :props="props">
+          <q-btn
+            @click="handleSendTestIntegration(props.row)"
+            flat
+            size="sm"
+            icon="eva-activity-outline"
+          >
+            <q-tooltip>
+              {{ $t("action.testIntegration") }}
+            </q-tooltip>
+          </q-btn>
           <q-btn
             flat
             size="sm"
@@ -165,6 +182,34 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+
+    <q-dialog v-model="showSendTestIntegrationDialog">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6">{{ $t("action.testIntegration") }}</div>
+        </q-card-section>
+
+        <q-card-section>
+          {{ $t("messages.information.testIntegrationDescription") }}
+          <span class="text-bold">{{ integration.name }}</span>
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn
+            outline
+            :label="$t('action.goBack')"
+            color="primary"
+            v-close-popup
+          />
+          <q-btn
+            push
+            :label="$t('action.sendTest')"
+            color="primary"
+            :loading="loadingSendTest"
+            @click="sendTestIntegration"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -221,6 +266,8 @@ export default {
       rowsPerPage: 10,
       rowsNumber: 0,
     });
+    const showSendTestIntegrationDialog = ref(false);
+    const loadingSendTest = ref(false);
 
     const store = useStore();
     const fetchIntegrations = (props) => {
@@ -252,6 +299,8 @@ export default {
       rows,
       loading,
       showEditIntegrationDialog,
+      showSendTestIntegrationDialog,
+      loadingSendTest,
       integrationsPagination,
       integration,
       fetchIntegrations,
@@ -266,6 +315,7 @@ export default {
           ok: {
             label: $t("action.delete"),
             color: "negative",
+            push: true,
           },
           cancel: {
             label: $t("action.noKeepIt"),
@@ -315,7 +365,9 @@ export default {
           .then(() => {
             showEditIntegrationDialog.value = false;
             $q.notify({
+              position: "top",
               color: "positive",
+              textColor: "white",
               message: $t("action.integrationUpdated"),
             });
             store
@@ -329,6 +381,29 @@ export default {
           })
           .finally(() => {
             loading.value = false;
+          });
+      },
+      handleSendTestIntegration({ id, name, type }) {
+        integration.value = { id, name, type };
+        showSendTestIntegrationDialog.value = true;
+      },
+      sendTestIntegration() {
+        loadingSendTest.value = true;
+        store
+          .dispatch("integrations/test", {
+            id: integration.value.id,
+          })
+          .then(() => {
+            showSendTestIntegrationDialog.value = false;
+            $q.notify({
+              position: "top",
+              color: "positive",
+              textColor: "white",
+              message: $t("action.testSent"),
+            });
+          })
+          .finally(() => {
+            loadingSendTest.value = false;
           });
       },
       reachedTheLimit() {

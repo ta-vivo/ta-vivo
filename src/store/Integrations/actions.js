@@ -27,3 +27,7 @@ export function createSlackIntegration(context, { authorizationCode }) {
 export function createDiscordIntegration(context, { authorizationCode }) {
   return axiosInstance.post('/integrations/discord', { authorizationCode })
 }
+
+export function test(context, { id }) {
+  return axiosInstance.post(`/integrations/test`, { id })
+}
