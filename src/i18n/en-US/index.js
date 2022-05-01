@@ -95,6 +95,10 @@ export default {
     sendEmail: 'Send email',
     continue: 'Continue',
     goToLogin: 'Go to login',
+    testIntegration: 'Test integration',
+    sendTest: 'Send test',
+    goBack: 'Go back',
+    testSent: 'Test sent',
   },
   messages: {
     information: {
@@ -128,6 +132,7 @@ export default {
       recoveryPasswordInitialDescription: 'Please enter your email and we will send you a one-time code so you can recover your password',
       changePasswordRules: 'Your password must be at least 8 characters long and contain at least one number and one letter.',
       recoveryPasswordSuccess: 'Recovery password successfully',
+      testIntegrationDescription: 'A test message will be sent to'
     },
     errors: {
       requireField: 'This field is required',
