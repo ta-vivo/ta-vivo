@@ -1,6 +1,6 @@
 # Ta vivo - Health Check
 
-![dashbaord](./docs/images/dashboard.png)
+![demo](./docs/images/demo.png)
 
 # Development
 
