@@ -1,6 +1,6 @@
 # Ta vivo - Health Check
 
-![demo](./docs/images/demo.png)
+![demo](https://njxuriszytyyfwsmdbga.supabase.co/storage/v1/object/public/assets/demo.png)
 
 # Development
 
