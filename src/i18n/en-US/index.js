@@ -55,6 +55,7 @@ export default {
     openSource: 'Open source',
     contact: 'Contact',
     phone: 'Phone',
+    retryOnFail: 'Retry on fail',
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
@@ -132,7 +133,8 @@ export default {
       recoveryPasswordInitialDescription: 'Please enter your email and we will send you a one-time code so you can recover your password',
       changePasswordRules: 'Your password must be at least 8 characters long and contain at least one number and one letter.',
       recoveryPasswordSuccess: 'Recovery password successfully',
-      testIntegrationDescription: 'A test message will be sent to'
+      testIntegrationDescription: 'A test message will be sent to',
+      retryOnFailDescription: 'If the Check fails, you can retry it until is up again.',
     },
     errors: {
       requireField: 'This field is required',
