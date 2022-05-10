@@ -47,6 +47,28 @@
             />
           </div>
           <div>
+            <p class="text-bold">
+              {{ $t("common.retryOnFail") }}
+              <q-icon name="eva-alert-circle-outline">
+                <q-tooltip class="bg-primary text-h6">
+                  {{ $t("messages.information.retryOnFailDescription") }}
+                </q-tooltip>
+              </q-icon>
+            </p>
+            <q-toggle v-model="check.retryOnFail" />
+            <template v-if="check.retryOnFail">
+              <q-slider
+                markers
+                label
+                :label-value="periods[check.onFailPeriodToCheck].value"
+                label-always
+                v-model="check.onFailPeriodToCheck"
+                :min="0"
+                :max="periods.length - 1"
+              />
+            </template>
+          </div>
+          <div>
             <p class="text-bold">{{ $t("common.integrations") }}</p>
             <template v-for="integration in integrations" :key="integration.id">
               <div>
@@ -100,6 +122,8 @@ export default {
       periodToCheck: 0,
       enabled: true,
       addIntegrations: [],
+      retryOnFail: false,
+      onFailPeriodToCheck: 0,
     });
     const loading = ref(false);
     const integrations = ref([]);
@@ -125,6 +149,8 @@ export default {
           target: check.value.target,
           periodToCheck: periods.value[check.value.periodToCheck].value,
           enabled: check.value.enabled,
+          retryOnFail: check.value.retryOnFail,
+          onFailPeriodToCheck: periods.value[check.value.onFailPeriodToCheck].value,
           addIntegrations: check.value.addIntegrations.map((id) => {
             const integration = integrations.value.find((i) => i.id === id);
             return {
