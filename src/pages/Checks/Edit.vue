@@ -50,7 +50,7 @@
             />
           </div>
           <div>
-           <p class="text-bold">
+            <p class="text-bold">
               {{ $t("common.retryOnFail") }}
               <q-icon name="eva-alert-circle-outline">
                 <q-tooltip class="bg-primary text-h6">
@@ -128,12 +128,12 @@ export default {
             );
             this.check.periodToCheck = period;
 
-            if (this.check.retryOnFail) {
-              const onFailPeriod = this.periods.findIndex(
-                (period) => period.value === this.check.onFailPeriodToCheckLabel
-              );
-              this.check.onFailPeriodToCheck = onFailPeriod;
-            }
+            this.check.retryOnFail;
+            const onFailPeriod = this.periods.findIndex(
+              (period) => period.value === this.check.onFailPeriodToCheckLabel
+            );
+            this.check.onFailPeriodToCheck = onFailPeriod === -1 ? 0 : onFailPeriod;
+
             this.check.currentIntegrations = this.check.check_integrations.map(
               (integration) => integration.integration.id
             );
