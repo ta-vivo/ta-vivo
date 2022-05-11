@@ -50,6 +50,28 @@
             />
           </div>
           <div>
+           <p class="text-bold">
+              {{ $t("common.retryOnFail") }}
+              <q-icon name="eva-alert-circle-outline">
+                <q-tooltip class="bg-primary text-h6">
+                  {{ $t("messages.information.retryOnFailDescription") }}
+                </q-tooltip>
+              </q-icon>
+            </p>
+            <q-toggle v-model="check.retryOnFail" />
+            <template v-if="check.retryOnFail">
+              <q-slider
+                markers
+                label
+                :label-value="periods[check.onFailPeriodToCheck].value"
+                label-always
+                v-model="check.onFailPeriodToCheck"
+                :min="0"
+                :max="periods.length - 1"
+              />
+            </template>
+          </div>
+          <div>
             <p class="text-bold">{{ $t("common.integrations") }}</p>
             <template v-for="integration in integrations" :key="integration.id">
               <div>
@@ -105,6 +127,13 @@ export default {
               (period) => period.value === this.check.periodToCheckLabel
             );
             this.check.periodToCheck = period;
+
+            if (this.check.retryOnFail) {
+              const onFailPeriod = this.periods.findIndex(
+                (period) => period.value === this.check.onFailPeriodToCheckLabel
+              );
+              this.check.onFailPeriodToCheck = onFailPeriod;
+            }
             this.check.currentIntegrations = this.check.check_integrations.map(
               (integration) => integration.integration.id
             );
@@ -163,6 +192,8 @@ export default {
         enabled: this.check.enabled,
         addIntegrations: this.check.addIntegrations,
         removeIntegrations: this.check.removeIntegrations,
+        onFailPeriodToCheck: this.periods[this.check.onFailPeriodToCheck].value,
+        retryOnFail: this.check.retryOnFail,
       };
 
       this.$store
