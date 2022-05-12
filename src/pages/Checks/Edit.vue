@@ -52,15 +52,23 @@
           <div>
             <p class="text-bold">
               {{ $t("common.retryOnFail") }}
-              <q-icon name="eva-alert-circle-outline">
-                <q-tooltip class="bg-primary text-h6">
-                  {{ $t("messages.information.retryOnFailDescription") }}
-                </q-tooltip>
-              </q-icon>
             </p>
-            <q-toggle v-model="check.retryOnFail" />
+            <div>
+              <span class="text-grey-7">
+                <q-icon name="eva-alert-circle-outline" />
+                {{ $t("messages.information.retryOnFailDescription") }}
+              </span>
+            </div>
+            <q-toggle v-model="check.retryOnFail" :disable="isBasicUser()" />
+            <role-badge
+              v-if="isBasicUser()"
+              class="cursor-pointer"
+              @click="$router.push('/pricing')"
+              role="Pro"
+            />
             <template v-if="check.retryOnFail">
               <q-slider
+                :disable="isBasicUser()"
                 markers
                 label
                 :label-value="periods[check.onFailPeriodToCheck].value"
@@ -103,10 +111,11 @@
 
 <script>
 import SmallIntegrationIcon from "components/Integrations/Icons/Small";
+import RoleBadge from "components/User/RoleBadge.vue";
 
 export default {
   name: "PageCheckEdit",
-  components: { SmallIntegrationIcon },
+  components: { SmallIntegrationIcon, RoleBadge },
   created() {
     this.$q.loading.show();
 
@@ -132,7 +141,8 @@ export default {
             const onFailPeriod = this.periods.findIndex(
               (period) => period.value === this.check.onFailPeriodToCheckLabel
             );
-            this.check.onFailPeriodToCheck = onFailPeriod === -1 ? 0 : onFailPeriod;
+            this.check.onFailPeriodToCheck =
+              onFailPeriod === -1 ? 0 : onFailPeriod;
 
             this.check.currentIntegrations = this.check.check_integrations.map(
               (integration) => integration.integration.id
@@ -214,6 +224,9 @@ export default {
         .finally(() => {
           this.loading = false;
         });
+    },
+    isBasicUser() {
+      return this.$store.getters["auth/getUser"].role === "basic";
     },
   },
 };
