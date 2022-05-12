@@ -49,15 +49,23 @@
           <div>
             <p class="text-bold">
               {{ $t("common.retryOnFail") }}
-              <q-icon name="eva-alert-circle-outline">
-                <q-tooltip class="bg-primary text-h6">
-                  {{ $t("messages.information.retryOnFailDescription") }}
-                </q-tooltip>
-              </q-icon>
             </p>
-            <q-toggle v-model="check.retryOnFail" />
+            <div>
+              <span class="text-grey-7">
+                <q-icon name="eva-alert-circle-outline" />
+                {{ $t("messages.information.retryOnFailDescription") }}
+              </span>
+            </div>
+            <q-toggle v-model="check.retryOnFail" :disable="isBasicUser()" />
+            <role-badge
+              v-if="isBasicUser()"
+              class="cursor-pointer"
+              @click="$router.push('/pricing')"
+              role="Pro"
+            />
             <template v-if="check.retryOnFail">
               <q-slider
+                :disable="isBasicUser()"
                 markers
                 label
                 :label-value="periods[check.onFailPeriodToCheck].value"
@@ -106,10 +114,11 @@ import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import SmallIntegrationIcon from "components/Integrations/Icons/Small";
 import jwtDecode from "jwt-decode";
+import RoleBadge from "components/User/RoleBadge.vue";
 
 export default {
   name: "PageCheckForm",
-  components: { SmallIntegrationIcon },
+  components: { SmallIntegrationIcon, RoleBadge },
   setup() {
     const $q = useQuasar();
     const $store = useStore();
@@ -150,7 +159,8 @@ export default {
           periodToCheck: periods.value[check.value.periodToCheck].value,
           enabled: check.value.enabled,
           retryOnFail: check.value.retryOnFail,
-          onFailPeriodToCheck: periods.value[check.value.onFailPeriodToCheck].value,
+          onFailPeriodToCheck:
+            periods.value[check.value.onFailPeriodToCheck].value,
           addIntegrations: check.value.addIntegrations.map((id) => {
             const integration = integrations.value.find((i) => i.id === id);
             return {
@@ -183,6 +193,9 @@ export default {
           .finally(() => {
             loading.value = false;
           });
+      },
+      isBasicUser() {
+        return $store.getters["auth/getUser"].role === "basic";
       },
     };
   },
