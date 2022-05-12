@@ -50,6 +50,36 @@
             />
           </div>
           <div>
+            <p class="text-bold">
+              {{ $t("common.retryOnFail") }}
+            </p>
+            <div>
+              <span class="text-grey-7">
+                <q-icon name="eva-alert-circle-outline" />
+                {{ $t("messages.information.retryOnFailDescription") }}
+              </span>
+            </div>
+            <q-toggle v-model="check.retryOnFail" :disable="isBasicUser()" />
+            <role-badge
+              v-if="isBasicUser()"
+              class="cursor-pointer"
+              @click="$router.push('/pricing')"
+              role="Pro"
+            />
+            <template v-if="check.retryOnFail">
+              <q-slider
+                :disable="isBasicUser()"
+                markers
+                label
+                :label-value="periods[check.onFailPeriodToCheck].value"
+                label-always
+                v-model="check.onFailPeriodToCheck"
+                :min="0"
+                :max="periods.length - 1"
+              />
+            </template>
+          </div>
+          <div>
             <p class="text-bold">{{ $t("common.integrations") }}</p>
             <template v-for="integration in integrations" :key="integration.id">
               <div>
@@ -81,10 +111,11 @@
 
 <script>
 import SmallIntegrationIcon from "components/Integrations/Icons/Small";
+import RoleBadge from "components/User/RoleBadge.vue";
 
 export default {
   name: "PageCheckEdit",
-  components: { SmallIntegrationIcon },
+  components: { SmallIntegrationIcon, RoleBadge },
   created() {
     this.$q.loading.show();
 
@@ -105,6 +136,14 @@ export default {
               (period) => period.value === this.check.periodToCheckLabel
             );
             this.check.periodToCheck = period;
+
+            this.check.retryOnFail;
+            const onFailPeriod = this.periods.findIndex(
+              (period) => period.value === this.check.onFailPeriodToCheckLabel
+            );
+            this.check.onFailPeriodToCheck =
+              onFailPeriod === -1 ? 0 : onFailPeriod;
+
             this.check.currentIntegrations = this.check.check_integrations.map(
               (integration) => integration.integration.id
             );
@@ -163,6 +202,8 @@ export default {
         enabled: this.check.enabled,
         addIntegrations: this.check.addIntegrations,
         removeIntegrations: this.check.removeIntegrations,
+        onFailPeriodToCheck: this.periods[this.check.onFailPeriodToCheck].value,
+        retryOnFail: this.check.retryOnFail,
       };
 
       this.$store
@@ -183,6 +224,9 @@ export default {
         .finally(() => {
           this.loading = false;
         });
+    },
+    isBasicUser() {
+      return this.$store.getters["auth/getUser"].role === "basic";
     },
   },
 };

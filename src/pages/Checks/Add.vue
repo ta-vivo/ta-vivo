@@ -47,6 +47,36 @@
             />
           </div>
           <div>
+            <p class="text-bold">
+              {{ $t("common.retryOnFail") }}
+            </p>
+            <div>
+              <span class="text-grey-7">
+                <q-icon name="eva-alert-circle-outline" />
+                {{ $t("messages.information.retryOnFailDescription") }}
+              </span>
+            </div>
+            <q-toggle v-model="check.retryOnFail" :disable="isBasicUser()" />
+            <role-badge
+              v-if="isBasicUser()"
+              class="cursor-pointer"
+              @click="$router.push('/pricing')"
+              role="Pro"
+            />
+            <template v-if="check.retryOnFail">
+              <q-slider
+                :disable="isBasicUser()"
+                markers
+                label
+                :label-value="periods[check.onFailPeriodToCheck].value"
+                label-always
+                v-model="check.onFailPeriodToCheck"
+                :min="0"
+                :max="periods.length - 1"
+              />
+            </template>
+          </div>
+          <div>
             <p class="text-bold">{{ $t("common.integrations") }}</p>
             <template v-for="integration in integrations" :key="integration.id">
               <div>
@@ -84,10 +114,11 @@ import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import SmallIntegrationIcon from "components/Integrations/Icons/Small";
 import jwtDecode from "jwt-decode";
+import RoleBadge from "components/User/RoleBadge.vue";
 
 export default {
   name: "PageCheckForm",
-  components: { SmallIntegrationIcon },
+  components: { SmallIntegrationIcon, RoleBadge },
   setup() {
     const $q = useQuasar();
     const $store = useStore();
@@ -100,6 +131,8 @@ export default {
       periodToCheck: 0,
       enabled: true,
       addIntegrations: [],
+      retryOnFail: false,
+      onFailPeriodToCheck: 0,
     });
     const loading = ref(false);
     const integrations = ref([]);
@@ -125,6 +158,9 @@ export default {
           target: check.value.target,
           periodToCheck: periods.value[check.value.periodToCheck].value,
           enabled: check.value.enabled,
+          retryOnFail: check.value.retryOnFail,
+          onFailPeriodToCheck:
+            periods.value[check.value.onFailPeriodToCheck].value,
           addIntegrations: check.value.addIntegrations.map((id) => {
             const integration = integrations.value.find((i) => i.id === id);
             return {
@@ -157,6 +193,9 @@ export default {
           .finally(() => {
             loading.value = false;
           });
+      },
+      isBasicUser() {
+        return $store.getters["auth/getUser"].role === "basic";
       },
     };
   },
