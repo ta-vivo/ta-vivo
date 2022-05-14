@@ -6,10 +6,14 @@
           <p class="text-h3">{{ $t("common.plans") }}</p>
         </div>
       </div>
-      <div :class="`row ${$q.screen.xs ? 'justify-center' : 'justify-between'} q-col-gutter-md`">
+      <div
+        :class="`row ${
+          $q.screen.xs ? 'justify-center' : 'justify-between'
+        } q-col-gutter-md`"
+      >
         <div class="col-md-3" v-for="plan in plans" :key="plan.id">
-          <q-card flat bordered class="text-center plan-card">
-            <q-card-section>
+          <q-card flat bordered class="plan-card">
+            <q-card-section class="text-center">
               <span class="text-h6">{{ plan.name }}</span>
               <div>
                 <span class="q-ml-sm" style="font-size: 20px">
@@ -20,11 +24,15 @@
             </q-card-section>
             <q-separator />
             <q-card-section>
-              <div v-for="feature in plan.features" :key="feature.item">
+              <div
+                class="q-mt-sm"
+                v-for="feature in plan.features"
+                :key="feature.item"
+              >
                 <pricing-feature :feature="feature" />
               </div>
             </q-card-section>
-            <q-card-section>
+            <q-card-section class="text-center">
               <q-btn
                 :disable="user.role === plan.name.toLowerCase()"
                 v-if="plan.price > 0"
@@ -76,6 +84,14 @@
             </div>
             <div>
               {{ $t("frequentQuestions.whatIsTheLogsHistoryNumberAnswer") }}
+            </div>
+          </div>
+          <div class="question-container">
+            <div class="text-bold">
+              {{ $t("frequentQuestions.whatIsRetryOnCheckFail") }}
+            </div>
+            <div>
+              {{ $t("frequentQuestions.whatIsRetryOnCheckFailAnswer") }}
             </div>
           </div>
         </q-card-section>
@@ -225,7 +241,7 @@ export default {
 <style>
 .plan-card {
   height: 100%;
-  width: 200px;
+  width: 220px;
 }
 .questions-container .question-container {
   margin: 20px auto;
