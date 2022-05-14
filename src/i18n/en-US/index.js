@@ -56,6 +56,7 @@ export default {
     contact: 'Contact',
     phone: 'Phone',
     retryOnFail: 'Retry on fail',
+    retryOnCheckFail: 'Retry on check fail'
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
@@ -66,6 +67,8 @@ export default {
     canICancelMyPaymentPlanAnswer: 'Yes, you can cancel your payment plan at any time, but no refunds are provided for prorated periods.',
     whatIsTheLogsHistoryNumber: 'What is the "logs history" number?',
     whatIsTheLogsHistoryNumberAnswer: 'Each "check" has a limit of "logs" that it can store. Every time the limit is reached, the oldest ones are deleted.',
+    whatIsRetryOnCheckFail: 'What is "retry on check fail"?',
+    whatIsRetryOnCheckFailAnswer: 'If a check fails, it will be retried every "retry on check fail" minutes. If you have a check that is checked every hour, you can specify a retry every minute if it fails.',
   },
   action: {
     addCheck: 'Add Check',
