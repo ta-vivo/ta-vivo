@@ -76,7 +76,9 @@
                 </template>
               </div>
               <div class="text-grey-8">{{ $t("common.period") }}</div>
-              <div class="q-mb-sm">{{ props.row.periodToCheckLabel }}</div>
+              <div class="q-mb-sm">
+                {{ props.row.periodToCheckLabel }} {{props.row.retryOnFail ? `(${$t('common.retryOnFail')} ${props.row.onFailPeriodToCheckLabel})` : ''}}
+              </div>
             </q-card-section>
             <q-separator />
             <q-card-actions>
