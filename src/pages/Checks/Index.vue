@@ -225,6 +225,7 @@ export default {
   setup() {
     const $t = useI18n().t;
     const $q = useQuasar();
+    const store = useStore();
 
     const truncatext = (text, length) => {
       if (text.length > length) {
@@ -262,6 +263,12 @@ export default {
         align: "center",
         label: $t("common.period"),
         field: "periodToCheckLabel",
+      },
+      {
+        name: 'retryOnFail',
+        align: 'center',
+        label: $t('common.retryOnFail'),
+        field: 'onFailPeriodToCheckLabel'
       },
       {
         name: "action",
@@ -308,8 +315,6 @@ export default {
     const loadingLogs = ref(false);
     const logs = ref([]);
     const tempCheck = ref({});
-
-    const store = useStore();
 
     const fetchChecks = (props) => {
       loading.value = true;
