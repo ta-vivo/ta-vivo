@@ -135,6 +135,11 @@
           </template>
         </q-td>
       </template>
+      <template v-slot:body-cell-periodToCheckLabel="props">
+        <q-td :props="props">
+          {{ props.row.periodToCheckLabel }} {{props.row.retryOnFail ? `(${$t('common.retryOnFail')} ${props.row.onFailPeriodToCheckLabel})` : ''}}
+        </q-td>
+      </template>
       <template v-slot:body-cell-action="props">
         <q-td :props="props">
           <q-btn
@@ -263,12 +268,6 @@ export default {
         align: "center",
         label: $t("common.period"),
         field: "periodToCheckLabel",
-      },
-      {
-        name: 'retryOnFail',
-        align: 'center',
-        label: $t('common.retryOnFail'),
-        field: 'onFailPeriodToCheckLabel'
       },
       {
         name: "action",
