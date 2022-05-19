@@ -76,7 +76,20 @@
                 </template>
               </div>
               <div class="text-grey-8">{{ $t("common.period") }}</div>
-              <div class="q-mb-sm">{{ props.row.periodToCheckLabel }}</div>
+              <div class="q-mb-sm">
+                {{ props.row.periodToCheckLabel }}
+                <template v-if="props.row.retryOnFail">
+                  <q-icon color="primary" name="eva-repeat-outline">
+                    <q-tooltip class="bg-primary">
+                      {{
+                        `${$t("common.retryOnFail")} ${
+                          props.row.onFailPeriodToCheckLabel
+                        }`
+                      }}
+                    </q-tooltip>
+                  </q-icon>
+                </template>
+              </div>
             </q-card-section>
             <q-separator />
             <q-card-actions>
@@ -132,6 +145,22 @@
                 </q-tooltip>
               </small-integration-Icon>
             </div>
+          </template>
+        </q-td>
+      </template>
+      <template v-slot:body-cell-periodToCheckLabel="props">
+        <q-td :props="props">
+          {{ props.row.periodToCheckLabel }}
+          <template v-if="props.row.retryOnFail">
+            <q-icon size="16" color="primary" name="eva-repeat-outline">
+              <q-tooltip class="bg-primary">
+                {{
+                  `${$t("common.retryOnFail")} ${
+                    props.row.onFailPeriodToCheckLabel
+                  }`
+                }}
+              </q-tooltip>
+            </q-icon>
           </template>
         </q-td>
       </template>
@@ -225,6 +254,7 @@ export default {
   setup() {
     const $t = useI18n().t;
     const $q = useQuasar();
+    const store = useStore();
 
     const truncatext = (text, length) => {
       if (text.length > length) {
@@ -308,8 +338,6 @@ export default {
     const loadingLogs = ref(false);
     const logs = ref([]);
     const tempCheck = ref({});
-
-    const store = useStore();
 
     const fetchChecks = (props) => {
       loading.value = true;
