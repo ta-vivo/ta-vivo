@@ -77,7 +77,18 @@
               </div>
               <div class="text-grey-8">{{ $t("common.period") }}</div>
               <div class="q-mb-sm">
-                {{ props.row.periodToCheckLabel }} {{props.row.retryOnFail ? `(${$t('common.retryOnFail')} ${props.row.onFailPeriodToCheckLabel})` : ''}}
+                {{ props.row.periodToCheckLabel }}
+                <template v-if="props.row.retryOnFail">
+                  <q-icon color="primary" name="eva-repeat-outline">
+                    <q-tooltip class="bg-primary">
+                      {{
+                        `${$t("common.retryOnFail")} ${
+                          props.row.onFailPeriodToCheckLabel
+                        }`
+                      }}
+                    </q-tooltip>
+                  </q-icon>
+                </template>
               </div>
             </q-card-section>
             <q-separator />
@@ -139,7 +150,18 @@
       </template>
       <template v-slot:body-cell-periodToCheckLabel="props">
         <q-td :props="props">
-          {{ props.row.periodToCheckLabel }} {{props.row.retryOnFail ? `(${$t('common.retryOnFail')} ${props.row.onFailPeriodToCheckLabel})` : ''}}
+          {{ props.row.periodToCheckLabel }}
+          <template v-if="props.row.retryOnFail">
+            <q-icon size="16" color="primary" name="eva-repeat-outline">
+              <q-tooltip class="bg-primary">
+                {{
+                  `${$t("common.retryOnFail")} ${
+                    props.row.onFailPeriodToCheckLabel
+                  }`
+                }}
+              </q-tooltip>
+            </q-icon>
+          </template>
         </q-td>
       </template>
       <template v-slot:body-cell-action="props">
