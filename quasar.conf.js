@@ -24,6 +24,7 @@ module.exports = configure(function (ctx) {
     boot: [
       'i18n',
       'axios',
+      'supabase'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -53,7 +54,9 @@ module.exports = configure(function (ctx) {
         PAYPAL_CLIENT_ID: process.env.PAYPAL_CLIENT_ID,
         CUSTOM_APP_NAME: process.env.CUSTOM_APP_NAME,
         CUSTOM_APP_URL: process.env.CUSTOM_APP_URL,
-        CONTACT_EMAIL: process.env.CONTACT_EMAIL
+        CONTACT_EMAIL: process.env.CONTACT_EMAIL,
+        SUPABASE_PROJECT_URL: process.env.SUPABASE_PROJECT_URL,
+        SUPABASE_ANON_PUBLIC_KEY: process.env.SUPABASE_ANON_PUBLIC_KEY,
       },
       // transpile: false,
       // publicPath: '/',
