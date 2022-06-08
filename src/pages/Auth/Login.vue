@@ -63,13 +63,21 @@
           <div class="text-center">
             <q-separator class="q-my-md" />
             <span class="text-grey-7">
-              {{ $t('common.connectWithOneClick') }}
+              {{ $t("common.connectWithOneClick") }}
             </span>
           </div>
           <div>
             <q-btn
+              :icon="discordIcon"
+              class="full-width discord-color"
+              text-color="white"
+              label="Discord"
+              @click="dispatchDiscordAuth()"
+              :disable="loading"
+            />
+            <q-btn
               icon="eva-google"
-              class="full-width google-color"
+              class="full-width google-color q-mt-md"
               text-color="white"
               label="Google"
               @click="dispatchGoogleAuth()"
@@ -89,6 +97,7 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import jwtDecode from "jwt-decode";
 import supabase from "boot/supabase";
+import { fabDiscord } from "@quasar/extras/fontawesome-v5";
 
 export default {
   name: "PageLogin",
@@ -100,6 +109,7 @@ export default {
     const email = ref(null);
     const password = ref(null);
     const loading = ref(false);
+    const discordIcon = ref(fabDiscord);
 
     const user = supabase.auth.user();
 
@@ -130,10 +140,40 @@ export default {
         });
     };
 
+    const discordAuth = async () => {
+      $store
+        .dispatch("auth/discord", {
+          access_token: supabase.auth.session().access_token,
+        })
+        .then((response) => {
+          const token = response.data.data.token;
+          const decoded = jwtDecode(token);
+
+          $store.commit("auth/SET_USER", decoded);
+
+          window.localStorage.setItem("token", token);
+
+          $router.push("/");
+        })
+        .catch((error) => {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: error.response.data.message,
+          });
+        })
+        .finally(() => {
+          loading.value = false;
+        });
+    };
+
     if (user) {
+      console.log('🚀 ~ file: Login.vue ~ line 171 ~ setup ~ user', user)
+      loading.value = true;
       if (user.app_metadata.provider === "google") {
-        loading.value = true;
         googleAuth();
+      } else if (user.app_metadata.provider === "discord") {
+        discordAuth();
       }
     }
 
@@ -141,6 +181,7 @@ export default {
       email,
       password,
       loading,
+      discordIcon,
 
       onSubmit() {
         loading.value = true;
@@ -180,6 +221,11 @@ export default {
           provider: "google",
         });
       },
+      async dispatchDiscordAuth() {
+        const { user, session, error } = await supabase.auth.signIn({
+          provider: "discord",
+        });
+      },
     };
   },
 };
@@ -187,5 +233,8 @@ export default {
 <style scoped>
 .google-color {
   background-color: #cf4737;
+}
+.discord-color {
+  background-color: #5865f2;
 }
 </style>
