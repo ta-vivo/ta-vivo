@@ -61,7 +61,10 @@
             />
           </div>
           <div class="text-center">
-            <q-separator />
+            <q-separator class="q-my-md" />
+            <span class="text-grey-7">
+              {{ $t('common.connectWithOneClick') }}
+            </span>
           </div>
           <div>
             <q-btn
