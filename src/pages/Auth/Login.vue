@@ -50,6 +50,11 @@
               color="primary"
               icon="eva-log-in-outline"
             />
+            <q-btn
+              @click="dispatchGoogleAuth()"
+              color="primary"
+              label="Google"
+            />
           </div>
           <div class="text-center">
             <q-separator />
@@ -75,6 +80,7 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import jwtDecode from "jwt-decode";
+import supabase from "boot/supabase";
 
 export default {
   name: "PageLogin",
@@ -86,6 +92,41 @@ export default {
     const email = ref(null);
     const password = ref(null);
     const loading = ref(false);
+
+    const user = supabase.auth.user();
+
+    const googleAuth = async () => {
+      $store
+        .dispatch("auth/google", {
+          access_token: supabase.auth.session().access_token,
+        })
+        .then((response) => {
+          const token = response.data.data.token;
+          const decoded = jwtDecode(token);
+
+          $store.commit("auth/SET_USER", decoded);
+
+          window.localStorage.setItem("token", token);
+
+          $router.push("/");
+        })
+        .catch((error) => {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: error.response.data.message,
+          });
+        })
+        .finally(() => {
+          loading.value = false;
+        });
+    };
+
+    if (user) {
+      if (user.app_metadata.provider === "google") {
+        googleAuth();
+      }
+    }
 
     return {
       email,
@@ -124,6 +165,11 @@ export default {
           .finally(() => {
             loading.value = false;
           });
+      },
+      async dispatchGoogleAuth() {
+        const { user, session, error } = await supabase.auth.signIn({
+          provider: "google",
+        });
       },
     };
   },
