@@ -5,6 +5,7 @@ export default {
   common: {
     login: 'Login',
     register: 'Register',
+    registerWithEmail: 'Register with email',
     username: 'Username',
     email: 'Email',
     password: 'Password',
