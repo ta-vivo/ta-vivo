@@ -50,22 +50,27 @@
               color="primary"
               icon="eva-log-in-outline"
             />
-            <q-btn
-              @click="dispatchGoogleAuth()"
-              color="primary"
-              label="Google"
-            />
-          </div>
-          <div class="text-center">
-            <q-separator />
           </div>
           <div class="text-center">
             <q-btn
               flat
               to="/auth/register"
-              :label="$t('common.register')"
+              :label="$t('common.registerWithEmail')"
               color="primary"
               icon="eva-person-add-outline"
+            />
+          </div>
+          <div class="text-center">
+            <q-separator />
+          </div>
+          <div>
+            <q-btn
+              icon="eva-google"
+              class="full-width google-color"
+              text-color="white"
+              label="Google"
+              @click="dispatchGoogleAuth()"
+              :disable="loading"
             />
           </div>
         </q-form>
@@ -124,6 +129,7 @@ export default {
 
     if (user) {
       if (user.app_metadata.provider === "google") {
+        loading.value = true;
         googleAuth();
       }
     }
@@ -175,3 +181,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.google-color {
+  background-color: #cf4737;
+}
+</style>
