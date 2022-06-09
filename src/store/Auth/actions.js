@@ -16,6 +16,10 @@ export function discord (context, { access_token }) {
   return axiosInstanceForAuth.post('/auth/discord', { access_token })
 }
 
+export function slack (context, { access_token }) {
+  return axiosInstanceForAuth.post('/auth/slack', { access_token })
+}
+
 export function register(context, { email, password, confirmPassword, fullname }) {
   return axiosInstanceForAuth.post('/auth/register', { email, password, confirmPassword, fullname })
 }
