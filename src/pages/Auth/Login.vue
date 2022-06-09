@@ -85,6 +85,15 @@
               @click="dispatchGoogleAuth()"
               :disable="loading"
             />
+            <q-btn
+              push
+              :icon="slackLogo"
+              class="full-width slack-color q-mt-md"
+              text-color="black"
+              label="Slack"
+              @click="dispatchSlackAuth()"
+              :disable="loading"
+            />
           </div>
         </q-form>
       </q-card-section>
@@ -99,7 +108,7 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import jwtDecode from "jwt-decode";
 import supabase from "boot/supabase";
-import { fabDiscord } from "@quasar/extras/fontawesome-v5";
+import { fabDiscord, fabSlack } from "@quasar/extras/fontawesome-v5";
 
 export default {
   name: "PageLogin",
@@ -112,6 +121,7 @@ export default {
     const password = ref(null);
     const loading = ref(false);
     const discordIcon = ref(fabDiscord);
+    const slackLogo = ref(fabSlack);
 
     const user = supabase.auth.user();
 
@@ -167,12 +177,50 @@ export default {
         });
     };
 
+    const slackAuth = async () => {
+      $store
+        .dispatch("auth/slack", {
+          access_token: supabase.auth.session().access_token,
+        })
+        .then((response) => {
+          const token = response.data.data.token;
+          onSuccessLogin(token);
+
+          $router.push("/");
+        })
+        .catch((error) => {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: error.response.data.message,
+          });
+        })
+        .finally(() => {
+          loading.value = false;
+        });
+    };
+
     if (user) {
       loading.value = true;
-      if (user.app_metadata.provider === "google") {
-        googleAuth();
-      } else if (user.app_metadata.provider === "discord") {
-        discordAuth();
+
+      switch (user.app_metadata.provider) {
+        case "google":
+          googleAuth();
+          break;
+        case "discord":
+          discordAuth();
+          break;
+        case "slack":
+          slackAuth();
+          break;
+        default:
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: "Unknown provider",
+          });
+          loading.value = false;
+          break;
       }
     }
 
@@ -181,6 +229,7 @@ export default {
       password,
       loading,
       discordIcon,
+      slackLogo,
 
       onSubmit() {
         loading.value = true;
@@ -221,6 +270,11 @@ export default {
       async dispatchDiscordAuth() {
         const { user, session, error } = await supabase.auth.signIn({
           provider: "discord",
+        });
+      },
+      async dispatchSlackAuth() {
+        const { user, session, error } = await supabase.auth.signIn({
+          provider: "slack",
         });
       },
     };
