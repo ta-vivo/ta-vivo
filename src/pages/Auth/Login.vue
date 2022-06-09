@@ -68,6 +68,7 @@
           </div>
           <div>
             <q-btn
+              push
               :icon="discordIcon"
               class="full-width discord-color"
               text-color="white"
@@ -76,6 +77,7 @@
               :disable="loading"
             />
             <q-btn
+              push
               icon="eva-google"
               class="full-width google-color q-mt-md"
               text-color="white"
@@ -113,6 +115,13 @@ export default {
 
     const user = supabase.auth.user();
 
+    const onSuccessLogin = (token) => {
+      const decoded = jwtDecode(token);
+
+      $store.commit("auth/SET_USER", decoded);
+      window.localStorage.setItem("token", token);
+    };
+
     const googleAuth = async () => {
       $store
         .dispatch("auth/google", {
@@ -120,12 +129,7 @@ export default {
         })
         .then((response) => {
           const token = response.data.data.token;
-          const decoded = jwtDecode(token);
-
-          $store.commit("auth/SET_USER", decoded);
-
-          window.localStorage.setItem("token", token);
-
+          onSuccessLogin(token);
           $router.push("/");
         })
         .catch((error) => {
@@ -147,11 +151,7 @@ export default {
         })
         .then((response) => {
           const token = response.data.data.token;
-          const decoded = jwtDecode(token);
-
-          $store.commit("auth/SET_USER", decoded);
-
-          window.localStorage.setItem("token", token);
+          onSuccessLogin(token);
 
           $router.push("/");
         })
@@ -168,7 +168,6 @@ export default {
     };
 
     if (user) {
-      console.log('🚀 ~ file: Login.vue ~ line 171 ~ setup ~ user', user)
       loading.value = true;
       if (user.app_metadata.provider === "google") {
         googleAuth();
@@ -192,11 +191,9 @@ export default {
           })
           .then((response) => {
             const token = response.data.data.token;
+            onSuccessLogin(token);
+
             const decoded = jwtDecode(token);
-
-            $store.commit("auth/SET_USER", decoded);
-
-            window.localStorage.setItem("token", token);
 
             if (!decoded.active) {
               $router.push("/auth/confirm-email");
