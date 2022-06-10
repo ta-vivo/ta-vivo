@@ -78,6 +78,15 @@
             />
             <q-btn
               push
+              :icon="githubLogo"
+              class="full-width github-color q-mt-md"
+              text-color="white"
+              label="Github"
+              @click="dispatchGithubAuth()"
+              :disable="loading"
+            />
+            <q-btn
+              push
               icon="eva-google"
               class="full-width google-color q-mt-md"
               text-color="white"
@@ -108,7 +117,7 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import jwtDecode from "jwt-decode";
 import supabase from "boot/supabase";
-import { fabDiscord, fabSlack } from "@quasar/extras/fontawesome-v5";
+import { fabDiscord, fabSlack, fabGithub } from "@quasar/extras/fontawesome-v5";
 
 export default {
   name: "PageLogin",
@@ -122,6 +131,7 @@ export default {
     const loading = ref(false);
     const discordIcon = ref(fabDiscord);
     const slackLogo = ref(fabSlack);
+    const githubLogo = ref(fabGithub);
 
     const user = supabase.auth.user();
 
@@ -200,6 +210,29 @@ export default {
         });
     };
 
+    const githubAuth = async () => {
+      $store
+        .dispatch("auth/github", {
+          access_token: supabase.auth.session().access_token,
+        })
+        .then((response) => {
+          const token = response.data.data.token;
+          onSuccessLogin(token);
+
+          $router.push("/");
+        })
+        .catch((error) => {
+          $q.notify({
+            color: "negative",
+            position: "top",
+            message: error.response.data.message,
+          });
+        })
+        .finally(() => {
+          loading.value = false;
+        });
+    };
+
     if (user) {
       loading.value = true;
 
@@ -212,6 +245,9 @@ export default {
           break;
         case "slack":
           slackAuth();
+          break;
+        case "github":
+          githubAuth();
           break;
         default:
           $q.notify({
@@ -230,6 +266,7 @@ export default {
       loading,
       discordIcon,
       slackLogo,
+      githubLogo,
 
       onSubmit() {
         loading.value = true;
@@ -277,6 +314,11 @@ export default {
           provider: "slack",
         });
       },
+      async dispatchGithubAuth() {
+        const { user, session, error } = await supabase.auth.signIn({
+          provider: "github",
+        });
+      }
     };
   },
 };
@@ -287,5 +329,8 @@ export default {
 }
 .discord-color {
   background-color: #5865f2;
+}
+.github-color {
+  background-color: #24292e;
 }
 </style>
