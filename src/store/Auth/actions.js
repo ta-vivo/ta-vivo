@@ -8,6 +8,22 @@ export function login(context, { email, password }) {
   return axiosInstanceForAuth.post('/auth/login', { email, password })
 }
 
+export function google (context, { access_token }) {
+  return axiosInstanceForAuth.post('/auth/google', { access_token })
+}
+
+export function discord (context, { access_token }) {
+  return axiosInstanceForAuth.post('/auth/discord', { access_token })
+}
+
+export function slack (context, { access_token }) {
+  return axiosInstanceForAuth.post('/auth/slack', { access_token })
+}
+
+export function github (context, { access_token }) {
+  return axiosInstanceForAuth.post('/auth/github', { access_token })
+}
+
 export function register(context, { email, password, confirmPassword, fullname }) {
   return axiosInstanceForAuth.post('/auth/register', { email, password, confirmPassword, fullname })
 }

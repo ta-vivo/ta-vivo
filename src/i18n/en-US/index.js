@@ -5,6 +5,8 @@ export default {
   common: {
     login: 'Login',
     register: 'Register',
+    registerWithEmail: 'Register with email',
+    connectWithOneClick: 'Connect with one click',
     username: 'Username',
     email: 'Email',
     password: 'Password',

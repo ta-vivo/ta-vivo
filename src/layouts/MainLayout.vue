@@ -43,7 +43,7 @@
               <q-item-section>
                 <q-item-label>
                   <q-icon name="eva-person-outline" />
-                  {{$t('common.profile')}}
+                  {{ $t("common.profile") }}
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -70,6 +70,8 @@ import { defineComponent } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import RoleBadge from "components/User/RoleBadge.vue";
+import supabase from "boot/supabase";
+import { useQuasar } from 'quasar';
 
 export default defineComponent({
   name: "MainLayout",
@@ -79,15 +81,25 @@ export default defineComponent({
   setup() {
     const $store = useStore();
     const $router = useRouter();
+    const $q = useQuasar();
 
     return {
-      logout() {
+      async logout() {
+        $q.loading.show();
+        const user = supabase.auth.user();
+
         window.localStorage.removeItem("token");
         $store.commit("auth/SET_USER", {
           email: "",
           id: null,
           role: "basic",
         });
+
+        if (user) {
+          await supabase.auth.signOut();
+        }
+
+        $q.loading.hide();
         $router.push("/auth/login");
       },
     };
