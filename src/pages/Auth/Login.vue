@@ -133,7 +133,14 @@ export default {
     const slackLogo = ref(fabSlack);
     const githubLogo = ref(fabGithub);
 
-    const user = supabase.auth.user();
+    let user = supabase.auth.user();
+
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN") {
+        user = supabase.auth.user();
+        onUserIsLoggedIn();
+      }
+    });
 
     const onSuccessLogin = (token) => {
       const decoded = jwtDecode(token);
@@ -233,7 +240,7 @@ export default {
         });
     };
 
-    if (user) {
+    const onUserIsLoggedIn = () => {
       loading.value = true;
 
       switch (user.app_metadata.provider) {
@@ -258,6 +265,10 @@ export default {
           loading.value = false;
           break;
       }
+    };
+
+    if (user) {
+      onUserIsLoggedIn();
     }
 
     return {
@@ -318,7 +329,7 @@ export default {
         const { user, session, error } = await supabase.auth.signIn({
           provider: "github",
         });
-      }
+      },
     };
   },
 };
