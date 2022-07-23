@@ -65,6 +65,33 @@
             </div>
             <q-separator class="q-my-md" />
             <div>
+              <div class="text-h4 q-mb-md">
+                {{ $t("common.timezone") }}
+              </div>
+              <p>{{$t('messages.information.timezoneDescription')}}</p>
+              <q-select
+                outlined
+                v-model="timezone"
+                :options="timezones"
+                :label="$t('common.timezone')"
+                option-value="code"
+                option-label="code"
+                emit-value
+                map-options
+                use-input
+                @filter="filterTimezone"
+              />
+                <q-btn
+                  :loading="loading"
+                  class="q-pl-none q-mt-md"
+                  color="primary"
+                  flat
+                  :label="$t('action.saveTimezone')"
+                  @click="saveTimezone"
+                />
+            </div>
+            <q-separator class="q-my-md" />
+            <div>
               <div class="text-h4 q-mb-md">{{ $t("common.subscription") }}</div>
               <role-badge
                 class="cursor-pointer"
@@ -160,6 +187,7 @@ import RoleBadge from "components/User/RoleBadge.vue";
 import PricingFeature from "components/Pricing/Feature";
 import { date } from "quasar";
 import ChangePassword from 'components/User/ChangePassword';
+import timezonesJson from "assets/timezones.json";
 
 export default {
   name: "PageProfile",
@@ -172,6 +200,8 @@ export default {
     return {
       loading: false,
       showChangePassword: false,
+      timezones: [],
+      timezone: this.$store.getters["auth/getUser"].timezone,
       planDetails: { features: [] },
       basicPlan: { features: [] },
       showCancelSubscription: false,
@@ -300,6 +330,44 @@ export default {
     },
     getDateFormat(timeStamp) {
       return date.formatDate(timeStamp, "DD/MM/YYYY");
+    },
+    filterTimezone(val, update) {
+      if (val === "") {
+        update(() => {
+          this.timezones = timezonesJson;
+          // here you have access to "ref" which
+          // is the Vue reference of the QSelect
+        });
+        return;
+      }
+      update(() => {
+        const needle = val.toLowerCase();
+        this.timezones = timezonesJson.filter(
+          (v) => v.code.toLowerCase().indexOf(needle) > -1
+        );
+      });
+    },
+    saveTimezone () {
+      this.loading = true;
+      this.$store
+        .dispatch("user/update", {timezone: this.timezone})
+        .then(async () => {
+          this.$q.notify({
+            message: this.$t("action.timezoneSaved"),
+            color: "positive",
+          });
+          await this.fetchMe();
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$q.notify({
+            message: this.$t("messages.error.errorOnSave"),
+            color: "negative",
+          });
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
   },
   computed: {
