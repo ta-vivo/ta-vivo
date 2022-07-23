@@ -3,7 +3,8 @@ export default function () {
     user: {
       id: null,
       email: '',
-      role: 'basic'
+      role: 'basic',
+      timezone: 'UTC'
     }
   }
 }
