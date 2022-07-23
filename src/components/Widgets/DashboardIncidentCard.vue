@@ -20,7 +20,7 @@
           {{ $t("common.isNoReachable") }}
         </p>
         <p>
-          {{ getDateFormat(incident.createdAt, "DD/MM/YYYY HH:mm:ss") }}
+          {{ getDateFormat(incident.createdAt, "DD/MM/YYYY HH:mm:ss") }} ({{incident.timezone}})
         </p>
       </template>
       <q-inner-loading :showing="loading" label-style="font-size: 1.1em" />
