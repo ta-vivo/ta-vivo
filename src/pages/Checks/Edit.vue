@@ -50,6 +50,20 @@
             />
           </div>
           <div>
+            <q-select
+              outlined
+              v-model="check.timezone"
+              :options="timezones"
+              :label="$t('common.timezone')"
+              option-value="code"
+              option-label="code"
+              emit-value
+              map-options
+              use-input
+              @filter="filterTimezone"
+            />
+          </div>
+          <div>
             <p class="text-bold">
               {{ $t("common.retryOnFail") }}
             </p>
@@ -112,6 +126,7 @@
 <script>
 import SmallIntegrationIcon from "components/Integrations/Icons/Small";
 import RoleBadge from "components/User/RoleBadge.vue";
+import timezonesJson from "assets/timezones.json";
 
 export default {
   name: "PageCheckEdit",
@@ -163,8 +178,10 @@ export default {
         currentIntegrations: [],
         addIntegrations: [],
         removeIntegrations: [],
+        timezone: ""
       },
       loading: false,
+      timezones:[],
       periods: this.$store.getters["checks/getPeriods"].filter((period) =>
         period.roles.includes(
           this.$store.getters["auth/getUser"].role.toLowerCase()
@@ -204,6 +221,7 @@ export default {
         removeIntegrations: this.check.removeIntegrations,
         onFailPeriodToCheck: this.periods[this.check.onFailPeriodToCheck].value,
         retryOnFail: this.check.retryOnFail,
+        timezone: this.check.timezone
       };
 
       this.$store
@@ -227,6 +245,22 @@ export default {
     },
     isBasicUser() {
       return this.$store.getters["auth/getUser"].role === "basic";
+    },
+    filterTimezone(val, update) {
+      if (val === "") {
+        update(() => {
+          this.timezones = timezonesJson;
+          // here you have access to "ref" which
+          // is the Vue reference of the QSelect
+        });
+        return;
+      }
+      update(() => {
+        const needle = val.toLowerCase();
+        this.timezones = timezonesJson.filter(
+          (v) => v.code.toLowerCase().indexOf(needle) > -1
+        );
+      });
     },
   },
 };
