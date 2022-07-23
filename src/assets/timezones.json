@@ -1,0 +1,755 @@
+[
+  {
+    "code": "UTC"
+  },
+  {
+    "code": "Pacific/Niue"
+  },
+  {
+    "code": "Pacific/Pago_Pago"
+  },
+  {
+    "code": "Pacific/Honolulu"
+  },
+  {
+    "code": "Pacific/Rarotonga"
+  },
+  {
+    "code": "Pacific/Tahiti"
+  },
+  {
+    "code": "Pacific/Marquesas"
+  },
+  {
+    "code": "America/Anchorage"
+  },
+  {
+    "code": "Pacific/Gambier"
+  },
+  {
+    "code": "America/Los_Angeles"
+  },
+  {
+    "code": "America/Tijuana"
+  },
+  {
+    "code": "America/Vancouver"
+  },
+  {
+    "code": "America/Whitehorse"
+  },
+  {
+    "code": "Pacific/Pitcairn"
+  },
+  {
+    "code": "America/Denver"
+  },
+  {
+    "code": "America/Phoenix"
+  },
+  {
+    "code": "America/Mazatlan"
+  },
+  {
+    "code": "America/Dawson_Creek"
+  },
+  {
+    "code": "America/Edmonton"
+  },
+  {
+    "code": "America/Hermosillo"
+  },
+  {
+    "code": "America/Yellowknife"
+  },
+  {
+    "code": "America/Belize"
+  },
+  {
+    "code": "America/Chicago"
+  },
+  {
+    "code": "America/Mexico_City"
+  },
+  {
+    "code": "America/Regina"
+  },
+  {
+    "code": "America/Tegucigalpa"
+  },
+  {
+    "code": "America/Winnipeg"
+  },
+  {
+    "code": "America/Costa_Rica"
+  },
+  {
+    "code": "America/El_Salvador"
+  },
+  {
+    "code": "Pacific/Galapagos"
+  },
+  {
+    "code": "America/Guatemala"
+  },
+  {
+    "code": "America/Managua"
+  },
+  {
+    "code": "America/Cancun"
+  },
+  {
+    "code": "America/Bogota"
+  },
+  {
+    "code": "Pacific/Easter"
+  },
+  {
+    "code": "America/New_York"
+  },
+  {
+    "code": "America/Iqaluit"
+  },
+  {
+    "code": "America/Toronto"
+  },
+  {
+    "code": "America/Guayaquil"
+  },
+  {
+    "code": "America/Havana"
+  },
+  {
+    "code": "America/Jamaica"
+  },
+  {
+    "code": "America/Lima"
+  },
+  {
+    "code": "America/Nassau"
+  },
+  {
+    "code": "America/Panama"
+  },
+  {
+    "code": "America/Port-au-Prince"
+  },
+  {
+    "code": "America/Rio_Branco"
+  },
+  {
+    "code": "America/Halifax"
+  },
+  {
+    "code": "America/Barbados"
+  },
+  {
+    "code": "Atlantic/Bermuda"
+  },
+  {
+    "code": "America/Boa_Vista"
+  },
+  {
+    "code": "America/Caracas"
+  },
+  {
+    "code": "America/Curacao"
+  },
+  {
+    "code": "America/Grand_Turk"
+  },
+  {
+    "code": "America/Guyana"
+  },
+  {
+    "code": "America/La_Paz"
+  },
+  {
+    "code": "America/Manaus"
+  },
+  {
+    "code": "America/Martinique"
+  },
+  {
+    "code": "America/Port_of_Spain"
+  },
+  {
+    "code": "America/Porto_Velho"
+  },
+  {
+    "code": "America/Puerto_Rico"
+  },
+  {
+    "code": "America/Santo_Domingo"
+  },
+  {
+    "code": "America/Thule"
+  },
+  {
+    "code": "America/St_Johns"
+  },
+  {
+    "code": "America/Araguaina"
+  },
+  {
+    "code": "America/Asuncion"
+  },
+  {
+    "code": "America/Belem"
+  },
+  {
+    "code": "America/Argentina/Buenos_Aires"
+  },
+  {
+    "code": "America/Campo_Grande"
+  },
+  {
+    "code": "America/Cayenne"
+  },
+  {
+    "code": "America/Cuiaba"
+  },
+  {
+    "code": "America/Fortaleza"
+  },
+  {
+    "code": "America/Godthab"
+  },
+  {
+    "code": "America/Maceio"
+  },
+  {
+    "code": "America/Miquelon"
+  },
+  {
+    "code": "America/Montevideo"
+  },
+  {
+    "code": "Antarctica/Palmer"
+  },
+  {
+    "code": "America/Paramaribo"
+  },
+  {
+    "code": "America/Punta_Arenas"
+  },
+  {
+    "code": "America/Recife"
+  },
+  {
+    "code": "Antarctica/Rothera"
+  },
+  {
+    "code": "America/Bahia"
+  },
+  {
+    "code": "America/Santiago"
+  },
+  {
+    "code": "Atlantic/Stanley"
+  },
+  {
+    "code": "America/Noronha"
+  },
+  {
+    "code": "America/Sao_Paulo"
+  },
+  {
+    "code": "Atlantic/South_Georgia"
+  },
+  {
+    "code": "Atlantic/Azores"
+  },
+  {
+    "code": "Atlantic/Cape_Verde"
+  },
+  {
+    "code": "America/Scoresbysund"
+  },
+  {
+    "code": "Africa/Abidjan"
+  },
+  {
+    "code": "Africa/Accra"
+  },
+  {
+    "code": "Africa/Bissau"
+  },
+  {
+    "code": "Atlantic/Canary"
+  },
+  {
+    "code": "Africa/Casablanca"
+  },
+  {
+    "code": "America/Danmarkshavn"
+  },
+  {
+    "code": "Europe/Dublin"
+  },
+  {
+    "code": "Africa/El_Aaiun"
+  },
+  {
+    "code": "Atlantic/Faroe"
+  },
+  {
+    "code": "Etc/GMT"
+  },
+  {
+    "code": "Europe/Lisbon"
+  },
+  {
+    "code": "Europe/London"
+  },
+  {
+    "code": "Africa/Monrovia"
+  },
+  {
+    "code": "Atlantic/Reykjavik"
+  },
+  {
+    "code": "Africa/Algiers"
+  },
+  {
+    "code": "Europe/Amsterdam"
+  },
+  {
+    "code": "Europe/Andorra"
+  },
+  {
+    "code": "Europe/Berlin"
+  },
+  {
+    "code": "Europe/Brussels"
+  },
+  {
+    "code": "Europe/Budapest"
+  },
+  {
+    "code": "Europe/Belgrade"
+  },
+  {
+    "code": "Europe/Prague"
+  },
+  {
+    "code": "Africa/Ceuta"
+  },
+  {
+    "code": "Europe/Copenhagen"
+  },
+  {
+    "code": "Europe/Gibraltar"
+  },
+  {
+    "code": "Africa/Lagos"
+  },
+  {
+    "code": "Europe/Luxembourg"
+  },
+  {
+    "code": "Europe/Madrid"
+  },
+  {
+    "code": "Europe/Malta"
+  },
+  {
+    "code": "Europe/Monaco"
+  },
+  {
+    "code": "Africa/Ndjamena"
+  },
+  {
+    "code": "Europe/Oslo"
+  },
+  {
+    "code": "Europe/Paris"
+  },
+  {
+    "code": "Europe/Rome"
+  },
+  {
+    "code": "Europe/Stockholm"
+  },
+  {
+    "code": "Europe/Tirane"
+  },
+  {
+    "code": "Africa/Tunis"
+  },
+  {
+    "code": "Europe/Vienna"
+  },
+  {
+    "code": "Europe/Warsaw"
+  },
+  {
+    "code": "Europe/Zurich"
+  },
+  {
+    "code": "Asia/Amman"
+  },
+  {
+    "code": "Europe/Athens"
+  },
+  {
+    "code": "Asia/Beirut"
+  },
+  {
+    "code": "Europe/Bucharest"
+  },
+  {
+    "code": "Africa/Cairo"
+  },
+  {
+    "code": "Europe/Chisinau"
+  },
+  {
+    "code": "Asia/Damascus"
+  },
+  {
+    "code": "Asia/Gaza"
+  },
+  {
+    "code": "Europe/Helsinki"
+  },
+  {
+    "code": "Asia/Jerusalem"
+  },
+  {
+    "code": "Africa/Johannesburg"
+  },
+  {
+    "code": "Africa/Khartoum"
+  },
+  {
+    "code": "Europe/Kiev"
+  },
+  {
+    "code": "Africa/Maputo"
+  },
+  {
+    "code": "Europe/Kaliningrad"
+  },
+  {
+    "code": "Asia/Nicosia"
+  },
+  {
+    "code": "Europe/Riga"
+  },
+  {
+    "code": "Europe/Sofia"
+  },
+  {
+    "code": "Europe/Tallinn"
+  },
+  {
+    "code": "Africa/Tripoli"
+  },
+  {
+    "code": "Europe/Vilnius"
+  },
+  {
+    "code": "Africa/Windhoek"
+  },
+  {
+    "code": "Asia/Baghdad"
+  },
+  {
+    "code": "Europe/Istanbul"
+  },
+  {
+    "code": "Europe/Minsk"
+  },
+  {
+    "code": "Europe/Moscow"
+  },
+  {
+    "code": "Africa/Nairobi"
+  },
+  {
+    "code": "Asia/Qatar"
+  },
+  {
+    "code": "Asia/Riyadh"
+  },
+  {
+    "code": "Antarctica/Syowa"
+  },
+  {
+    "code": "Asia/Tehran"
+  },
+  {
+    "code": "Asia/Baku"
+  },
+  {
+    "code": "Asia/Dubai"
+  },
+  {
+    "code": "Indian/Mahe"
+  },
+  {
+    "code": "Indian/Mauritius"
+  },
+  {
+    "code": "Europe/Samara"
+  },
+  {
+    "code": "Indian/Reunion"
+  },
+  {
+    "code": "Asia/Tbilisi"
+  },
+  {
+    "code": "Asia/Yerevan"
+  },
+  {
+    "code": "Asia/Kabul"
+  },
+  {
+    "code": "Asia/Aqtau"
+  },
+  {
+    "code": "Asia/Aqtobe"
+  },
+  {
+    "code": "Asia/Ashgabat"
+  },
+  {
+    "code": "Asia/Dushanbe"
+  },
+  {
+    "code": "Asia/Karachi"
+  },
+  {
+    "code": "Indian/Kerguelen"
+  },
+  {
+    "code": "Indian/Maldives"
+  },
+  {
+    "code": "Antarctica/Mawson"
+  },
+  {
+    "code": "Asia/Yekaterinburg"
+  },
+  {
+    "code": "Asia/Tashkent"
+  },
+  {
+    "code": "Asia/Colombo"
+  },
+  {
+    "code": "Asia/Kolkata"
+  },
+  {
+    "code": "Asia/Kathmandu"
+  },
+  {
+    "code": "Asia/Almaty"
+  },
+  {
+    "code": "Asia/Bishkek"
+  },
+  {
+    "code": "Indian/Chagos"
+  },
+  {
+    "code": "Asia/Dhaka"
+  },
+  {
+    "code": "Asia/Omsk"
+  },
+  {
+    "code": "Asia/Thimphu"
+  },
+  {
+    "code": "Antarctica/Vostok"
+  },
+  {
+    "code": "Indian/Cocos"
+  },
+  {
+    "code": "Asia/Yangon"
+  },
+  {
+    "code": "Asia/Bangkok"
+  },
+  {
+    "code": "Indian/Christmas"
+  },
+  {
+    "code": "Antarctica/Davis"
+  },
+  {
+    "code": "Asia/Saigon"
+  },
+  {
+    "code": "Asia/Hovd"
+  },
+  {
+    "code": "Asia/Jakarta"
+  },
+  {
+    "code": "Asia/Krasnoyarsk"
+  },
+  {
+    "code": "Asia/Brunei"
+  },
+  {
+    "code": "Asia/Shanghai"
+  },
+  {
+    "code": "Asia/Choibalsan"
+  },
+  {
+    "code": "Asia/Hong_Kong"
+  },
+  {
+    "code": "Asia/Kuala_Lumpur"
+  },
+  {
+    "code": "Asia/Macau"
+  },
+  {
+    "code": "Asia/Makassar"
+  },
+  {
+    "code": "Asia/Manila"
+  },
+  {
+    "code": "Asia/Irkutsk"
+  },
+  {
+    "code": "Asia/Singapore"
+  },
+  {
+    "code": "Asia/Taipei"
+  },
+  {
+    "code": "Asia/Ulaanbaatar"
+  },
+  {
+    "code": "Australia/Perth"
+  },
+  {
+    "code": "Asia/Pyongyang"
+  },
+  {
+    "code": "Asia/Dili"
+  },
+  {
+    "code": "Asia/Jayapura"
+  },
+  {
+    "code": "Asia/Yakutsk"
+  },
+  {
+    "code": "Pacific/Palau"
+  },
+  {
+    "code": "Asia/Seoul"
+  },
+  {
+    "code": "Asia/Tokyo"
+  },
+  {
+    "code": "Australia/Darwin"
+  },
+  {
+    "code": "Antarctica/DumontDUrville"
+  },
+  {
+    "code": "Australia/Brisbane"
+  },
+  {
+    "code": "Pacific/Guam"
+  },
+  {
+    "code": "Asia/Vladivostok"
+  },
+  {
+    "code": "Pacific/Port_Moresby"
+  },
+  {
+    "code": "Pacific/Chuuk"
+  },
+  {
+    "code": "Australia/Adelaide"
+  },
+  {
+    "code": "Antarctica/Casey"
+  },
+  {
+    "code": "Australia/Hobart"
+  },
+  {
+    "code": "Australia/Sydney"
+  },
+  {
+    "code": "Pacific/Efate"
+  },
+  {
+    "code": "Pacific/Guadalcanal"
+  },
+  {
+    "code": "Pacific/Kosrae"
+  },
+  {
+    "code": "Asia/Magadan"
+  },
+  {
+    "code": "Pacific/Norfolk"
+  },
+  {
+    "code": "Pacific/Noumea"
+  },
+  {
+    "code": "Pacific/Pohnpei"
+  },
+  {
+    "code": "Pacific/Funafuti"
+  },
+  {
+    "code": "Pacific/Kwajalein"
+  },
+  {
+    "code": "Pacific/Majuro"
+  },
+  {
+    "code": "Asia/Kamchatka"
+  },
+  {
+    "code": "Pacific/Nauru"
+  },
+  {
+    "code": "Pacific/Tarawa"
+  },
+  {
+    "code": "Pacific/Wake"
+  },
+  {
+    "code": "Pacific/Wallis"
+  },
+  {
+    "code": "Pacific/Auckland"
+  },
+  {
+    "code": "Pacific/Enderbury"
+  },
+  {
+    "code": "Pacific/Fakaofo"
+  },
+  {
+    "code": "Pacific/Fiji"
+  },
+  {
+    "code": "Pacific/Tongatapu"
+  },
+  {
+    "code": "Pacific/Apia"
+  },
+  {
+    "code": "Pacific/Kiritimati"
+  }
+]
