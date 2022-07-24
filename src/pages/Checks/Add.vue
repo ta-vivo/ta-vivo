@@ -47,6 +47,20 @@
             />
           </div>
           <div>
+            <q-select
+              outlined
+              v-model="check.timezone"
+              :options="timezones"
+              :label="$t('common.timezone')"
+              option-value="code"
+              option-label="code"
+              emit-value
+              map-options
+              use-input
+              @filter="filterTimezone"
+            />
+          </div>
+          <div>
             <p class="text-bold">
               {{ $t("common.retryOnFail") }}
             </p>
@@ -115,6 +129,7 @@ import { useI18n } from "vue-i18n";
 import SmallIntegrationIcon from "components/Integrations/Icons/Small";
 import jwtDecode from "jwt-decode";
 import RoleBadge from "components/User/RoleBadge.vue";
+import timezonesJson from "assets/timezones.json";
 
 export default {
   name: "PageCheckForm",
@@ -124,6 +139,7 @@ export default {
     const $store = useStore();
     const $router = useRouter();
     const $t = useI18n().t;
+    const timezones = ref([]);
 
     const check = ref({
       name: "",
@@ -133,6 +149,7 @@ export default {
       addIntegrations: [],
       retryOnFail: false,
       onFailPeriodToCheck: 0,
+      timezone: $store.getters["auth/getUser"].timezone,
     });
     const loading = ref(false);
     const integrations = ref([]);
@@ -151,6 +168,7 @@ export default {
       loading,
       periods,
       integrations,
+      timezones,
       onSubmit() {
         loading.value = true;
         const newCheck = {
@@ -168,6 +186,7 @@ export default {
               type: integration.type,
             };
           }),
+          timezone: check.value.timezone,
         };
         $store
           .dispatch("checks/create", newCheck)
@@ -196,6 +215,24 @@ export default {
       },
       isBasicUser() {
         return $store.getters["auth/getUser"].role === "basic";
+      },
+      filterTimezone(val, update) {
+        if (val === "") {
+          update(() => {
+            timezones.value = timezonesJson;
+
+            // here you have access to "ref" which
+            // is the Vue reference of the QSelect
+          });
+          return;
+        }
+
+        update(() => {
+          const needle = val.toLowerCase();
+          timezones.value = timezonesJson.filter(
+            (v) => v.code.toLowerCase().indexOf(needle) > -1
+          );
+        });
       },
     };
   },

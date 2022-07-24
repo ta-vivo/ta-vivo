@@ -58,7 +58,8 @@ export default {
     contact: 'Contact',
     phone: 'Phone',
     retryOnFail: 'Retry on fail',
-    retryOnCheckFail: 'Retry on check fail'
+    retryOnCheckFail: 'Retry on check fail',
+    timezone: 'Timezone'
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
@@ -105,6 +106,8 @@ export default {
     sendTest: 'Send test',
     goBack: 'Go back',
     testSent: 'Test sent',
+    saveTimezone: 'Save timezone',
+    timezoneSaved: 'Timezone saved'
   },
   messages: {
     information: {
@@ -140,12 +143,14 @@ export default {
       recoveryPasswordSuccess: 'Recovery password successfully',
       testIntegrationDescription: 'A test message will be sent to',
       retryOnFailDescription: 'If the Check fails, you can retry it until is up again.',
+      timezoneDescription: 'This timezone will be used as the default setting for displaying dates in notifications, history, and everywhere a date exists.'
     },
     errors: {
       requireField: 'This field is required',
       notValidEmail: 'This is not a valid email',
       passwordSecurity: 'Password must be at least 8 characters long and contain at least one number and one letter',
-      pleaseTypeTheOldPassword: 'Please type the old password'
+      pleaseTypeTheOldPassword: 'Please type the old password',
+      errorOnSave: 'Error on save, please try again'
     },
     questions: {
       areYousureYouWantCancelSubscription: 'Are you sure you want to cancel your subscription?',

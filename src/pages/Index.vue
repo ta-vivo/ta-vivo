@@ -171,7 +171,7 @@ export default defineComponent({
           name: "createdAt",
           label: this.$t("common.date"),
           align: "left",
-          field: (row) => this.formatDate(row.createdAt),
+          field: (row) => this.formatDate(row.createdAt) + ` (${row.timezone})`,
         },
       ],
     };

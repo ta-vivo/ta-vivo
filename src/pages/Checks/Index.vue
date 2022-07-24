@@ -313,7 +313,7 @@ export default {
         field: (row) =>
           `${date.formatDate(row.createdAt, "DD/MM/YYYY")} ${$t(
             "common.at"
-          )} ${date.formatDate(row.createdAt, "HH:mm:ss")}`,
+          )} ${date.formatDate(row.createdAt, "HH:mm:ss")} (${row.timezone})`,
       },
     ];
     const logsPagination = ref({
