@@ -67,6 +67,9 @@
       of access and operating system. We collect log information when you use
       our Services–for example when you create or make changes to your account.
     </p>
+    <p>
+      Timezone: We collect your browser's timezone to set the default timezone in your profile configuration.
+    </p>
     <p class="text-h5">How and Why We Use Information</p>
     <p>
       We use information about you as mentioned above and for the purposes
