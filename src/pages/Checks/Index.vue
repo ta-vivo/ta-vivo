@@ -247,6 +247,7 @@ import { useQuasar } from "quasar";
 import { date } from "quasar";
 import SmallIntegrationIcon from "components/Integrations/Icons/Small";
 import jwtDecode from "jwt-decode";
+import { getTimestampInHumanFormat } from "src/utils/time";
 
 export default {
   name: "PageChecks",
@@ -310,14 +311,11 @@ export default {
         name: "createdAt",
         label: $t("common.date"),
         align: "left",
-        field: (row) =>
-          `${date.formatDate(row.createdAt, "DD/MM/YYYY")} ${$t(
-            "common.at"
-          )} ${date.formatDate(row.createdAt, "HH:mm:ss")} (${row.timezone})`,
+        field: (row) => `${getTimestampInHumanFormat(row.createdAt, row.timezone)} (${row.timezone})`,
       },
     ];
     const logsPagination = ref({
-      sortBy: "createdAt",
+      sortBy: "id",
       descending: false,
       page: 1,
       rowsPerPage: 10,
@@ -460,7 +458,7 @@ export default {
         }
 
         return false;
-      },
+      }
     };
   },
 };

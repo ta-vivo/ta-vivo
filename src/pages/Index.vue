@@ -81,7 +81,9 @@
                   <div class="q-mb-sm">
                     <q-chip
                       class="q-ml-none"
-                      :color="props.row.status === 'up' ? 'positive' : 'negative'"
+                      :color="
+                        props.row.status === 'up' ? 'positive' : 'negative'
+                      "
                       text-color="white"
                     >
                       {{ props.row.status }}
@@ -95,7 +97,7 @@
                     {{ $t("common.date") }}
                   </div>
                   <div>
-                    {{ formatDate(props.row.createdAt) }}
+                    {{ formatDate(props.row.createdAt, props.row.timezone) }} <span class="ellipsis">({{props.row.timezone}})</span>
                   </div>
                 </q-card-section>
               </q-card>
@@ -123,7 +125,7 @@ import { defineComponent } from "vue";
 import { useStore } from "vuex";
 import DashboardCard from "components/Widgets/DashboardCard";
 import DashboardIncidentCard from "components/Widgets/DashboardIncidentCard";
-import { date } from "quasar";
+import { getTimestampInHumanFormat } from "src/utils/time";
 
 export default defineComponent({
   name: "PageIndex",
@@ -171,16 +173,15 @@ export default defineComponent({
           name: "createdAt",
           label: this.$t("common.date"),
           align: "left",
-          field: (row) => this.formatDate(row.createdAt) + ` (${row.timezone})`,
+          field: (row) =>
+            this.formatDate(row.createdAt, row.timezone) + ` (${row.timezone})`,
         },
       ],
     };
   },
   methods: {
-    formatDate(timestamp) {
-      return `${date.formatDate(timestamp, "DD/MM/YYYY")} ${this.$t(
-        "common.at"
-      )} ${date.formatDate(timestamp, "HH:mm:ss")}`;
+    formatDate(timestamp, timezone) {
+      return getTimestampInHumanFormat(timestamp, timezone);
     },
   },
 });
