@@ -97,7 +97,7 @@
                     {{ $t("common.date") }}
                   </div>
                   <div>
-                    {{ formatDate(props.row.createdAt, row.timezone) }}
+                    {{ formatDate(props.row.createdAt, props.row.timezone) }} <span class="ellipsis">({{props.row.timezone}})</span>
                   </div>
                 </q-card-section>
               </q-card>
