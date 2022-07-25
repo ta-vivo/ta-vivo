@@ -87,13 +87,18 @@
             />
             <q-btn
               push
-              icon="eva-google"
-              class="full-width google-color q-mt-md"
-              text-color="white"
-              label="Google"
+              class="full-width q-mt-md"
+              color="#FFFFFF"
               @click="dispatchGoogleAuth()"
               :disable="loading"
-            />
+            >
+              <q-img
+                style="margin-right: 24px"
+                width="18px"
+                src="https://developers.google.com/static/identity/images/g-logo.png"
+              />
+              <span style="color: #777777">Google</span>
+            </q-btn>
             <q-btn
               push
               :icon="slackLogo"
@@ -335,9 +340,6 @@ export default {
 };
 </script>
 <style scoped>
-.google-color {
-  background-color: #cf4737;
-}
 .discord-color {
   background-color: #5865f2;
 }
