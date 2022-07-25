@@ -1,5 +1,5 @@
 <template>
-  <q-card flat bordered style="max-width: 200px; min-height: 210px;">
+  <q-card flat bordered style="max-width: 200px; min-height: 210px">
     <q-card-section class="text-center">
       <q-avatar
         size="50px"
@@ -20,7 +20,9 @@
           {{ $t("common.isNoReachable") }}
         </p>
         <p>
-          {{ getDateFormat(incident.createdAt, "DD/MM/YYYY HH:mm:ss") }} ({{incident.timezone}})
+          {{ getDateFormat(incident.createdAt, incident.timezone) }} ({{
+            incident.timezone
+          }})
         </p>
       </template>
       <q-inner-loading :showing="loading" label-style="font-size: 1.1em" />
@@ -29,7 +31,8 @@
 </template>
 
 <script>
-import { date } from "quasar";
+import { getTimestampInHumanFormat } from "src/utils/time";
+
 export default {
   name: "ComponentDashboardIncidentCard",
   props: {
@@ -46,10 +49,8 @@ export default {
     return {};
   },
   methods: {
-    getDateFormat(timeStamp) {
-      return `${date.formatDate(timeStamp, "DD/MM/YYYY")} ${this.$t(
-        "common.at"
-      )} ${date.formatDate(timeStamp, "HH:mm:ss")}`;
+    getDateFormat(timestamp, timezone) {
+      return getTimestampInHumanFormat(timestamp, timezone)
     },
   },
 };
