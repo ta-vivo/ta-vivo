@@ -19,11 +19,10 @@
           <span class="text-bold">{{ incident.check.name }}</span>
           {{ $t("common.isNoReachable") }}
         </p>
-        <p>
-          {{ getDateFormat(incident.createdAt, incident.timezone) }} ({{
-            incident.timezone
-          }})
+        <p class="q-mb-none">
+          {{ getDateFormat(incident.createdAt, incident.timezone) }}
         </p>
+        <div class="ellipsis">({{ incident.timezone }})</div>
       </template>
       <q-inner-loading :showing="loading" label-style="font-size: 1.1em" />
     </q-card-section>
@@ -50,7 +49,7 @@ export default {
   },
   methods: {
     getDateFormat(timestamp, timezone) {
-      return getTimestampInHumanFormat(timestamp, timezone)
+      return getTimestampInHumanFormat(timestamp, timezone);
     },
   },
 };
