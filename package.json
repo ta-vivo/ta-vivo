@@ -10,7 +10,7 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.0.0",
+    "@quasar/extras": "^1.15.0",
     "@supabase/supabase-js": "^1.35.3",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
