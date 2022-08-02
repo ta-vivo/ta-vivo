@@ -30,9 +30,13 @@ $ quasar dev
 
 ## API
 
-Check the respository [https://github.com/itsalb3rt/ta-vivo-api](https://github.com/itsalb3rt/ta-vivo-api)
+Check the respository [https://github.com/ta-vivo/ta-vivo-api](https://github.com/ta-vivo/ta-vivo-api)
 
 ---
+
+## Documentation
+
+The full documentation is available on [https://documentation-tavivo.albert.do/front-end/#front-end](https://documentation-tavivo.albert.do/front-end/#front-end)
 
 ## Icons
 
