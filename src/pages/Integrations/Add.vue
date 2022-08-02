@@ -50,6 +50,11 @@
         />
         <SlackForm v-if="selectedIntegration === 'slack'" />
         <DiscordForm v-if="selectedIntegration === 'discord'" />
+        <WhatsappForm
+          v-if="selectedIntegration === 'whatsapp'"
+          :loading="loading"
+          @saved="onSubmit"
+        />
       </q-card-section>
     </q-card>
   </q-page>
@@ -66,6 +71,7 @@ import EmailForm from "components/Integrations/Form/Email";
 import SlackForm from "components/Integrations/Form/Slack";
 import IntegrationIcon from "components/Integrations/Icons/Small";
 import DiscordForm from "components/Integrations/Form/Discord";
+import WhatsappForm from "components/Integrations/Form/Whatsapp";
 import jwtDecode from "jwt-decode";
 
 export default {
@@ -76,6 +82,7 @@ export default {
     SlackForm,
     IntegrationIcon,
     DiscordForm,
+    WhatsappForm,
   },
   setup() {
     const $q = useQuasar();
@@ -93,6 +100,7 @@ export default {
       "email",
       "slack",
       "telegram",
+      "whatsapp",
     ]);
     const selectedIntegration = ref(null);
 
@@ -111,7 +119,7 @@ export default {
               const decoded = jwtDecode(token);
 
               $store.commit("auth/SET_USER", decoded);
-            })
+            });
             $q.notify({
               message: $t("action.integrationCreated"),
               color: "positive",

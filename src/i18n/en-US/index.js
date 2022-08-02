@@ -33,6 +33,7 @@ export default {
     isNoReachable: 'is not reachable',
     email: 'Email',
     emailConfirmationCode: 'Email confirmation code',
+    whatsappConfirmationCode: 'Whatsapp confirmation code',
     termsAndConditions: 'Terms and conditions',
     privacyPolicy: 'Privacy policy',
     confirmationCode: 'Confirmation code',
@@ -143,14 +144,17 @@ export default {
       recoveryPasswordSuccess: 'Recovery password successfully',
       testIntegrationDescription: 'A test message will be sent to',
       retryOnFailDescription: 'If the Check fails, you can retry it until is up again.',
-      timezoneDescription: 'This timezone will be used as the default setting for displaying dates in notifications, history, and everywhere a date exists.'
+      timezoneDescription: 'This timezone will be used as the default setting for displaying dates in notifications, history, and everywhere a date exists.',
+      whatsappNumberInformation: 'Fill the input with your WhatsApp number. It must be a valid number.',
+      whatsappVerificationInformation: 'We already send a code to your WhatsApp.',
     },
     errors: {
       requireField: 'This field is required',
       notValidEmail: 'This is not a valid email',
       passwordSecurity: 'Password must be at least 8 characters long and contain at least one number and one letter',
       pleaseTypeTheOldPassword: 'Please type the old password',
-      errorOnSave: 'Error on save, please try again'
+      errorOnSave: 'Error on save, please try again',
+      notValidPhoneNumber: 'This is not a valid phone number',
     },
     questions: {
       areYousureYouWantCancelSubscription: 'Are you sure you want to cancel your subscription?',

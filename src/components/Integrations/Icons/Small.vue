@@ -22,6 +22,7 @@ import {
   fabTelegram,
   farEnvelope,
   fabDiscord,
+  fabWhatsapp
 } from "@quasar/extras/fontawesome-v5";
 import slackImage from "assets/slack-logo.png";
 
@@ -48,6 +49,8 @@ export default {
           return { icon: slackImage };
         case "discord":
           return { icon: fabDiscord, style: "color: #5865F2" };
+        case "whatsapp":
+          return {icon: fabWhatsapp, style: "color: #41C353"}
         default:
           return "";
       }

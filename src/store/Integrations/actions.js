@@ -8,6 +8,10 @@ export function requestEmailCode(context, { email }) {
   return axiosInstance.post('/integrations/request-email-code', { email })
 }
 
+export function requestWhatsappCode(context, { phone }) {
+  return axiosInstance.post('/integrations/request-whatsapp-code', { phone })
+}
+
 export function create(context, payload) {
   return axiosInstance.post('/integrations', payload)
 }

@@ -3,20 +3,22 @@
     <div class="col-xs-12 col-md-5">
       <q-form
         v-if="activeForm === 'requestCode'"
-        @submit="requestCodeViaEmail"
+        @submit="requestCode"
         class="q-gutter-md text-center"
         style="max-width:400px; margin:auto;"
       >
         <p class="text-h4">{{ $t("common.basicInformation") }}</p>
+        <p>{{$t('messages.information.whatsappNumberInformation')}}</p>
         <q-input
-          type="email"
-          hint="jhon@domain.com"
+          prefix="+1"
+          mask="(###) ### - ####"
+          unmasked-value
           outlined
-          v-model="integration.email"
-          :label="$t('common.email')"
+          v-model="integration.phone"
+          :label="$t('common.phone')"
           lazy-rules
           :rules="[
-            (val) => validateEmail(val) || $t('messages.errors.notValidEmail'),
+            (val) => validatePhone(val) || $t('messages.errors.notValidPhoneNumber'),
           ]"
         />
         <div class="text-center">
@@ -31,15 +33,28 @@
         </div>
       </q-form>
       <q-form
-        v-if="activeForm === 'confirmEmailCode'"
+        v-if="activeForm === 'confirmCode'"
         @submit="onSubmit"
         class="q-gutter-md text-center"
         style="max-width: 400px; margin: auto"
       >
-        <p class="text-h4">{{ $t("common.emailConfirmationCode") }}</p>
+        <p class="text-h4">{{ $t("common.whatsappConfirmationCode") }}</p>
         <p class="text-italic text-grey-9">
-          {{ $t("messages.information.emailVerification").replace('[EMAIL]', integration.email) }}
+          {{ $t("messages.information.whatsappVerificationInformation").replace('[PHONE]', integration.phone) }}
         </p>
+        <q-input
+          type="text"
+          :hint="$t('messages.information.telegramIntegrationNamePlaceholder')"
+          outlined
+          v-model="integration.name"
+          :label="$t('common.name')"
+          lazy-rules
+          :rules="[
+            (val) =>
+              (val && val.length > 0) || $t('messages.errors.requireField'),
+          ]"
+          maxlength="50"
+        />
         <q-input
           type="text"
           outlined
@@ -67,7 +82,7 @@
 
 <script>
 export default {
-  name: "ComponentEmailForm",
+  name: "ComponentWhatsappForm",
   props: {
     loading: {
       type: Boolean,
@@ -77,29 +92,28 @@ export default {
   data() {
     return {
       loadingRequestCode: false,
-      integration: { email: "", code: "" },
+      integration: { phone: "", code: "", name: "" },
       activeForm: "requestCode",
     };
   },
   methods: {
     onSubmit() {
-      this.$emit("saved", { uniqueCode: this.integration.code });
+      this.$emit("saved", { uniqueCode: this.integration.code, name: this.integration.name });
     },
-    validateEmail(email) {
-      return String(email)
-        .toLowerCase()
-        .match(
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        );
+    validatePhone(phone) {
+      if(/^[\\+]?[(]?[0-9]{3}[)]?[-\s\\.]?[0-9]{3}[-\s\\.]?[0-9]{4,6}$/im.test(phone) === false || String(phone).length !== 10){
+        return false;
+      }
+      return true;
     },
-    requestCodeViaEmail() {
+    requestCode() {
       this.loadingRequestCode = true;
       this.$store
-        .dispatch("integrations/requestEmailCode", {
-          email: this.integration.email,
+        .dispatch("integrations/requestWhatsappCode", {
+          phone: '1'+this.integration.phone,
         })
         .then(() => {
-          this.activeForm = "confirmEmailCode";
+          this.activeForm = "confirmCode";
         })
         .catch((error) => {
           this.$q.notify({
