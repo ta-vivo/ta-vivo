@@ -18,11 +18,12 @@ We have very cool features at this moment;
 
 # Get started
 
-Check the app [here](https://app-tavivo.albert.do/)
+Start checking your service now! :point_right: [here](https://app-tavivo.albert.do/)
 
 Also you can contribute to this project in a different parts;
 
-- [The API](https://documentation-tavivo.albert.do/back-end/)
+- [Frontend](https://documentation-tavivo.albert.do/front-end/)
+- [Backend](https://documentation-tavivo.albert.do/back-end/)
 - [WhatsApp service](https://github.com/ta-vivo/ta-vivo-whatsapp-service)
 - [Audit log service](https://github.com/ta-vivo/ta-vivo-audit-log)
 - [Backup service](https://github.com/ta-vivo/ta-vivo-backup-uploader)
