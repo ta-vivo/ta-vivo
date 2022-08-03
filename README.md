@@ -1,10 +1,10 @@
-# Ta vivo - See if your service is down before your customers
+# Ta vivo - Check if your service is down before your customers
 
 [Ta-vivo](https://landing-tavivo.albert.do/) Is a tool designed to monitor APIs or web services based on a configurable time interval and sent notifications if the service is down or not responding.
 
 ![demo](https://njxuriszytyyfwsmdbga.supabase.co/storage/v1/object/public/assets/demo.png)
 
-<a href="./CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="license: MIT"></a> [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Check%20if%20your%20service%20is%20down&url=https://github.com/ta-vivo/ta-vivo&via=alhidalgodev&hashtags=nodejs,quasar,api,webservice)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/aecba478-8f6d-4db3-a109-99a26a03add3/deploy-status)](https://app.netlify.com/sites/ta-vivo/deploys) <a href="./CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="license: MIT"></a> [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Check%20if%20your%20service%20is%20down&url=https://github.com/ta-vivo/ta-vivo&via=alhidalgodev&hashtags=nodejs,quasar,api,webservice)
 
 # Features
 
