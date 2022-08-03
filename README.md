@@ -32,6 +32,14 @@ Also you can contribute to this project in a different parts;
 
 You can check more on the full [documentation](https://documentation-tavivo.albert.do/)
 
+## Give a Star! ⭐
+
+If you like this project or plan to use it in the future, please give it a star. Thanks 🙏
+
+## Bugs and Feedback
+
+For bugs, questions, and discussions, please use the [Github Issues](https://github.com/ta-vivo/ta-vivo/issues) we have cool templates for you.
+
 ## Contributing
 
 For contributing, please see the following links:
