@@ -4,7 +4,7 @@
 
 ![demo](https://njxuriszytyyfwsmdbga.supabase.co/storage/v1/object/public/assets/demo.png)
 
-<a href="./CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a><a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="license: MIT"></a>[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Check%20if%20your%20service%20is%20down&url=https://github.com/ta-vivo/ta-vivo&via=alhidalgodev&hashtags=nodejs,quasar,api,webservice)
+<a href="./CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg"></a> <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="license: MIT"></a> [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Check%20if%20your%20service%20is%20down&url=https://github.com/ta-vivo/ta-vivo&via=alhidalgodev&hashtags=nodejs,quasar,api,webservice)
 
 # Features
 
