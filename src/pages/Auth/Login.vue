@@ -123,6 +123,7 @@ import { useRouter } from "vue-router";
 import jwtDecode from "jwt-decode";
 import supabase from "boot/supabase";
 import { fabDiscord, fabSlack, fabGithub } from "@quasar/extras/fontawesome-v5";
+import {getUserTimezone} from 'src/utils/time';
 
 export default {
   name: "PageLogin",
@@ -155,9 +156,12 @@ export default {
     };
 
     const googleAuth = async () => {
+      const timezone = getUserTimezone();
+
       $store
         .dispatch("auth/google", {
           access_token: supabase.auth.session().access_token,
+          timezone
         })
         .then((response) => {
           const token = response.data.data.token;
