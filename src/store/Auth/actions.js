@@ -8,8 +8,8 @@ export function login(context, { email, password }) {
   return axiosInstanceForAuth.post('/auth/login', { email, password })
 }
 
-export function google (context, { access_token }) {
-  return axiosInstanceForAuth.post('/auth/google', { access_token })
+export function google (context, { access_token, timezone }) {
+  return axiosInstanceForAuth.post('/auth/google', { access_token, timezone: timezone })
 }
 
 export function discord (context, { access_token }) {
