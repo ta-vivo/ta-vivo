@@ -123,6 +123,7 @@ import { useRouter } from "vue-router";
 import jwtDecode from "jwt-decode";
 import supabase from "boot/supabase";
 import { fabDiscord, fabSlack, fabGithub } from "@quasar/extras/fontawesome-v5";
+import {getUserTimezone} from 'src/utils/time';
 
 export default {
   name: "PageLogin",
@@ -137,6 +138,7 @@ export default {
     const discordIcon = ref(fabDiscord);
     const slackLogo = ref(fabSlack);
     const githubLogo = ref(fabGithub);
+    const timezone = getUserTimezone();
 
     let user = supabase.auth.user();
 
@@ -158,6 +160,7 @@ export default {
       $store
         .dispatch("auth/google", {
           access_token: supabase.auth.session().access_token,
+          timezone
         })
         .then((response) => {
           const token = response.data.data.token;
@@ -180,6 +183,7 @@ export default {
       $store
         .dispatch("auth/discord", {
           access_token: supabase.auth.session().access_token,
+          timezone
         })
         .then((response) => {
           const token = response.data.data.token;
@@ -203,6 +207,7 @@ export default {
       $store
         .dispatch("auth/slack", {
           access_token: supabase.auth.session().access_token,
+          timezone
         })
         .then((response) => {
           const token = response.data.data.token;
@@ -226,6 +231,7 @@ export default {
       $store
         .dispatch("auth/github", {
           access_token: supabase.auth.session().access_token,
+          timezone
         })
         .then((response) => {
           const token = response.data.data.token;
