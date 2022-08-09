@@ -68,11 +68,27 @@
           bordered
           row-per-page="10"
           :rows-per-page-options="[10]"
-          :title="$t('common.mostRecentsLogs')"
           :rows="dashboard.recentActivity"
           :columns="columns"
           row-key="id"
         >
+          <template v-slot:top>
+            <span class="text-h6">{{ $t("common.mostRecentsLogs") }}</span>
+            <q-space />
+            <span class="q-mr-sm">{{
+              getDurationOfLastRefreshInSeconds(lastRefresh)
+            }}</span>
+            <q-btn
+              @click="onRefresh()"
+              :loading="isRefresh"
+              round
+              flat
+              size="sm"
+              color="white"
+              text-color="primary"
+              icon="eva-refresh-outline"
+            />
+          </template>
           <!-- Grid -->
           <template v-slot:item="props">
             <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
@@ -97,7 +113,8 @@
                     {{ $t("common.date") }}
                   </div>
                   <div>
-                    {{ formatDate(props.row.createdAt, props.row.timezone) }} <span class="ellipsis">({{props.row.timezone}})</span>
+                    {{ formatDate(props.row.createdAt, props.row.timezone) }}
+                    <span class="ellipsis">({{ props.row.timezone }})</span>
                   </div>
                 </q-card-section>
               </q-card>
@@ -122,10 +139,9 @@
 
 <script>
 import { defineComponent } from "vue";
-import { useStore } from "vuex";
 import DashboardCard from "components/Widgets/DashboardCard";
 import DashboardIncidentCard from "components/Widgets/DashboardIncidentCard";
-import { getTimestampInHumanFormat } from "src/utils/time";
+import { getTimestampInHumanFormat, getDuration } from "src/utils/time";
 
 export default defineComponent({
   name: "PageIndex",
@@ -134,10 +150,8 @@ export default defineComponent({
     DashboardIncidentCard,
   },
   created() {
-    const $store = useStore();
     this.loading = true;
-    $store
-      .dispatch("dashboard/fetchStats")
+    this.fetchDashboard()
       .then((response) => {
         this.dashboard = { ...response.data.data };
       })
@@ -151,6 +165,8 @@ export default defineComponent({
   data() {
     return {
       loading: false,
+      isRefresh: false,
+      lastRefresh: 0,
       dashboard: {
         checks: 0,
         recentActivity: [],
@@ -180,8 +196,41 @@ export default defineComponent({
     };
   },
   methods: {
+    async fetchDashboard() {
+      return this.$store.dispatch("dashboard/fetchStats");
+    },
+    onRefresh() {
+      this.isRefresh = true;
+      this.fetchDashboard()
+        .then((response) => {
+          this.dashboard = { ...response.data.data };
+          this.lastRefresh = 0;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          this.isRefresh = false;
+        });
+    },
     formatDate(timestamp, timezone) {
       return getTimestampInHumanFormat(timestamp, timezone);
+    },
+    getDurationOfLastRefreshInSeconds() {
+      return getDuration(this.lastRefresh);
+    },
+  },
+  watch: {
+    lastRefresh: {
+      handler() {
+        if (this.lastRefresh > 5 * 60) {
+          this.onRefresh();
+        }
+        setTimeout(() => {
+          this.lastRefresh++;
+        }, 1000);
+      },
+      immediate: true, // This ensures the watcher is triggered upon creation
     },
   },
 });
