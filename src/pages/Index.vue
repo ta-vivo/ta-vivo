@@ -162,11 +162,21 @@ export default defineComponent({
         this.loading = false;
       });
   },
+  mounted() {
+    document.addEventListener("visibilitychange",  () => {
+      if (document.hidden) {
+        this.isWindowFocused = false;
+      } else {
+        this.isWindowFocused = true;
+      }
+    });
+  },
   data() {
     return {
       loading: false,
       isRefresh: false,
       lastRefresh: 0,
+      isWindowFocused: true,
       dashboard: {
         checks: 0,
         recentActivity: [],
@@ -223,7 +233,7 @@ export default defineComponent({
   watch: {
     lastRefresh: {
       handler() {
-        if (this.lastRefresh > 5 * 60) {
+        if (this.lastRefresh > 5 * 60 && this.isWindowFocused) {
           this.onRefresh();
         }
         setTimeout(() => {
