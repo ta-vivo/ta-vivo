@@ -108,7 +108,9 @@ export default {
     goBack: 'Go back',
     testSent: 'Test sent',
     saveTimezone: 'Save timezone',
-    timezoneSaved: 'Timezone saved'
+    timezoneSaved: 'Timezone saved',
+    checkDisabled: 'Check disabled',
+    checkEnabled: 'Check enabled',
   },
   messages: {
     information: {
