@@ -108,7 +108,9 @@ export default {
     goBack: 'Go back',
     testSent: 'Test sent',
     saveTimezone: 'Save timezone',
-    timezoneSaved: 'Timezone saved'
+    timezoneSaved: 'Timezone saved',
+    checkDisabled: 'Check disabled',
+    checkEnabled: 'Check enabled',
   },
   messages: {
     information: {
@@ -147,6 +149,8 @@ export default {
       timezoneDescription: 'This timezone will be used as the default setting for displaying dates in notifications, history, and everywhere a date exists.',
       whatsappNumberInformation: 'Fill the input with your WhatsApp number. It must be a valid number.',
       whatsappVerificationInformation: 'We already send a code to your WhatsApp.',
+      diableCheckDescription: 'When you disable a Check you will stop receiving notifications and no more pings will be made until it is activated again.',
+      enableCheckDescription: 'If you enable the check, pings will begin, if the check is down, you will begin to receive notifications.',
     },
     errors: {
       requireField: 'This field is required',

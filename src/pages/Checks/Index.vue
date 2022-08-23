@@ -93,6 +93,24 @@
             </q-card-section>
             <q-separator />
             <q-card-actions>
+              <q-toggle
+                v-model="props.row.enabled"
+                color="primary"
+                @update:model-value="
+                  (val) => (val ? disable(props.row) : enable(props.row))
+                "
+                :disable="props.row.loadingEnableStatus"
+              >
+                <q-tooltip class="bg-primary" max-width="200px">
+                  <span style="font-size: 14px">
+                    {{
+                      props.row.enabled
+                        ? $t("messages.information.diableCheckDescription")
+                        : $t("messages.information.enableCheckDescription")
+                    }}
+                  </span>
+                </q-tooltip>
+              </q-toggle>
               <q-btn
                 :label="$t('action.viewLogs')"
                 flat
@@ -166,6 +184,24 @@
       </template>
       <template v-slot:body-cell-action="props">
         <q-td :props="props">
+          <q-toggle
+            v-model="props.row.enabled"
+            color="primary"
+            @update:model-value="
+              (val) => (val === true ? enable(props.row) : disable(props.row))
+            "
+            :disable="props.row.loadingEnableStatus"
+          >
+            <q-tooltip class="bg-primary" max-width="200px">
+              <span style="font-size: 14px">
+                {{
+                  props.row.enabled
+                    ? $t("messages.information.diableCheckDescription")
+                    : $t("messages.information.enableCheckDescription")
+                }}
+              </span>
+            </q-tooltip>
+          </q-toggle>
           <q-btn
             flat
             size="sm"
@@ -243,8 +279,7 @@
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
-import { useQuasar } from "quasar";
-import { date } from "quasar";
+import { useQuasar, Notify } from "quasar";
 import SmallIntegrationIcon from "components/Integrations/Icons/Small";
 import jwtDecode from "jwt-decode";
 import { getTimestampInHumanFormat } from "src/utils/time";
@@ -311,7 +346,10 @@ export default {
         name: "createdAt",
         label: $t("common.date"),
         align: "left",
-        field: (row) => `${getTimestampInHumanFormat(row.createdAt, row.timezone)} (${row.timezone})`,
+        field: (row) =>
+          `${getTimestampInHumanFormat(row.createdAt, row.timezone)} (${
+            row.timezone
+          })`,
       },
     ];
     const logsPagination = ref({
@@ -351,7 +389,12 @@ export default {
         .dispatch("checks/fetchAll", queryString)
         .then((response) => {
           checksPagination.value.rowsNumber = response.data.pagination.total;
-          rows.value = response.data.data;
+          rows.value = response.data.data.map((check) => {
+            return {
+              ...check,
+              loadingEnableStatus: false,
+            };
+          });
         })
         .finally(() => {
           loading.value = false;
@@ -390,6 +433,47 @@ export default {
         });
     };
 
+    const disable = (check) => {
+      const index = rows.value.findIndex((item) => item.id === check.id);
+      rows.value[index].loadingEnableStatus = true;
+      store
+        .dispatch("checks/disable", check.id)
+        .then(() => {
+          $q.notify({
+            position: "top",
+            color: "positive",
+            textColor: "white",
+            message: $t("action.checkDisabled"),
+          });
+        })
+        .finally(() => {
+          setTimeout(() => {
+            rows.value[index].loadingEnableStatus = false;
+          }, 2500);
+        });
+    };
+
+    const enable = (check) => {
+      const index = rows.value.findIndex((item) => item.id === check.id);
+      rows.value[index].loadingEnableStatus = true;
+
+      store
+        .dispatch("checks/enable", check.id)
+        .then(() => {
+          $q.notify({
+            position: "top",
+            color: "positive",
+            textColor: "white",
+            message: $t("action.checkEnabled"),
+          });
+        })
+        .finally(() => {
+          setTimeout(() => {
+            rows.value[index].loadingEnableStatus = false;
+          }, 2500);
+        });
+    };
+
     return {
       columns,
       rows,
@@ -404,6 +488,8 @@ export default {
       handleShowLogs,
       fetchlogs,
       fetchChecks,
+      disable,
+      enable,
       handleDeleteCheck(check) {
         $q.dialog({
           title: "Confirm",
@@ -458,7 +544,7 @@ export default {
         }
 
         return false;
-      }
+      },
     };
   },
 };

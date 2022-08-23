@@ -4,7 +4,25 @@
       <q-card-section>
         <p class="text-h5">
           {{ $t("action.editCheck") }}
-          <q-toggle size="lg" v-model="check.enabled" />
+          <q-toggle
+            color="primary"
+            size="lg"
+            v-model="check.enabled"
+            @update:model-value="
+              (val) => (val ? enable(check) : disable(check))
+            "
+            :disable="check.loadingEnableStatus"
+          >
+            <q-tooltip class="bg-primary" max-width="200px">
+              <span style="font-size: 14px">
+                {{
+                  check.enabled
+                    ? $t("messages.information.diableCheckDescription")
+                    : $t("messages.information.enableCheckDescription")
+                }}
+              </span>
+            </q-tooltip>
+          </q-toggle>
         </p>
       </q-card-section>
       <q-card-section>
@@ -178,10 +196,11 @@ export default {
         currentIntegrations: [],
         addIntegrations: [],
         removeIntegrations: [],
-        timezone: ""
+        timezone: "",
+        loadingEnableStatus: false,
       },
       loading: false,
-      timezones:[],
+      timezones: [],
       periods: this.$store.getters["checks/getPeriods"].filter((period) =>
         period.roles.includes(
           this.$store.getters["auth/getUser"].role.toLowerCase()
@@ -221,7 +240,7 @@ export default {
         removeIntegrations: this.check.removeIntegrations,
         onFailPeriodToCheck: this.periods[this.check.onFailPeriodToCheck].value,
         retryOnFail: this.check.retryOnFail,
-        timezone: this.check.timezone
+        timezone: this.check.timezone,
       };
 
       this.$store
@@ -261,6 +280,43 @@ export default {
           (v) => v.code.toLowerCase().indexOf(needle) > -1
         );
       });
+    },
+    enable(check) {
+      this.check.loadingEnableStatus = true;
+
+      this.$store
+        .dispatch("checks/enable", check.id)
+        .then(() => {
+          this.$q.notify({
+            position: "top",
+            color: "positive",
+            textColor: "white",
+            message: this.$t("action.checkEnabled"),
+          });
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.check.loadingEnableStatus = false;
+          }, 2500);
+        });
+    },
+    disable(check) {
+      this.check.loadingEnableStatus = true;
+      this.$store
+        .dispatch("checks/disable", check.id)
+        .then(() => {
+          this.$q.notify({
+            position: "top",
+            color: "positive",
+            textColor: "white",
+            message: this.$t("action.checkDisabled"),
+          });
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.check.loadingEnableStatus = false;
+          }, 2500);
+        });
     },
   },
 };

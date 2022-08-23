@@ -20,6 +20,14 @@ export function update(context, payload) {
   return axiosInstance.put(`/checks/${payload.id}`, payload)
 }
 
+export function disable(context, id) {
+  return axiosInstance.put(`/checks/${id}/disable`)
+}
+
+export function enable(context, id) {
+  return axiosInstance.put(`/checks/${id}/enable`)
+}
+
 export function remove (context, payload) {
   return axiosInstance.delete(`/checks/${payload.id}`)
 }
