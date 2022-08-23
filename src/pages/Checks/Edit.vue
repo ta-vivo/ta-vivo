@@ -12,7 +12,17 @@
               (val) => (val ? enable(check) : disable(check))
             "
             :disable="check.loadingEnableStatus"
-          />
+          >
+            <q-tooltip class="bg-primary" max-width="200px">
+              <span style="font-size: 14px">
+                {{
+                  check.enabled
+                    ? $t("messages.information.diableCheckDescription")
+                    : $t("messages.information.enableCheckDescription")
+                }}
+              </span>
+            </q-tooltip>
+          </q-toggle>
         </p>
       </q-card-section>
       <q-card-section>
