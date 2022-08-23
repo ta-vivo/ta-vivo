@@ -100,7 +100,17 @@
                   (val) => (val ? disable(props.row) : enable(props.row))
                 "
                 :disable="props.row.loadingEnableStatus"
-              />
+              >
+                <q-tooltip class="bg-primary" max-width="200px">
+                  <span style="font-size: 14px">
+                    {{
+                      props.row.enabled
+                        ? $t("messages.information.diableCheckDescription")
+                        : $t("messages.information.enableCheckDescription")
+                    }}
+                  </span>
+                </q-tooltip>
+              </q-toggle>
               <q-btn
                 :label="$t('action.viewLogs')"
                 flat
@@ -181,7 +191,17 @@
               (val) => (val === true ? enable(props.row) : disable(props.row))
             "
             :disable="props.row.loadingEnableStatus"
-          />
+          >
+            <q-tooltip class="bg-primary" max-width="200px">
+              <span style="font-size: 14px">
+                {{
+                  props.row.enabled
+                    ? $t("messages.information.diableCheckDescription")
+                    : $t("messages.information.enableCheckDescription")
+                }}
+              </span>
+            </q-tooltip>
+          </q-toggle>
           <q-btn
             flat
             size="sm"
