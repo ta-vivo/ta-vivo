@@ -8,12 +8,15 @@
 </template>
 
 <script>
+import { useQuasar } from 'quasar';
+
 export default {
   name: "ComponentUserBadge",
   props: {
     role: String
   },
   setup(props) {
+    const $q = useQuasar();
     const roleSettings = {
       textColor: "white",
       backgroundColor: "primary",
@@ -22,11 +25,11 @@ export default {
 
     switch (props.role.toLowerCase()) {
       case "basic":
-        roleSettings.backgroundColor = "black";
+        roleSettings.backgroundColor = "primary";
         roleSettings.role = "Basic";
         break;
       case "pro":
-        roleSettings.backgroundColor = "primary";
+        roleSettings.backgroundColor = "cyan";
         roleSettings.role = "Pro";
         break;
       case "enterprise":
