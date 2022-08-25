@@ -1,7 +1,9 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header class="bg-white text-black" bordered>
-      <q-toolbar class="constrain-width">
+    <q-header
+    :class="$q.dark.isActive ? 'bg-dark' : 'bg-white'"
+    >
+      <q-toolbar class="constrain-width" :class="`${$q.dark.isActive ? 'bg-dark text-white' : 'bg-white'}`">
         <q-img
           src="~assets/main-logo.png"
           spinner-color="white"
@@ -10,20 +12,20 @@
           class="q-mr-sm cursor-pointer"
         />
         <q-btn
-          color="primary"
+          :color="$router.currentRoute._value.fullPath === '/checks' ? 'primary' : 'white'"
           to="/checks"
           stretch
           flat
           icon="eva-activity-outline"
-          :label="$t('common.checks')"
+          :label="$q.screen.xs ? '' : $t('common.checks')"
         ></q-btn>
         <q-btn
-          color="primary"
+          :color="$router.currentRoute._value.fullPath === '/integrations' ? 'primary' : 'white'"
           to="/integrations"
           stretch
           flat
           icon="eva-briefcase-outline"
-          :label="$t('common.integrations')"
+          :label="$q.screen.xs ? '' : $t('common.integrations')"
         ></q-btn>
         <q-space />
         <role-badge
@@ -35,8 +37,9 @@
         <q-btn-dropdown
           flat
           color="primary"
+          class="q-ml-xs q-mr-xs"
           :label="$q.screen.gt.xs ? user.email : null"
-          :icon="$q.screen.xs ? 'eva-person-outline' : null"
+          icon='eva-person-outline'
         >
           <q-list>
             <q-item clickable v-close-popup @click="$router.push('/profile')">
@@ -57,6 +60,13 @@
             </q-item>
           </q-list>
         </q-btn-dropdown>
+        <q-toggle
+          color="primary"
+          dark
+          v-model="darkMode"
+          :icon="darkMode ? 'eva-moon-outline' : 'eva-sun-outline'"
+          @update:model-value="toggleDarkMode"
+        />
       </q-toolbar>
     </q-header>
     <q-page-container>
@@ -66,7 +76,7 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import RoleBadge from "components/User/RoleBadge.vue";
@@ -79,11 +89,14 @@ export default defineComponent({
     RoleBadge,
   },
   setup() {
+    const darkmodeFromLocalStorage = localStorage.getItem("darkmode");
     const $store = useStore();
     const $router = useRouter();
     const $q = useQuasar();
+    const darkMode = ref(darkmodeFromLocalStorage || $q.dark.isActive);
 
     return {
+      darkMode,
       async logout() {
         $q.loading.show();
         const user = supabase.auth.user();
@@ -101,6 +114,10 @@ export default defineComponent({
 
         $q.loading.hide();
         $router.push("/auth/login");
+      },
+      toggleDarkMode() {
+        window.localStorage.setItem("darkMode", darkMode.value);
+        $q.dark.set(darkMode.value);
       },
     };
   },
