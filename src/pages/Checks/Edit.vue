@@ -112,6 +112,44 @@
             </template>
           </div>
           <div>
+            <p class="text-bold">
+              {{ $t("common.authentication") }}
+            </p>
+            <div>
+              <span class="text-grey-7">
+                <q-icon name="eva-alert-circle-outline" />
+                {{ $t("messages.information.authenticationDescription") }}
+              </span>
+            </div>
+            <q-toggle v-model="useAuthorizationHeader" />
+            <div class="q-gutter-md" v-if="useAuthorizationHeader">
+              <q-select
+                ref="refAuthorizationHeaderDropdown"
+                outlined
+                v-model="check.authorizationHeader.name"
+                :options="commonAuthorizationHeader"
+                :label="$t('common.header')"
+                @new-value="onNewAuthorizationHeader"
+                use-input
+                :hint="
+                  $t('messages.information.writeACustomValueAndPressEnter')
+                "
+              />
+              <q-input
+                type="textarea"
+                outlined
+                v-model="check.authorizationHeader.token"
+                :label="$t('common.token')"
+                lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) ||
+                    $t('messages.errors.requireField'),
+                ]"
+              />
+            </div>
+          </div>
+          <div>
             <p class="text-bold">{{ $t("common.integrations") }}</p>
             <template v-for="integration in integrations" :key="integration.id">
               <div>
@@ -198,7 +236,18 @@ export default {
         removeIntegrations: [],
         timezone: "",
         loadingEnableStatus: false,
+        authorizationHeader: {
+          name: "Authorization",
+          token: "",
+        },
       },
+      useAuthorizationHeader: false,
+      commonAuthorizationHeader: [
+        "Authorization",
+        "X-Auth-Token",
+        "X-Auth-Key",
+      ],
+      refAuthorizationHeaderDropdown: null,
       loading: false,
       timezones: [],
       periods: this.$store.getters["checks/getPeriods"].filter((period) =>
@@ -242,6 +291,13 @@ export default {
         retryOnFail: this.check.retryOnFail,
         timezone: this.check.timezone,
       };
+
+      if (this.useAuthorizationHeader) {
+        updatedCheck.authorizationHeader = {
+          name: this.check.authorizationHeader.name,
+          token: this.check.authorizationHeader.token,
+        };
+      }
 
       this.$store
         .dispatch("checks/update", { id: this.check.id, ...updatedCheck })
@@ -317,6 +373,13 @@ export default {
             this.check.loadingEnableStatus = false;
           }, 2500);
         });
+    },
+    onNewAuthorizationHeader(value) {
+      this.check.authorizationHeader.name = value;
+      this.commonAuthorizationHeader = this.commonAuthorizationHeader.filter(
+        (header) => header !== value
+      );
+      this.$refs.refAuthorizationHeaderDropdown.blur();
     },
   },
 };
