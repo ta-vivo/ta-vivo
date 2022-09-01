@@ -91,6 +91,44 @@
             </template>
           </div>
           <div>
+            <p class="text-bold">
+              {{ $t("common.authentication") }}
+            </p>
+            <div>
+              <span class="text-grey-7">
+                <q-icon name="eva-alert-circle-outline" />
+                {{ $t("messages.information.authenticationDescription") }}
+              </span>
+            </div>
+            <q-toggle v-model="useAuthorizationHeader" />
+            <div class="q-gutter-md" v-if="useAuthorizationHeader">
+              <q-select
+                ref="refAuthorizationHeaderDropdown"
+                outlined
+                v-model="check.authorizationHeader.name"
+                :options="commonAuthorizationHeader"
+                :label="$t('common.header')"
+                @new-value="onNewAuthorizationHeader"
+                use-input
+                :hint="
+                  $t('messages.information.writeACustomValueAndPressEnter')
+                "
+              />
+              <q-input
+                type="textarea"
+                outlined
+                v-model="check.authorizationHeader.token"
+                :label="$t('common.token')"
+                lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) ||
+                    $t('messages.errors.requireField'),
+                ]"
+              />
+            </div>
+          </div>
+          <div>
             <p class="text-bold">{{ $t("common.integrations") }}</p>
             <template v-for="integration in integrations" :key="integration.id">
               <div>
@@ -140,6 +178,13 @@ export default {
     const $router = useRouter();
     const $t = useI18n().t;
     const timezones = ref([]);
+    const useAuthorizationHeader = ref(false);
+    const commonAuthorizationHeader = ref([
+      "Authorization",
+      "X-Auth-Token",
+      "X-Auth-Key",
+    ]);
+    const refAuthorizationHeaderDropdown = ref(null);
 
     const check = ref({
       name: "",
@@ -150,6 +195,10 @@ export default {
       retryOnFail: false,
       onFailPeriodToCheck: 0,
       timezone: $store.getters["auth/getUser"].timezone,
+      authorizationHeader: {
+        name: "Authorization",
+        token: "",
+      },
     });
     const loading = ref(false);
     const integrations = ref([]);
@@ -169,6 +218,15 @@ export default {
       periods,
       integrations,
       timezones,
+      useAuthorizationHeader,
+      commonAuthorizationHeader,
+      onNewAuthorizationHeader(value) {
+        check.value.authorizationHeader.name = value;
+        commonAuthorizationHeader.value =
+          commonAuthorizationHeader.value.filter((header) => header !== value);
+        refAuthorizationHeaderDropdown.value.blur();
+      },
+      refAuthorizationHeaderDropdown,
       onSubmit() {
         loading.value = true;
         const newCheck = {
@@ -188,6 +246,14 @@ export default {
           }),
           timezone: check.value.timezone,
         };
+
+        if (useAuthorizationHeader.value) {
+          newCheck.authorizationHeader = {
+            name: check.value.authorizationHeader.name,
+            token: check.value.authorizationHeader.token,
+          };
+        }
+
         $store
           .dispatch("checks/create", newCheck)
           .then(() => {
