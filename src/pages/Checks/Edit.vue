@@ -212,6 +212,12 @@ export default {
             this.check.currentIntegrations = this.check.check_integrations.map(
               (integration) => integration.integration.id
             );
+
+            if (response.data.data.authorizationHeader) {
+              this.useAuthorizationHeader = true;
+              this.check.authorizationHeader.name =
+                this.check.authorizationHeader.name || "";
+            }
           });
       })
       .finally(() => {
@@ -291,6 +297,8 @@ export default {
           name: this.check.authorizationHeader.name,
           token: this.check.authorizationHeader.token,
         };
+      } else {
+        updatedCheck.removeAuthorizationHeader = true;
       }
 
       this.$store
