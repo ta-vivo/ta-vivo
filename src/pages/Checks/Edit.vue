@@ -140,12 +140,6 @@
                 outlined
                 v-model="check.authorizationHeader.token"
                 :label="$t('common.token')"
-                lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.length > 0) ||
-                    $t('messages.errors.requireField'),
-                ]"
               />
             </div>
           </div>
