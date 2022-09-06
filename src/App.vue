@@ -13,6 +13,21 @@ export default defineComponent({
     FooterComponent,
   },
   created() {
+
+    let darkmodeFromLocalStorage = localStorage.getItem("darkMode");
+
+    if (
+      darkmodeFromLocalStorage === "true" ||
+      darkmodeFromLocalStorage === true ||
+      darkmodeFromLocalStorage === null
+    ) {
+      darkmodeFromLocalStorage = true;
+    } else {
+      darkmodeFromLocalStorage = false;
+    }
+
+    this.$q.dark.set(darkmodeFromLocalStorage);
+
     const token = window.localStorage.getItem("token");
     if (token) {
       this.$store.dispatch("auth/me").then((response) => {
