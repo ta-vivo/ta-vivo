@@ -4,6 +4,13 @@
     $q.dark.isActive ? 'bg-dark text-white' : 'bg-white'
   } constrain-width`"
   >
+  <q-img
+    src="~assets/main-logo.png"
+    spinner-color="white"
+    style="height: 40px; max-width: 40px"
+    @click="$router.push('/')"
+    class="q-mr-sm cursor-pointer"
+  />
   <q-btn
     to="/checks"
     stretch
