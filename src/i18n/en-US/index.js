@@ -60,7 +60,10 @@ export default {
     phone: 'Phone',
     retryOnFail: 'Retry on fail',
     retryOnCheckFail: 'Retry on check fail',
-    timezone: 'Timezone'
+    timezone: 'Timezone',
+    authentication: 'Authentication',
+    header: 'Header',
+    token: 'Token',
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
@@ -151,6 +154,9 @@ export default {
       whatsappVerificationInformation: 'We already send a code to your WhatsApp.',
       diableCheckDescription: 'When you disable a Check you will stop receiving notifications and no more pings will be made until it is activated again.',
       enableCheckDescription: 'If you enable the check, pings will begin, if the check is down, you will begin to receive notifications.',
+      authenticationDescription: 'Use a authentication header to authenticate your requests to your service.',
+      writeACustomValueAndPressEnter: 'Write a custom value and press enter',
+      authorizationHeaderConfigured: 'Authorization header configured',
     },
     errors: {
       requireField: 'This field is required',

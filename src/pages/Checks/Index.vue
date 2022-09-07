@@ -52,6 +52,18 @@
                       ? $t("common.enabled")
                       : $t("common.disabled")
                   }}
+                  <q-icon
+                    v-show="props.row.check_authorization"
+                    size="sm"
+                    name="eva-lock-outline"
+                    class="cursor-pointer"
+                  >
+                    <q-tooltip class="bg-primary">
+                      {{
+                        $t("messages.information.authorizationHeaderConfigured")
+                      }}
+                    </q-tooltip>
+                  </q-icon>
                 </q-chip>
               </div>
               <div class="text-grey-8">{{ $t("common.name") }}</div>
@@ -147,6 +159,16 @@
             {{
               props.row.enabled ? $t("common.enabled") : $t("common.disabled")
             }}
+            <q-icon
+              v-show="props.row.check_authorization"
+              size="sm"
+              name="eva-lock-outline"
+              class="cursor-pointer"
+            >
+              <q-tooltip class="bg-primary">
+                {{ $t("messages.information.authorizationHeaderConfigured") }}
+              </q-tooltip>
+            </q-icon>
           </q-chip>
         </q-td>
       </template>
