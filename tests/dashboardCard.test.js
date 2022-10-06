@@ -21,7 +21,6 @@ const wrapper = wrapperFactory();
 
 test('mount component', () => {
   expect(DashboardCard).toBeTruthy();
-  expect(wrapper.html()).toContain("10");
 })
 
 test('should render title', () => {
