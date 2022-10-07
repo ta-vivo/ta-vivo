@@ -87,23 +87,18 @@
             />
             <q-btn
               push
-              class="full-width q-mt-md"
-              color="#FFFFFF"
+              :icon="googleLogo"
+              class="full-width google-color q-mt-md"
+              text-color="white"
+              label="Google"
               @click="dispatchGoogleAuth()"
               :disable="loading"
-            >
-              <q-img
-                style="margin-right: 24px"
-                width="18px"
-                src="https://developers.google.com/static/identity/images/g-logo.png"
-              />
-              <span style="color: #777777">Google</span>
-            </q-btn>
+            />
             <q-btn
               push
               :icon="slackLogo"
               class="full-width slack-color q-mt-md"
-              text-color="black"
+              text-color="white"
               label="Slack"
               @click="dispatchSlackAuth()"
               :disable="loading"
@@ -122,7 +117,7 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import jwtDecode from "jwt-decode";
 import supabase from "boot/supabase";
-import { fabDiscord, fabSlack, fabGithub } from "@quasar/extras/fontawesome-v5";
+import { fabDiscord, fabSlack, fabGithub, fabGoogle } from "@quasar/extras/fontawesome-v5";
 import {getUserTimezone} from 'src/utils/time';
 
 export default {
@@ -138,6 +133,7 @@ export default {
     const discordIcon = ref(fabDiscord);
     const slackLogo = ref(fabSlack);
     const githubLogo = ref(fabGithub);
+    const googleLogo = ref(fabGoogle);
     const timezone = getUserTimezone();
 
     let user = supabase.auth.user();
@@ -289,6 +285,7 @@ export default {
       discordIcon,
       slackLogo,
       githubLogo,
+      googleLogo,
 
       onSubmit() {
         loading.value = true;
@@ -351,5 +348,11 @@ export default {
 }
 .github-color {
   background-color: #24292e;
+}
+.google-color {
+  background-color: #4285F4;
+}
+.slack-color {
+  background-color: #2EB67D;
 }
 </style>
