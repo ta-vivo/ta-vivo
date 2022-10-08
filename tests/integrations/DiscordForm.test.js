@@ -1,4 +1,4 @@
-import { test, expect } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { Quasar } from 'quasar'
 
@@ -15,16 +15,19 @@ const wrapperFactory = () => mount(Discord, {
 
 const wrapper = wrapperFactory();
 
-test('mount component', () => {
-  expect(Discord).toBeTruthy();
-})
+describe('DiscordForm', () => {
+  it('mount component', () => {
+    expect(Discord).toBeTruthy();
+  })
 
-test('should render button to dispatch integration', () => {
-  const integrationButton = wrapper.find('button');
-  expect(integrationButton.exists()).toBe(true);
-})
+  it('should render button to dispatch integration', () => {
+    const integrationButton = wrapper.find('button');
+    expect(integrationButton.exists()).toBe(true);
+  })
 
-test('should contain example image', () => {
-  const exampleImage = wrapper.find('img');
-  expect(exampleImage.exists()).toBe(true);
+  it('should contain example image', () => {
+    const exampleImage = wrapper.find('img');
+    expect(exampleImage.exists()).toBe(true);
+  })
+
 })

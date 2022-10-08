@@ -1,4 +1,4 @@
-import { test, expect } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { Quasar } from 'quasar'
 
@@ -19,18 +19,20 @@ const wrapperFactory = () => mount(DashboardCard, {
 
 const wrapper = wrapperFactory();
 
-test('mount component', () => {
-  expect(DashboardCard).toBeTruthy();
-})
+describe('DashboardCard', () => {
+  it('mount component', () => {
+    expect(DashboardCard).toBeTruthy();
+  })
 
-test('should render title', () => {
-  expect(wrapper.html()).toContain("checks");
-})
+  it('should render title', () => {
+    expect(wrapper.html()).toContain("checks");
+  })
 
-test('should render value', () => {
-  expect(wrapper.html()).toContain("10");
-})
+  it('should render value', () => {
+    expect(wrapper.html()).toContain("10");
+  })
 
-test('should render icon', () => {
-  expect(wrapper.html()).toContain("eva-activity-outline");
+  it('should render icon', () => {
+    expect(wrapper.html()).toContain("eva-activity-outline");
+  })
 })
