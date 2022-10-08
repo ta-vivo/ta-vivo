@@ -4,9 +4,6 @@ import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
 import path from 'path'
 
 export default defineConfig({
-  define: {
-    $t: JSON.stringify('message')
-  },
   resolve: {
     alias: {
       'assets': path.resolve(__dirname, './src/assets')
