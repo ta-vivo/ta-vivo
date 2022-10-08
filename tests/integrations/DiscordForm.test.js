@@ -15,7 +15,7 @@ const wrapperFactory = () => mount(Discord, {
 
 const wrapper = wrapperFactory();
 
-describe('DiscordForm', () => {
+describe('Discord integration form', () => {
   it('mount component', () => {
     expect(Discord).toBeTruthy();
   })
