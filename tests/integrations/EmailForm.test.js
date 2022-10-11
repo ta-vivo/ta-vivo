@@ -48,7 +48,12 @@ describe('Email integration Form', () => {
     await input.setValue('jhon@doe.com');
     await form.trigger('submit');
 
-    // TODO: Check if the requestEmailCode action was called
+    wrapper.vm.onSubmit()
+    expect(wrapper.emitted().saved).toBeTruthy();
+    expect(wrapper.emitted().saved[0]).toEqual([{
+      uniqueCode: '',
+    }]);
+
   })
 
 })
