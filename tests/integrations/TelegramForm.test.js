@@ -1,11 +1,9 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { Quasar } from 'quasar'
-import { createStore } from 'vuex'
 
 
 import Telegram from "../../src/components/Integrations/Form/Telegram.vue";
-import { find } from 'core-js/core/array';
 
 
 const wrapperFactory = () => mount(Telegram, {
@@ -40,11 +38,12 @@ describe('Telegram integration Form', () => {
     const integrationButton = wrapper.find('button');
     expect(integrationButton.exists()).toBe(true);
 
+    expect(wrapper.find('div[role="alert"]').exists()).toBe(false);
+
     const form = wrapper.find('form');
     await form.trigger('submit');
 
-    const error = wrapper.find('div[role="alert"]');
-    expect(error.exists()).toBe(true);
+    expect(wrapper.find('div[role="alert"]').exists()).toBe(true);
 
     const nameInput = wrapper.find('.name');
     await nameInput.setValue('test');
@@ -52,7 +51,17 @@ describe('Telegram integration Form', () => {
     const tokenInput = wrapper.find('.token');
     await tokenInput.setValue('test');
 
-    // TODO: test the event emitted
+    await form.trigger('submit');
+
+    expect(wrapper.find('div[role="alert"]').exists()).toBe(false);
+
+    wrapper.vm.onSubmit()
+
+    expect(wrapper.emitted().saved).toBeTruthy();
+    expect(wrapper.emitted().saved[0]).toEqual([{
+      name: 'test',
+      uniqueCode: 'test'
+    }]);
   })
 
 })
