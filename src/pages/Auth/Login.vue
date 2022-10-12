@@ -86,6 +86,7 @@
               :disable="loading"
             />
             <q-btn
+              v-if="!$q.dark.isActive"
               push
               class="full-width q-mt-md"
               color="#FFFFFF"
@@ -100,14 +101,40 @@
               <span style="color: #777777">Google</span>
             </q-btn>
             <q-btn
+              v-else
+              push
+              class="full-width q-mt-md"
+              color="#FFFFFF"
+              @click="dispatchGoogleAuth()"
+              :disable="loading"
+              label="Google"
+              icon="eva-google"
+            />
+            <q-btn
+              v-if="$q.dark.isActive"
               push
               :icon="slackLogo"
               class="full-width slack-color q-mt-md"
-              text-color="black"
+              text-color="white"
               label="Slack"
               @click="dispatchSlackAuth()"
               :disable="loading"
             />
+            <q-btn
+              v-else
+              push
+              class="full-width q-mt-md"
+              color="white"
+              @click="dispatchSlackAuth()"
+              :disable="loading"
+            >
+              <q-img
+                style="margin-right: 24px"
+                width="18px"
+                src="../../assets/slack-logo.png"
+              />
+              <span style="color: #777777">SLACK</span>
+            </q-btn>
           </div>
         </q-form>
       </q-card-section>
