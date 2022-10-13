@@ -44,6 +44,7 @@
           {{ $t("messages.information.whatsappVerificationInformation").replace('[PHONE]', integration.phone) }}
         </p>
         <q-input
+          input-class="whatsapp-name"
           type="text"
           :hint="$t('messages.information.telegramIntegrationNamePlaceholder')"
           outlined
@@ -57,6 +58,7 @@
           maxlength="50"
         />
         <q-input
+          input-class="whatsapp-unique-code"
           type="text"
           outlined
           v-model="integration.code"
@@ -68,6 +70,7 @@
         />
         <div class="text-center">
           <q-btn
+            class="confirm-code"
             push
             :loading="loading"
             :label="$t('action.save')"

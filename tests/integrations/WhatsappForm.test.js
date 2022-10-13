@@ -2,6 +2,8 @@ import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { Quasar } from 'quasar'
 import { createStore } from 'vuex'
+import { flushPromises } from '@vue/test-utils'
+
 
 import Whatsapp from "../../src/components/Integrations/Form/Whatsapp.vue";
 
@@ -35,6 +37,7 @@ describe('Whatsapp integration Form', () => {
 
   it('should test the request code flow', async () => {
 
+    // Request the code
     const integrationButton = wrapper.find('button');
     expect(integrationButton.exists()).toBe(true);
 
@@ -49,9 +52,26 @@ describe('Whatsapp integration Form', () => {
     await nameInput.setValue('8095559999');
 
     await requestCodeForm.trigger('submit');
+    await flushPromises()
 
     expect(wrapper.find('div[role="alert"]').exists()).toBe(false);
 
+    // Confirm the code
+    const confirmCodeForm = wrapper.find('form.confirm-code');
+    expect(confirmCodeForm.exists()).toBe(true);
+
+    const whatsappNameInput = wrapper.find('input.whatsapp-name');
+    await whatsappNameInput.setValue('Test Whatsapp');
+
+    const codeInput = wrapper.find('input.whatsapp-unique-code');
+    await codeInput.setValue('123456');
+
+    const confirmCodeButton = wrapper.find('button.confirm-code');
+    expect(confirmCodeButton.exists()).toBe(true);
+
+    await confirmCodeForm.trigger('submit');
+
+    expect(wrapper.find('div[role="alert"]').exists()).toBe(false);
   })
 
 })
