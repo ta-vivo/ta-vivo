@@ -6,33 +6,33 @@
         spinner-color="white"
         style="height: 20px; max-width: 20px"
         @click="$router.push('/')"
-        class="q-mr-sm cursor-pointer"
+        class="q-mr-sm cursor-pointer logo"
       />
       Ta-Vivo
       <q-separator class="q-my-md" />
       <div class="footer-links">
         <span class="text-grey-7"> Copyright © {{ getYear() }} Ta-Vivo </span>
         <span
-          class="link text-grey-7"
+          class="link text-grey-7 terms"
           @click="$router.push('/legal/terms-and-conditions')"
         >
           {{ $t("common.termsAndConditions") }}
         </span>
         <span
-          class="link text-grey-7"
+          class="link text-grey-7 privacy"
           @click="$router.push('/legal/privacy-policy')"
         >
           {{ $t("common.privacyPolicy") }}
         </span>
         <span
           v-show="$store.getters['auth/getUser'].id"
-          class="link text-grey-7"
+          class="link text-grey-7 pricing"
           @click="$router.push('/pricing')"
         >
           {{ $t("common.pricing") }}
         </span>
         <span
-          class="link text-grey-7"
+          class="link text-grey-7 about"
           @click="$router.push('/about')"
         >
           {{ $t("common.about") }}
