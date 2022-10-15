@@ -2,7 +2,6 @@ import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { Quasar } from 'quasar'
 import { createStore } from 'vuex'
-import $q from '../mocks/Quasar'
 
 import Footer from "../../src/components/Interface/Footer.vue";
 
