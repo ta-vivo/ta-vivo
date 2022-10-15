@@ -4,12 +4,13 @@
       <q-form
         v-if="activeForm === 'requestCode'"
         @submit="requestCode"
-        class="q-gutter-md text-center"
+        class="q-gutter-md text-center request-code"
         style="max-width:400px; margin:auto;"
       >
         <p class="text-h4">{{ $t("common.basicInformation") }}</p>
         <p>{{$t('messages.information.whatsappNumberInformation')}}</p>
         <q-input
+          input-class="phone"
           prefix="+1"
           mask="(###) ### - ####"
           unmasked-value
@@ -35,7 +36,7 @@
       <q-form
         v-if="activeForm === 'confirmCode'"
         @submit="onSubmit"
-        class="q-gutter-md text-center"
+        class="q-gutter-md text-center confirm-code"
         style="max-width: 400px; margin: auto"
       >
         <p class="text-h4">{{ $t("common.whatsappConfirmationCode") }}</p>
@@ -43,6 +44,7 @@
           {{ $t("messages.information.whatsappVerificationInformation").replace('[PHONE]', integration.phone) }}
         </p>
         <q-input
+          input-class="whatsapp-name"
           type="text"
           :hint="$t('messages.information.telegramIntegrationNamePlaceholder')"
           outlined
@@ -56,6 +58,7 @@
           maxlength="50"
         />
         <q-input
+          input-class="whatsapp-unique-code"
           type="text"
           outlined
           v-model="integration.code"
@@ -67,6 +70,7 @@
         />
         <div class="text-center">
           <q-btn
+            class="confirm-code"
             push
             :loading="loading"
             :label="$t('action.save')"

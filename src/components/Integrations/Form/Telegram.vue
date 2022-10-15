@@ -6,6 +6,7 @@
           <p class="text-bold">{{ $t("common.basicInformation") }}</p>
         </div>
         <q-input
+          input-class="name"
           type="text"
           :hint="$t('messages.information.telegramIntegrationNamePlaceholder')"
           outlined
@@ -19,6 +20,7 @@
           maxlength="50"
         />
         <q-input
+          input-class="token"
           type="text"
           :hint="$t('messages.information.uniqueCodeGetFromTelegram')"
           outlined
@@ -49,7 +51,7 @@
       <p>
         <span class="text-bold">1-</span> {{ $t("messages.information.telegramSetupBot") }}
         <a
-          class="text-primary text-bold"
+          class="text-primary text-bold bot-link"
           href="https://t.me/TaVivoBot"
           target="_blank"
           >@ta-vivo-bot</a
@@ -58,7 +60,7 @@
       <p>
         <span class="text-bold">2-</span> {{ $t("messages.information.telegramSetupBotCommand") }}
         <q-img
-          class="q-mt-md"
+          class="q-mt-md telegram-demo"
           src="~assets/telegram/telegram-bot-command.jpeg"
           spinner-color="white"
           style="max-width: 80%"

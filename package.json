@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "SUPABASE_PROJECT_URL=http://supabase.localhost SUPABASE_ANON_PUBLIC_KEY=anon_key vitest"
   },
   "dependencies": {
     "@quasar/extras": "^1.15.4",
@@ -27,11 +27,16 @@
     "@babel/eslint-parser": "^7.13.14",
     "@quasar/app-webpack": "^3.6.1",
     "@quasar/quasar-app-extension-dotenv": "^1.1.0",
+    "@quasar/vite-plugin": "^1.2.3",
+    "@vitejs/plugin-vue": "^3.1.2",
+    "@vue/test-utils": "^2.1.0",
     "babel-loader": "^8.2.3",
     "eslint": "^7.14.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-vue": "^7.0.0",
-    "eslint-webpack-plugin": "^2.4.0"
+    "eslint-webpack-plugin": "^2.4.0",
+    "happy-dom": "^7.5.7",
+    "vitest": "^0.23.4"
   },
   "browserslist": [
     "last 10 Chrome versions",
