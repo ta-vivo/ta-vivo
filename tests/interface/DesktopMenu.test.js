@@ -26,7 +26,7 @@ const mockStore = createStore({
 
 const wrapperFactory = () => mount(DesktopMenu, {
   global: {
-    plugins: [[Quasar,], mockStore],
+    plugins: [Quasar, mockStore],
     mocks: {
       $t: (msg) => msg,
       $q: {...$q}
@@ -36,7 +36,7 @@ const wrapperFactory = () => mount(DesktopMenu, {
 
 const wrapper = wrapperFactory();
 
-describe('Discord integration form', () => {
+describe('Desktop Menu component', () => {
   it('mount component', () => {
     expect(DesktopMenu).toBeTruthy();
   })
