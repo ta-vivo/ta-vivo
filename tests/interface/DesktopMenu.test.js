@@ -53,4 +53,14 @@ describe('Desktop Menu component', () => {
   it('should have a badge with administrator text', async () => {
     expect(wrapper.find('div.q-badge').text()).toBe('Administrator');
   })
+
+  it('should have a darkmode toggle', () => {
+    expect(wrapper.find('div.q-toggle').exists()).toBe(true);
+  })
+
+  it('should have a darkmode toggle functionality', () => {
+    expect(wrapper.vm.darkMode).toBe(false);
+    wrapper.find('div.q-toggle').trigger('click');
+    expect(wrapper.vm.darkMode).toBe(true);
+  })
 })
