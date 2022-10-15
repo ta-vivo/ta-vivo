@@ -36,7 +36,8 @@
     "eslint-plugin-vue": "^7.0.0",
     "eslint-webpack-plugin": "^2.4.0",
     "happy-dom": "^7.5.7",
-    "vitest": "^0.23.4"
+    "vitest": "^0.23.4",
+    "vue-router-mock": "^0.1.9"
   },
   "browserslist": [
     "last 10 Chrome versions",

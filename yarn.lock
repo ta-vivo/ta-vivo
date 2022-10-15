@@ -6463,6 +6463,11 @@ vue-loader@17.0.0:
     hash-sum "^2.0.0"
     loader-utils "^2.0.0"
 
+vue-router-mock@^0.1.9:
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/vue-router-mock/-/vue-router-mock-0.1.9.tgz#eaac144d3954a67f1ec0ba6050d3bc38ad7cc8a1"
+  integrity sha512-ap+mzPUtw2mV4/q043hM1f68JFRU725LDg+m0YL7Lkr3OtIiEqi9pvhB+SY0m5ByrHLAIvAGFbWGrw5YWM+QqQ==
+
 vue-router@^4.0.0:
   version "4.0.12"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.0.12.tgz#8dc792cddf5bb1abcc3908f9064136de7e13c460"
