@@ -70,4 +70,13 @@ describe('Change password component', () => {
     expect(showConfirmPasswordButton.exists()).toBeTruthy();
   })
 
+  it('should be show the password', async () => {
+    const showPasswordButton = wrapper.find('button.show-password');
+
+    await showPasswordButton.trigger('click');
+
+    expect(wrapper.find('input.new-password').element.type).toBe('text');
+    expect(wrapper.find('input.confirm-new-password').element.type).toBe('text');
+  })
+
 })
