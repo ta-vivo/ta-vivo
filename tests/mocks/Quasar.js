@@ -25,5 +25,6 @@ export default {
       "filter": "Filter",
       "refresh": "Refresh"
     }
-  }
+  },
+  notify: { mounted: vi.fn() },
 }
