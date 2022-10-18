@@ -26,6 +26,7 @@
     >
       <template v-slot:append>
         <q-btn
+          class="show-password"
           @click="showPassword = !showPassword"
           flat
           dense
@@ -48,6 +49,7 @@
     >
       <template v-slot:append>
         <q-btn
+          class="show-confirm-password"
           @click="showPassword = !showPassword"
           flat
           dense
