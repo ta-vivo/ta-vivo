@@ -58,4 +58,16 @@ describe('Change password component', () => {
 
   })
 
+  it('should be have a show password button', () => {
+    const showPasswordButton = wrapper.find('button.show-password');
+
+    expect(showPasswordButton.exists()).toBeTruthy();
+  })
+
+  it('should be have a show confirm passwor button', () => {
+    const showConfirmPasswordButton = wrapper.find('button.show-confirm-password');
+
+    expect(showConfirmPasswordButton.exists()).toBeTruthy();
+  })
+
 })
