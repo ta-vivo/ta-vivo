@@ -30,4 +30,83 @@ describe('Auth store', () => {
     expect(store.getters['Auth/getUser']).toEqual(user);
   })
 
+  it('should be login success', () => {
+    store.dispatch('Auth/login', { email: 'jhon@doe.com', password: '123456' })
+      .then(() => {
+        expect(store.state.Auth.user).toEqual(user);
+      })
+
+  })
+
+  it('should be login with google', () => {
+    store.dispatch('Auth/google', { access_token: '123456', timezone: 'UTC' })
+      .then(() => {
+        expect(store.state.Auth.user).toEqual(user);
+      })
+  })
+
+  it('should be login with discord', () => {
+    store.dispatch('Auth/discord', { access_token: '123456', timezone: 'UTC' })
+      .then(() => {
+        expect(store.state.Auth.user).toEqual(user);
+      })
+  })
+
+  it('should be login with slack', () => {
+    store.dispatch('Auth/slack', { access_token: '123456', timezone: 'UTC' })
+      .then(() => {
+        expect(store.state.Auth.user).toEqual(user);
+      })
+  })
+
+  it('should be login with github', () => {
+    store.dispatch('Auth/github', { access_token: '123456', timezone: 'UTC' })
+      .then(() => {
+        expect(store.state.Auth.user).toEqual(user);
+      })
+  })
+
+  it('should be register', () => {
+    store.dispatch('Auth/register', { email: 'jhon@doe.com', password: '123456', confirmPassword: '123456', fullname: 'Jhon Doe' })
+      .then(() => {
+        expect(store.state.Auth.user).toEqual(user);
+      })
+
+  })
+
+  it('should be register email confirmation', () => {
+    store.dispatch('Auth/registerEmailConfirmation', { uniqueCode: '123456' })
+      .then(() => {
+        expect(store.state.Auth.user).toEqual(user);
+      })
+  })
+
+  it('should be request register email confirmation', () => {
+    store.dispatch('Auth/requestRegisterEmailConfirmation')
+      .then(() => {
+        expect(store.state.Auth.user).toEqual(user);
+      })
+  })
+
+  it('should be request reset password', () => {
+    store.dispatch('Auth/forgotPassword', { email: 'jhon@doe.com' })
+      .then(() => {
+        expect(store.state.Auth.user).toEqual(user);
+      })
+  })
+
+  it('should be change password', () => {
+    store.dispatch('Auth/recoverPassword', { email: 'jhon@doe.com', oldPassword: '123456', password: '123456', confirmPassword: '123456' })
+      .then(() => {
+        expect(store.state.Auth.user).toEqual(user);
+      })
+  })
+
+  it('should be recover password', () => {
+    store.dispatch('Auth/recoverPassword', { email: 'jhon@doe.com', uniqueCode: '123456', password: '123456', confirmPassword: '123456' })
+      .then(() => {
+        expect(store.state.Auth.user).toEqual(user);
+      })
+  })
+
 })
