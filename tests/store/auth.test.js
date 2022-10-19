@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { createStore } from 'vuex'
+import '../mocks/axios'
 
 import Auth from 'stores/Auth/index.js'
 
