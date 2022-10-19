@@ -1,10 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { createStore } from 'vuex'
-import axiosMock from '../mocks/axios'
+import '../mocks/axios'
 
 import Checks from 'stores/Checks/index.js'
-
-axiosMock({ getData: { data: [] } })
 
 const store = createStore({
   modules: {
