@@ -19,7 +19,7 @@ const getTimestampInHumanFormat = (timestamp, timezone) => {
 
 const getDuration = (count) => {
 
-  if (count < 60) {
+  if (count <= 60) {
     return dayjs.duration(count, "seconds").humanize();
   } else if (count > 60 && count < 3600) {
     return dayjs.duration(Math.floor(count / 60), "minutes").humanize();
