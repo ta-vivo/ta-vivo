@@ -8,15 +8,12 @@
 </template>
 
 <script>
-import { useQuasar } from 'quasar';
-
 export default {
   name: "ComponentUserBadge",
   props: {
     role: String
   },
   setup(props) {
-    const $q = useQuasar();
     const roleSettings = {
       textColor: "white",
       backgroundColor: "primary",

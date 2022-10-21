@@ -1,6 +1,7 @@
 <template>
   <q-form @submit="handleChangePassword" class="q-gutter-md">
     <q-input
+      input-class="old-password"
       type="password"
       outlined
       v-model="oldPassword"
@@ -12,6 +13,7 @@
       ]"
     />
     <q-input
+      input-class="new-password"
       :type="showPassword ? 'text' : 'password'"
       outlined
       v-model="password"
@@ -24,6 +26,7 @@
     >
       <template v-slot:append>
         <q-btn
+          class="show-password"
           @click="showPassword = !showPassword"
           flat
           dense
@@ -33,6 +36,7 @@
       </template>
     </q-input>
     <q-input
+      input-class="confirm-new-password"
       :type="showPassword ? 'text' : 'password'"
       outlined
       v-model="confirmPassword"
@@ -45,6 +49,7 @@
     >
       <template v-slot:append>
         <q-btn
+          class="show-confirm-password"
           @click="showPassword = !showPassword"
           flat
           dense
@@ -111,11 +116,13 @@ export default {
             confirmPassword.value = "";
           })
           .catch((error) => {
-            $q.notify({
-              color: "negative",
-              position: "top",
-              message: error.response.data.message,
-            });
+            if (error.response && error.response.data) {
+              $q.notify({
+                color: "negative",
+                position: "top",
+                message: error.response.data.message,
+              });
+            }
           })
           .finally(() => {
             loading.value = false;

@@ -8,6 +8,7 @@
     class="q-mr-sm cursor-pointer"
   />
   <q-btn
+    class="checks"
     to="/checks"
     stretch
     flat
@@ -16,6 +17,7 @@
     :label="$t('common.checks')"
   ></q-btn>
   <q-btn
+    class="integrations"
     to="/integrations"
     stretch
     flat
@@ -33,7 +35,7 @@
   <q-btn-dropdown
     flat
     color="primary"
-    class="q-ml-xs q-mr-xs"
+    class="q-ml-xs q-mr-xs email dropdown"
     :label="user.email"
     icon='eva-person-outline'
   >
@@ -46,7 +48,7 @@
           </q-item-label>
         </q-item-section>
       </q-item>
-      <q-item clickable v-close-popup @click="logout">
+      <q-item clickable v-close-popup @click="logout" class="logout">
         <q-item-section>
           <q-item-label class="text-negative">
             <q-icon name="eva-log-out-outline" />
@@ -119,4 +121,3 @@
     },
   });
   </script>
-
