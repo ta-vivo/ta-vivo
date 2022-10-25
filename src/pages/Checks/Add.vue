@@ -141,6 +141,9 @@
                 <q-separator />
               </div>
             </template>
+            <template v-if="integrations.length === 0">
+              <NoIntegrationsAction />
+            </template>
           </div>
           <div class="text-center">
             <q-btn
@@ -168,10 +171,11 @@ import SmallIntegrationIcon from "components/Integrations/Icons/Small";
 import jwtDecode from "jwt-decode";
 import RoleBadge from "components/User/RoleBadge.vue";
 import timezonesJson from "assets/timezones.json";
+import NoIntegrationsAction from "components/Integrations/NoIntegrationsAction.vue";
 
 export default {
   name: "PageCheckForm",
-  components: { SmallIntegrationIcon, RoleBadge },
+  components: { SmallIntegrationIcon, RoleBadge, NoIntegrationsAction },
   setup() {
     const $q = useQuasar();
     const $store = useStore();
