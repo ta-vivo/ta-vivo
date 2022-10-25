@@ -157,6 +157,9 @@
                 <q-separator />
               </div>
             </template>
+            <template v-if="integrations.length === 0">
+              <NoIntegrationsAction />
+            </template>
           </div>
           <div class="text-center">
             <q-btn
@@ -177,10 +180,11 @@
 import SmallIntegrationIcon from "components/Integrations/Icons/Small";
 import RoleBadge from "components/User/RoleBadge.vue";
 import timezonesJson from "assets/timezones.json";
+import NoIntegrationsAction from "components/Integrations/NoIntegrationsAction.vue";
 
 export default {
   name: "PageCheckEdit",
-  components: { SmallIntegrationIcon, RoleBadge },
+  components: { SmallIntegrationIcon, RoleBadge, NoIntegrationsAction },
   created() {
     this.$q.loading.show();
 
