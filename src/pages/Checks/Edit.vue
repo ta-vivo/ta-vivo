@@ -144,7 +144,14 @@
             </div>
           </div>
           <div>
-            <p class="text-bold">{{ $t("common.integrations") }}</p>
+            <p class="text-bold">
+              {{ $t("common.integrations") }}
+              <q-spinner
+                v-show="loadingIntegrations"
+                color="primary"
+                size="1em"
+              />
+            </p>
             <template v-for="integration in integrations" :key="integration.id">
               <div>
                 <q-toggle
@@ -228,6 +235,12 @@ export default {
         this.$q.loading.hide();
       });
   },
+  mounted() {
+    document.addEventListener("visibilitychange", this.fetchIntegrationsOnFocusWindow);
+  },
+  unmounted() {
+    document.removeEventListener("visibilitychange", this.fetchIntegrationsOnFocusWindow);
+  },
   data() {
     return {
       check: {
@@ -253,6 +266,7 @@ export default {
       ],
       refAuthorizationHeaderDropdown: null,
       loading: false,
+      loadingIntegrations: false,
       timezones: [],
       periods: this.$store.getters["checks/getPeriods"].filter((period) =>
         period.roles.includes(
@@ -263,6 +277,18 @@ export default {
     };
   },
   methods: {
+    fetchIntegrationsOnFocusWindow() {
+      if (document.visibilityState === "visible") {
+        this.$store
+          .dispatch("integrations/fetchAll")
+          .then((response) => {
+            this.integrations = response.data.data;
+          })
+          .finally(() => {
+            this.loadingIntegrations = false;
+          });
+      }
+    },
     onToggleIntegration(integrationId) {
       const isChecked = this.check.currentIntegrations.includes(integrationId);
       const isOnCurrent = this.check.check_integrations.find(
