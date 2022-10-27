@@ -1,6 +1,6 @@
 # Ta vivo - Check if your service is down before your customers
 
-[Ta-vivo](https://landing-tavivo.albert.do/) Is a tool designed to monitor APIs or web services based on a configurable time interval and sent notifications if the service is down or not responding.
+[Ta-vivo](https://landing.tavivo.do/) Is a tool designed to monitor APIs or web services based on a configurable time interval and sent notifications if the service is down or not responding.
 
 ![demo](https://njxuriszytyyfwsmdbga.supabase.co/storage/v1/object/public/assets/demo.png)
 
@@ -18,19 +18,19 @@ We have very cool features at this moment;
 
 # Get started
 
-Start checking your service now! :point_right: [here](https://app-tavivo.albert.do/)
+Start checking your service now! :point_right: [here](https://tavivo.do/)
 
 Also you can contribute to this project in a different parts;
 
-- [Frontend](https://documentation-tavivo.albert.do/front-end/)
-- [Backend](https://documentation-tavivo.albert.do/back-end/)
+- [Frontend](https://documentation.tavivo.do/front-end/)
+- [Backend](https://documentation.tavivo.do/back-end/)
 - [WhatsApp service](https://github.com/ta-vivo/ta-vivo-whatsapp-service)
 - [Audit log service](https://github.com/ta-vivo/ta-vivo-audit-log)
 - [Backup service](https://github.com/ta-vivo/ta-vivo-backup-uploader)
 - [The documentation](https://github.com/ta-vivo/ta-vivo-documentation)
 - [The landing page](https://github.com/ta-vivo/ta-vivo-landing)
 
-You can check more on the full [documentation](https://documentation-tavivo.albert.do/)
+You can check more on the full [documentation](https://documentation.tavivo.do/)
 
 ## Give a Star! ⭐
 
@@ -61,4 +61,4 @@ We're glad to be supported by respected companies and individuals from several i
  - [Albert Hidalgo](https://github.com/itsalb3rt)
 
 ## License
-Copyright (C) 2022 by [Ta-vivo](https://landing-tavivo.albert.do/). MIT License (see [LICENSE](https://github.com/ta-vivo/ta-vivo/blob/master/LICENSE) for details).
+Copyright (C) 2022 by [Ta-vivo](https://landing.tavivo.do/). MIT License (see [LICENSE](https://github.com/ta-vivo/ta-vivo/blob/master/LICENSE) for details).
