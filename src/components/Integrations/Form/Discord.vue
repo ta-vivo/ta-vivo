@@ -4,7 +4,7 @@
       <p>{{ $t("messages.information.discordIntegrationDescription") }}</p>
       <a
         style="text-decoration: none"
-        href="https://discord.com/api/oauth2/authorize?client_id=946962652582776932&redirect_uri=https%3A%2F%2Fapp-tavivo.albert.do%2Fintegrations%2Fdiscord%2Fsuccess&response_type=code&scope=webhook.incoming"
+        href="https://discord.com/api/oauth2/authorize?client_id=946962652582776932&redirect_uri=https%3A%2F%2Ftavivo.do%2Fintegrations%2Fdiscord%2Fsuccess&response_type=code&scope=webhook.incoming"
       >
         <q-btn no-caps outline color="black">
           <q-icon style="color: #5865f2" :name="fabDiscord" class="q-mr-sm" />
