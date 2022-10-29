@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, RouterLinkStub } from '@vue/test-utils'
 import { Quasar } from 'quasar'
 
 import NoIntegrationsAction from "../../src/components/Integrations/NoIntegrationsAction.vue";
@@ -9,8 +9,11 @@ const wrapperFactory = () => mount(NoIntegrationsAction, {
     plugins: [Quasar],
     mocks: {
       $t: (msg) => msg
+    },
+    stubs: {
+      RouterLink: RouterLinkStub
     }
-  }
+  },
 })
 
 const wrapper = wrapperFactory();
@@ -27,7 +30,7 @@ describe('No integrations action component', () => {
   })
 
   it('should be have a link', () => {
-    const link = wrapper.find('router-link');
+    const link = wrapper.find('a');
     expect(link.exists()).toBe(true);
   })
 
