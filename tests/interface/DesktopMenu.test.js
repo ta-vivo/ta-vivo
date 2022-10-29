@@ -3,6 +3,7 @@ import { mount } from '@vue/test-utils'
 import { Quasar } from 'quasar'
 import { createStore } from 'vuex'
 import $q from '../mocks/Quasar'
+import '../mocks/router'
 
 import DesktopMenu from "../../src/components/Interface/DesktopMenu.vue";
 
