@@ -114,6 +114,7 @@ export default {
     timezoneSaved: 'Timezone saved',
     checkDisabled: 'Check disabled',
     checkEnabled: 'Check enabled',
+    clickHere: 'Click here',
   },
   messages: {
     information: {
@@ -157,6 +158,8 @@ export default {
       authenticationDescription: 'Use a authentication header to authenticate your requests to your service.',
       writeACustomValueAndPressEnter: 'Write a custom value and press enter',
       authorizationHeaderConfigured: 'Authorization header configured',
+      noIntegration1: 'You haven`t added any integration yet,',
+      noIntegration2: 'to open a new tab and create your first integration to receive notifications.'
     },
     errors: {
       requireField: 'This field is required',

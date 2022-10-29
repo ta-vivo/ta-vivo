@@ -129,7 +129,14 @@
             </div>
           </div>
           <div>
-            <p class="text-bold">{{ $t("common.integrations") }}</p>
+            <p class="text-bold">
+              {{ $t("common.integrations") }}
+              <q-spinner
+                v-show="loadingIntegrations"
+                color="primary"
+                size="1em"
+              />
+            </p>
             <template v-for="integration in integrations" :key="integration.id">
               <div>
                 <q-toggle
@@ -140,6 +147,9 @@
                 {{ integration.name }}
                 <q-separator />
               </div>
+            </template>
+            <template v-if="integrations.length === 0">
+              <NoIntegrationsAction />
             </template>
           </div>
           <div class="text-center">
@@ -160,7 +170,7 @@
 
 <script>
 import { useQuasar } from "quasar";
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
@@ -168,15 +178,17 @@ import SmallIntegrationIcon from "components/Integrations/Icons/Small";
 import jwtDecode from "jwt-decode";
 import RoleBadge from "components/User/RoleBadge.vue";
 import timezonesJson from "assets/timezones.json";
+import NoIntegrationsAction from "components/Integrations/NoIntegrationsAction.vue";
 
 export default {
   name: "PageCheckForm",
-  components: { SmallIntegrationIcon, RoleBadge },
+  components: { SmallIntegrationIcon, RoleBadge, NoIntegrationsAction },
   setup() {
     const $q = useQuasar();
     const $store = useStore();
     const $router = useRouter();
     const $t = useI18n().t;
+    const loadingIntegrations = ref(false);
     const timezones = ref([]);
     const useAuthorizationHeader = ref(false);
     const commonAuthorizationHeader = ref([
@@ -185,6 +197,33 @@ export default {
       "X-Auth-Key",
     ]);
     const refAuthorizationHeaderDropdown = ref(null);
+
+    const fetchIntegrations = () => {
+      loadingIntegrations.value = true;
+
+      $store
+        .dispatch("integrations/fetchAll")
+        .then((response) => {
+          integrations.value = response.data.data;
+        })
+        .finally(() => {
+          loadingIntegrations.value = false;
+        });
+    };
+
+    const checkTabFocused = () => {
+      if (document.visibilityState === "visible") {
+        fetchIntegrations();
+      }
+    };
+
+    onMounted(() => {
+      document.addEventListener("visibilitychange", checkTabFocused);
+    });
+
+    onUnmounted(() => {
+      document.removeEventListener("visibilitychange", checkTabFocused);
+    });
 
     const check = ref({
       name: "",
@@ -208,13 +247,12 @@ export default {
       )
     );
 
-    $store.dispatch("integrations/fetchAll").then((response) => {
-      integrations.value = response.data.data;
-    });
+    fetchIntegrations();
 
     return {
       check,
       loading,
+      loadingIntegrations,
       periods,
       integrations,
       timezones,
