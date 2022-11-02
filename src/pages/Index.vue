@@ -214,7 +214,6 @@ export default defineComponent({
       this.fetchDashboard()
         .then((response) => {
           this.dashboard = { ...response.data.data };
-          this.lastRefresh = 0;
         })
         .catch((error) => {
           console.log(error);
@@ -234,6 +233,7 @@ export default defineComponent({
     lastRefresh: {
       handler() {
         if (this.lastRefresh > 5 * 60 && this.isWindowFocused) {
+          this.lastRefresh = 0;
           this.onRefresh();
         }
         setTimeout(() => {
