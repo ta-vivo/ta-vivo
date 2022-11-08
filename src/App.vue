@@ -1,4 +1,5 @@
 <template>
+  <onboarding-new-users />
   <router-view class="constrain-width" />
   <footer-component />
 </template>
@@ -6,11 +7,13 @@
 import { defineComponent } from "vue";
 import jwtDecode from "jwt-decode";
 import FooterComponent from "components/Interface/Footer";
+import OnboardingNewUsers from "components/Onboarding/NewUsers";
 
 export default defineComponent({
   name: "App",
   components: {
     FooterComponent,
+    OnboardingNewUsers
   },
   created() {
 
