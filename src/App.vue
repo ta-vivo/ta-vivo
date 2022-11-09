@@ -1,5 +1,5 @@
 <template>
-  <onboarding-new-users />
+  <onboarding-new-users key="onboarding" />
   <router-view class="constrain-width" />
   <footer-component />
 </template>
