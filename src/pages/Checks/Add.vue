@@ -10,6 +10,8 @@
             <p class="text-bold">{{ $t("common.basicInformation") }}</p>
           </div>
           <q-input
+            class="name"
+            name="name"
             type="text"
             outlined
             v-model="check.name"
@@ -23,6 +25,7 @@
             :hint="`${check.name.length}/50`"
           />
           <q-input
+            class="target"
             type="text"
             hint="http://example.com or http://192.168.1.1:5000"
             outlined
@@ -34,7 +37,7 @@
                 (val && val.length > 0) || $t('messages.errors.requireField'),
             ]"
           />
-          <div>
+          <div class="period-container">
             <p class="text-bold">{{ $t("common.period") }}</p>
             <q-slider
               markers
@@ -154,6 +157,7 @@
           </div>
           <div class="text-center">
             <q-btn
+              class="submit"
               push
               :loading="loading"
               :label="$t('action.save')"
