@@ -59,7 +59,10 @@ export default {
             text: "Skip",
             classes:
               "q-btn q-btn-item non-selectable no-outline q-btn--outline q-btn--rectangle text-primary q-btn--actionable q-focusable q-hoverable",
-            action: this.tour.cancel,
+            action: () => {
+              this.tour.cancel();
+              window.localStorage.setItem("new-users-onboarding", "skiped");
+            },
           },
         ],
       });
@@ -162,6 +165,7 @@ export default {
     showTheLastStep() {
       this.tour.next();
       this.showTheFinalDialog = true;
+      window.localStorage.setItem("new-users-onboarding", "done");
     },
   },
   watch: {
