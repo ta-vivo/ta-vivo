@@ -68,6 +68,7 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
+        name: 'checks',
         path: '', component: () => import('pages/Checks/Index.vue'),
         meta: {
           isPublic: false
