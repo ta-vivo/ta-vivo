@@ -309,7 +309,7 @@ export default {
               message: $t("action.checkCreated"),
               color: "positive",
             });
-            $router.push("/checks");
+            $router.push({ name: "checks", query: { created: true } });
           })
           .catch((error) => {
             $q.notify({
