@@ -1,5 +1,5 @@
 <template>
-  <onboarding-new-users key="onboarding" />
+  <onboarding-new-users v-if="showOnboarding" key="onboarding" />
   <router-view class="constrain-width" />
   <footer-component />
 </template>
@@ -14,6 +14,11 @@ export default defineComponent({
   components: {
     FooterComponent,
     OnboardingNewUsers
+  },
+  data () {
+    return {
+      showOnboarding: false
+    }
   },
   created() {
 
@@ -47,6 +52,15 @@ export default defineComponent({
         window.localStorage.setItem("token", token);
       });
     }
+    this.isNewUser();
   },
+  methods: {
+    isNewUser() {
+      const onboarding = window.localStorage.getItem('new-users-onboarding');
+      if (onboarding === null) {
+        this.showOnboarding = true;
+      }
+    },
+  }
 });
 </script>
