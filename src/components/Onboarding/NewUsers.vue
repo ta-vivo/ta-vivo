@@ -44,6 +44,12 @@ export default {
     createTour() {
       this.tour = this.$shepherd({
         useModalOverlay: true,
+        defaultStepOptions: {
+          cancelIcon: {
+            enabled: true,
+          },
+          scrollTo: { behavior: "smooth", block: "center" },
+        },
       });
 
       this.tour.addStep({
