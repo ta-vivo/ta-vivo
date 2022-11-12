@@ -117,6 +117,23 @@ export default {
     clickHere: 'Click here',
   },
   messages: {
+    onboarding:{
+      welcome: 'Welcome!',
+      welcomeDescription: 'We are happy to have you here. We will guide you through the first steps to get started.',
+      checksDescription: 'A check is a URL that will be checked periodically ⏰. If the URL is not reachable, an incident will be created 🔔.',
+      checksCreationTitle: 'Let`s create your first check!',
+      checksCreationDescription: 'To create a check, click on the "+ Add check" button.',
+      checksNameTitle: 'Name',
+      checksNameDescription: 'Give a name to your check. This name will be used to identify the check. For example: "My website".',
+      checksTargetTitle: 'Target',
+      checksTargetDescription: 'Enter the URL that will be checked. For example: "https://mywebsite.com". The URL must start with "http://" or "https://". You can also use an IP address.',
+      checksPeriodTitle: 'Period',
+      checksPeriodDescription: 'Select the period that the check will be performed. For example: "Every 5 minutes".',
+      checksSaveTitle: 'Save',
+      checksSaveDescription: 'Click on the "Save" button to save the check.',
+      newUserOnboardingTitleFinish: 'Finish 🎉',
+      newUserOnboardingDescriptionFinish: 'You have completed the onboarding. Now you know how to create a check. If you have any questions, you can contact us in the "Contact" section, we will be happy to help you 😊.',
+    },
     information: {
       noIntegrationFound: 'No integration found',
       areYouSureYouWantToDelete: 'Are you sure you want to delete [ITEM]?',
