@@ -2,29 +2,24 @@
   <div class="onboarding"></div>
   <q-dialog v-model="showTheFinalDialog">
     <q-card>
-
-    <q-linear-progress
-      :value="100"
-      rounded
-      color="positive"
-    />
+      <q-linear-progress :value="100" rounded color="positive" />
       <q-card-section>
-        <div class="text-h6 text-center">🎉 Success</div>
+        <div class="text-h6 text-center">
+          {{ $t("messages.onboarding.newUserOnboardingTitleFinish") }}
+        </div>
       </q-card-section>
       <q-card-section>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. porro. Rerum
-        blanditiis perferendis totam, ea at omnis vel numquam exercitationem
-        aut, natus minima, porro labore.
+        {{ $t("messages.onboarding.newUserOnboardingDescriptionFinish") }}
       </q-card-section>
       <q-card-actions align="center">
-        <q-btn push label="OK" color="primary" v-close-popup />
+        <q-btn @click="finish" push label="OK" color="primary" />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
-import "shepherd.js/dist/css/shepherd.css";
+import "src/css/shepherd.css";
 
 export default {
   name: "ComponentOnboardingNewUsers",
@@ -39,6 +34,8 @@ export default {
       tour: null,
       btnClasses:
         "q-btn q-btn-item non-selectable no-outline q-btn--push q-btn--rectangle bg-primary text-white q-btn--actionable q-focusable q-hoverable q-btn--active",
+      btnOutlinedClasses:
+        "q-btn q-btn-item non-selectable no-outline q-btn--outline q-btn--rectangle text-primary q-btn--actionable q-focusable q-hoverable",
       showTheFinalDialog: false,
     };
   },
@@ -55,12 +52,13 @@ export default {
       });
 
       this.tour.on("cancel", () => {
-         window.localStorage.setItem("new-users-onboarding", "closed");
+        window.localStorage.setItem("new-users-onboarding", "closed");
       });
 
       this.tour.addStep({
         attachTo: { element: ".onboarding", on: "top" },
-        text: "Welcome 🎉",
+        title: this.$t("messages.onboarding.welcome") + " 🎉",
+        text: this.$t("messages.onboarding.welcomeDescription"),
         buttons: [
           {
             text: "Next",
@@ -69,8 +67,7 @@ export default {
           },
           {
             text: "Skip",
-            classes:
-              "q-btn q-btn-item non-selectable no-outline q-btn--outline q-btn--rectangle text-primary q-btn--actionable q-focusable q-hoverable",
+            classes: this.btnOutlinedClasses,
             action: () => {
               this.tour.cancel();
               window.localStorage.setItem("new-users-onboarding", "skiped");
@@ -81,7 +78,8 @@ export default {
 
       this.tour.addStep({
         attachTo: { element: ".q-btn.checks", on: "bottom" },
-        text: "Go to Create check",
+        title: this.$t("common.checks"),
+        text: this.$t("messages.onboarding.checksDescription"),
       });
     },
     dispatchShowCreateCheck() {
@@ -109,7 +107,8 @@ export default {
     showCreateCheck() {
       this.tour.addStep({
         attachTo: { element: ".q-btn.create-check", on: "bottom" },
-        text: "check description",
+        title: this.$t("messages.onboarding.checksCreationTitle"),
+        text: this.$t("messages.onboarding.checksCreationDescription"),
       });
 
       this.tour.next();
@@ -117,7 +116,8 @@ export default {
     showFormInformation() {
       this.tour.addStep({
         attachTo: { element: "label.name", on: "bottom" },
-        text: "check name info",
+        title: this.$t("messages.onboarding.checksNameTitle"),
+        text: this.$t("messages.onboarding.checksNameDescription"),
         buttons: [
           {
             text: "Next",
@@ -129,7 +129,8 @@ export default {
 
       this.tour.addStep({
         attachTo: { element: "label.target", on: "bottom" },
-        text: "check target info",
+        title: this.$t("messages.onboarding.checksTargetTitle"),
+        text: this.$t("messages.onboarding.checksTargetDescription"),
         buttons: [
           {
             text: "Prev",
@@ -146,7 +147,8 @@ export default {
 
       this.tour.addStep({
         attachTo: { element: "div.period-container", on: "bottom" },
-        text: "check period info",
+        title: this.$t("messages.onboarding.checksPeriodTitle"),
+        text: this.$t("messages.onboarding.checksPeriodDescription"),
         buttons: [
           {
             text: "Prev",
@@ -156,20 +158,15 @@ export default {
           {
             text: "Next",
             classes: this.btnClasses,
-            action: () => {
-              this.tour.next();
-              window.scrollTo({
-                top: document.body.scrollHeight,
-                behavior: "smooth",
-              });
-            },
+            action: this.tour.next,
           },
         ],
       });
 
       this.tour.addStep({
         attachTo: { element: ".q-btn.submit", on: "bottom" },
-        text: "check save info",
+        title: this.$t("messages.onboarding.checksSaveTitle"),
+        text: this.$t("messages.onboarding.checksSaveDescription"),
       });
 
       this.tour.next();
@@ -178,6 +175,9 @@ export default {
       this.tour.next();
       this.showTheFinalDialog = true;
       window.localStorage.setItem("new-users-onboarding", "done");
+    },
+    finish() {
+      this.showTheFinalDialog = false;
     },
   },
   watch: {
