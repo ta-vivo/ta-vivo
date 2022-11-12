@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import "shepherd.js/dist/css/shepherd.css";
+
 export default {
   name: "ComponentOnboardingNewUsers",
   created() {
