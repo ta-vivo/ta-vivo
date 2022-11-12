@@ -52,6 +52,10 @@ export default {
         },
       });
 
+      this.tour.on("cancel", () => {
+         window.localStorage.setItem("new-users-onboarding", "closed");
+      });
+
       this.tour.addStep({
         attachTo: { element: ".onboarding", on: "top" },
         text: "Welcome 🎉",
