@@ -1,5 +1,9 @@
 <template>
-  <onboarding-new-users v-if="showOnboarding" key="onboarding" />
+  <onboarding-new-users
+    v-if="showOnboarding"
+    @hide="handleEmitHide"
+    key="onboarding"
+  />
   <router-view class="constrain-width" />
   <footer-component />
 </template>
@@ -13,15 +17,14 @@ export default defineComponent({
   name: "App",
   components: {
     FooterComponent,
-    OnboardingNewUsers
+    OnboardingNewUsers,
   },
-  data () {
+  data() {
     return {
-      showOnboarding: false
-    }
+      showOnboarding: false,
+    };
   },
   created() {
-
     let darkmodeFromLocalStorage = localStorage.getItem("darkMode");
 
     if (
@@ -56,11 +59,14 @@ export default defineComponent({
   },
   methods: {
     isNewUser() {
-      const onboarding = window.localStorage.getItem('new-users-onboarding');
+      const onboarding = window.localStorage.getItem("new-users-onboarding");
       if (onboarding === null) {
         this.showOnboarding = true;
       }
     },
-  }
+    handleEmitHide() {
+      this.showOnboarding = false;
+    },
+  },
 });
 </script>
