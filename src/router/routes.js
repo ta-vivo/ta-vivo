@@ -53,6 +53,7 @@ const routes = [
         }
       },
       {
+        name: 'confirm-email',
         path: 'confirm-email', component: () => import('pages/Auth/ConfirmEmail.vue'),
         meta: {
           isPublic: true
