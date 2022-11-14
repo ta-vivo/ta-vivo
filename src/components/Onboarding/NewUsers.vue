@@ -23,6 +23,7 @@ import "src/css/shepherd.css";
 
 export default {
   name: "ComponentOnboardingNewUsers",
+  emits: ["hide"],
   created() {
     this.createTour();
   },
