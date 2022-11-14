@@ -81,7 +81,7 @@ export default defineComponent({
     $route(to, from) {
       if (
         from.name === "login" ||
-        (from.name === "register" && to.name === "home")
+        (from.name === "confirm-email" && to.name === "home")
       ) {
         this.isNewUser();
       }
