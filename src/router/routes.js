@@ -5,6 +5,7 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
+        name: 'home',
         path: '', component: () => import('pages/Index.vue'),
         meta: {
           isPublic: false
@@ -38,12 +39,14 @@ const routes = [
     component: () => import('layouts/Auth.vue'),
     children: [
       {
+        name: 'login',
         path: 'login', component: () => import('pages/Auth/Login.vue'),
         meta: {
           isPublic: true
         }
       },
       {
+        name: 'register',
         path: 'register', component: () => import('pages/Auth/Register.vue'),
         meta: {
           isPublic: true

@@ -60,8 +60,17 @@ export default defineComponent({
   methods: {
     isNewUser() {
       const onboarding = window.localStorage.getItem("new-users-onboarding");
-      if (onboarding === null) {
-        this.showOnboarding = true;
+      const sessionToken = window.localStorage.getItem("token");
+
+      if (onboarding === null && sessionToken) {
+        const decoded = jwtDecode(sessionToken);
+        const createdAt = new Date(decoded.createdAt)
+          .toISOString()
+          .split("T")[0];
+
+        if (createdAt === new Date().toISOString().split("T")[0]) {
+          this.showOnboarding = true;
+        }
       }
     },
     handleEmitHide() {
