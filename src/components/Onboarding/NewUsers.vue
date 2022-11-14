@@ -53,6 +53,7 @@ export default {
 
       this.tour.on("cancel", () => {
         window.localStorage.setItem("new-users-onboarding", "closed");
+        this.handleEmitHide();
       });
 
       this.tour.addStep({
@@ -71,6 +72,7 @@ export default {
             action: () => {
               this.tour.cancel();
               window.localStorage.setItem("new-users-onboarding", "skiped");
+              this.handleEmitHide();
             },
           },
         ],
@@ -178,6 +180,10 @@ export default {
     },
     finish() {
       this.showTheFinalDialog = false;
+      this.handleEmitHide();
+    },
+    handleEmitHide() {
+      this.$emit("hide");
     },
   },
   watch: {
