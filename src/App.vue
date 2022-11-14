@@ -68,5 +68,15 @@ export default defineComponent({
       this.showOnboarding = false;
     },
   },
+  watch: {
+    $route(to, from) {
+      if (
+        from.name === "login" ||
+        (from.name === "register" && to.name === "home")
+      ) {
+        this.isNewUser();
+      }
+    },
+  },
 });
 </script>
