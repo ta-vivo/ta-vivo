@@ -115,6 +115,9 @@ export default {
     checkDisabled: 'Check disabled',
     checkEnabled: 'Check enabled',
     clickHere: 'Click here',
+    start: 'Start',
+    skip: 'Skip',
+    closeTheTour: 'Close the tour'
   },
   messages: {
     onboarding:{
