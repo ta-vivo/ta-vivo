@@ -1,5 +1,30 @@
 <template>
   <div class="onboarding"></div>
+  <q-dialog v-model="showInitialDialog">
+    <q-card>
+      <q-card-section>
+        <div class="text-h6">{{ $t("messages.onboarding.welcome") }} 🎉</div>
+      </q-card-section>
+      <q-card-section>
+        {{ $t("messages.onboarding.welcomeDescription") }}
+      </q-card-section>
+      <q-card-actions align="right">
+        <q-btn
+          push
+          @click="start"
+          :label="$t('action.start')"
+          color="primary"
+        />
+        <q-btn
+          outline
+          @click="skip"
+          :label="$t('action.skip')"
+          color="negative"
+        />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+
   <q-dialog v-model="showTheFinalDialog">
     <q-card>
       <q-linear-progress :value="100" rounded color="positive" />
@@ -12,7 +37,7 @@
         {{ $t("messages.onboarding.newUserOnboardingDescriptionFinish") }}
       </q-card-section>
       <q-card-actions align="center">
-        <q-btn @click="finish" push label="OK" color="primary" />
+        <q-btn @click="finish" push :label="$t('action.closeTheTour')" color="primary" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -27,12 +52,10 @@ export default {
   created() {
     this.createTour();
   },
-  mounted() {
-    this.tour.start();
-  },
   data() {
     return {
       tour: null,
+      showInitialDialog: true,
       btnClasses:
         "q-btn q-btn-item non-selectable no-outline q-btn--push q-btn--rectangle bg-primary text-white q-btn--actionable q-focusable q-hoverable q-btn--active",
       btnOutlinedClasses:
@@ -58,32 +81,19 @@ export default {
       });
 
       this.tour.addStep({
-        attachTo: { element: ".onboarding", on: "top" },
-        title: this.$t("messages.onboarding.welcome") + " 🎉",
-        text: this.$t("messages.onboarding.welcomeDescription"),
-        buttons: [
-          {
-            text: "Next",
-            classes: this.btnClasses,
-            action: this.tour.next,
-          },
-          {
-            text: "Skip",
-            classes: this.btnOutlinedClasses,
-            action: () => {
-              this.tour.cancel();
-              window.localStorage.setItem("new-users-onboarding", "skiped");
-              this.handleEmitHide();
-            },
-          },
-        ],
-      });
-
-      this.tour.addStep({
         attachTo: { element: ".q-btn.checks", on: "bottom" },
         title: this.$t("common.checks"),
         text: this.$t("messages.onboarding.checksDescription"),
       });
+    },
+    start(){
+      this.tour.start();
+      this.showInitialDialog = false;
+    },
+    skip(){
+      this.showInitialDialog = false;
+      window.localStorage.setItem("new-users-onboarding", "skiped");
+      this.$emit('hide');
     },
     dispatchShowCreateCheck() {
       let element = document.querySelector(".q-btn.create-check");
