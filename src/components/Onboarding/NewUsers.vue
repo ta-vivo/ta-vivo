@@ -84,6 +84,15 @@ export default {
         attachTo: { element: ".q-btn.checks", on: "bottom" },
         title: this.$t("common.checks"),
         text: this.$t("messages.onboarding.checksDescription"),
+        buttons: [
+          {
+            text: "Next",
+            classes: this.btnClasses,
+            action: () => {
+              this.$router.push({ name: "checks" });
+            }
+          },
+        ],
       });
     },
     start(){
