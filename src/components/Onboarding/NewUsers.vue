@@ -37,7 +37,12 @@
         {{ $t("messages.onboarding.newUserOnboardingDescriptionFinish") }}
       </q-card-section>
       <q-card-actions align="center">
-        <q-btn @click="finish" push :label="$t('action.closeTheTour')" color="primary" />
+        <q-btn
+          @click="finish"
+          push
+          :label="$t('action.closeTheTour')"
+          color="primary"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -90,19 +95,19 @@ export default {
             classes: this.btnClasses,
             action: () => {
               this.$router.push({ name: "checks" });
-            }
+            },
           },
         ],
       });
     },
-    start(){
+    start() {
       this.tour.start();
       this.showInitialDialog = false;
     },
-    skip(){
+    skip() {
       this.showInitialDialog = false;
       window.localStorage.setItem("new-users-onboarding", "skiped");
-      this.$emit('hide');
+      this.$emit("hide");
     },
     dispatchShowCreateCheck() {
       let element = document.querySelector(".q-btn.create-check");
@@ -140,6 +145,7 @@ export default {
         attachTo: { element: "label.name", on: "bottom" },
         title: this.$t("messages.onboarding.checksNameTitle"),
         text: this.$t("messages.onboarding.checksNameDescription"),
+        highlightClass: "highlight",
         buttons: [
           {
             text: "Next",
@@ -153,6 +159,7 @@ export default {
         attachTo: { element: "label.target", on: "bottom" },
         title: this.$t("messages.onboarding.checksTargetTitle"),
         text: this.$t("messages.onboarding.checksTargetDescription"),
+        highlightClass: "highlight",
         buttons: [
           {
             text: "Prev",
@@ -171,6 +178,7 @@ export default {
         attachTo: { element: "div.period-container", on: "bottom" },
         title: this.$t("messages.onboarding.checksPeriodTitle"),
         text: this.$t("messages.onboarding.checksPeriodDescription"),
+        highlightClass: "highlight",
         buttons: [
           {
             text: "Prev",
@@ -186,9 +194,9 @@ export default {
       });
 
       this.tour.addStep({
-        attachTo: { element: ".q-btn.submit", on: "bottom" },
+        attachTo: { element: ".q-btn.submit", on: "top" },
         title: this.$t("messages.onboarding.checksSaveTitle"),
-        text: this.$t("messages.onboarding.checksSaveDescription"),
+        text: this.$t("messages.onboarding.checksSaveDescription")
       });
 
       this.tour.next();
