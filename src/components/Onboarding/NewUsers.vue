@@ -1,6 +1,6 @@
 <template>
   <div class="onboarding"></div>
-  <q-dialog v-model="showInitialDialog">
+  <q-dialog persistent v-model="showInitialDialog">
     <q-card>
       <q-card-section>
         <div class="text-h6">{{ $t("messages.onboarding.welcome") }} 🎉</div>
@@ -25,7 +25,7 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog v-model="showTheFinalDialog">
+  <q-dialog persistent v-model="showTheFinalDialog">
     <q-card>
       <q-linear-progress :value="100" rounded color="positive" />
       <q-card-section>
