@@ -1,5 +1,5 @@
-.shepherd-footer .q-btn{
-  margin-top: 0!important;
+.shepherd-footer .q-btn {
+  margin-top: 0 !important;
 }
 
 .shepherd-button {
@@ -115,7 +115,7 @@
   transition: opacity .3s, visibility .3s;
   visibility: hidden;
   width: 100%;
-  z-index: 9999
+  z-index: 9999;
 }
 
 .shepherd-enabled.shepherd-element {
@@ -191,9 +191,13 @@
   height: 100vh;
   opacity: .5;
   transform: translateZ(0);
-  transition: all .3s ease-out, height 0s 0s, opacity .3s 0s
+  transition: all .3s ease-out, height 0s 0s, opacity .3s 0s;
 }
 
 .shepherd-modal-overlay-container.shepherd-modal-is-visible path {
-  pointer-events: all
+  pointer-events: all;
+}
+
+label.highlight, label.q-field--highlighted, .period-container.highlight {
+  padding: 30px 10px;
 }
