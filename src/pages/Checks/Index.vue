@@ -304,7 +304,7 @@ import { useI18n } from "vue-i18n";
 import { useQuasar, Notify } from "quasar";
 import SmallIntegrationIcon from "components/Integrations/Icons/Small";
 import jwtDecode from "jwt-decode";
-import { getTimestampInHumanFormat } from "src/utils/time";
+import { getTimestampInHumanFormat, getDurationInMs } from "src/utils/time";
 
 export default {
   name: "PageChecks",
@@ -320,6 +320,14 @@ export default {
       }
       return text;
     };
+
+    const getMsOrSecondsFromMs = (ms) => {
+      if (ms < 1000) {
+        return `${ms} ms`;
+      }
+      return `${(ms / 1000).toFixed(2)} ${$t("common.seconds")}`;
+    };
+
     const columns = [
       {
         name: "enabled",
@@ -363,6 +371,12 @@ export default {
         label: $t("common.status"),
         align: "left",
         field: "status",
+      },
+      {
+        name: "ResponseTime",
+        label: $t("common.responseTime"),
+        align: "left",
+        field: row => getMsOrSecondsFromMs(row.duration),
       },
       {
         name: "createdAt",
