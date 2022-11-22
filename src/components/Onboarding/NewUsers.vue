@@ -91,7 +91,7 @@ export default {
         text: this.$t("messages.onboarding.checksDescription"),
         buttons: [
           {
-            text: "Next",
+            text: this.$t('action.next'),
             classes: this.btnClasses,
             action: () => {
               this.$router.push({ name: "checks" });
@@ -148,7 +148,7 @@ export default {
         highlightClass: "highlight",
         buttons: [
           {
-            text: "Next",
+            text: this.$t('action.next'),
             classes: this.btnClasses,
             action: this.tour.next,
           },
@@ -167,7 +167,7 @@ export default {
             action: this.tour.back,
           },
           {
-            text: "Next",
+            text: this.$t('action.next'),
             classes: this.btnClasses,
             action: this.tour.next,
           },
@@ -186,7 +186,7 @@ export default {
             action: this.tour.back,
           },
           {
-            text: "Next",
+            text: this.$t('action.next'),
             classes: this.btnClasses,
             action: this.tour.next,
           },
