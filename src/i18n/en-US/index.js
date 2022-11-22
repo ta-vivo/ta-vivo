@@ -117,7 +117,8 @@ export default {
     clickHere: 'Click here',
     start: 'Start',
     skip: 'Skip',
-    closeTheTour: 'Close the tour'
+    closeTheTour: 'Close the tour',
+    next: 'Next'
   },
   messages: {
     onboarding:{
