@@ -267,6 +267,20 @@
           <q-space />
           <q-btn icon="eva-close-outline" flat round dense v-close-popup />
         </q-card-section>
+        <q-card-section>
+          <div class="row">
+            <div class="col">
+              <span class="text-bold">{{
+                $t("common.averageResponseTime")
+              }}</span>
+              {{ getTheAverageResponseTime() }}
+            </div>
+            <div class="col">
+              <span class="text-bold">{{$t("common.upTime")}}</span>
+              {{ getUpTimePercent() }}
+              </div>
+          </div>
+        </q-card-section>
 
         <q-card-section>
           <q-table
@@ -301,7 +315,7 @@
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
-import { useQuasar, Notify } from "quasar";
+import { useQuasar } from "quasar";
 import SmallIntegrationIcon from "components/Integrations/Icons/Small";
 import jwtDecode from "jwt-decode";
 import { getTimestampInHumanFormat, getDurationInMs } from "src/utils/time";
@@ -326,6 +340,19 @@ export default {
         return `${ms} ms`;
       }
       return `${(ms / 1000).toFixed(2)} ${$t("common.seconds")}`;
+    };
+
+    const getTheAverageResponseTime = () => {
+      const averageTime = logs.value.reduce(
+        (acc, log) => acc + parseFloat(log.duration),
+        0
+      );
+      return getMsOrSecondsFromMs(averageTime / logs.value.length);
+    };
+
+    const getUpTimePercent = () => {
+      const upTime = logs.value.filter((log) => log.status === "up").length;
+      return `${((upTime / logs.value.length) * 100).toFixed(2)}%`;
     };
 
     const columns = [
@@ -376,7 +403,7 @@ export default {
         name: "ResponseTime",
         label: $t("common.responseTime"),
         align: "left",
-        field: row => getMsOrSecondsFromMs(row.duration),
+        field: (row) => getMsOrSecondsFromMs(row.duration),
       },
       {
         name: "createdAt",
@@ -526,6 +553,8 @@ export default {
       fetchChecks,
       disable,
       enable,
+      getTheAverageResponseTime,
+      getUpTimePercent,
       handleDeleteCheck(check) {
         $q.dialog({
           title: "Confirm",
