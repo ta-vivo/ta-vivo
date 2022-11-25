@@ -64,6 +64,10 @@ export default {
     authentication: 'Authentication',
     header: 'Header',
     token: 'Token',
+    responseTime: 'Response time',
+    seconds: 'seconds',
+    averageResponseTime: 'Average response time',
+    upTime: 'Up time',
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
