@@ -270,15 +270,15 @@
         <q-card-section>
           <div class="row">
             <div class="col">
-              <span class="text-bold">{{
-                $t("common.averageResponseTime")
-              }}</span>
+              <span class="text-bold">
+                {{ $t("common.averageResponseTime") }}:
+              </span>
               {{ getTheAverageResponseTime() }}
             </div>
             <div class="col">
-              <span class="text-bold">{{$t("common.upTime")}}</span>
+              <span class="text-bold">{{ $t("common.upTime") }}: </span>
               {{ getUpTimePercent() }}
-              </div>
+            </div>
           </div>
         </q-card-section>
 
@@ -347,12 +347,16 @@ export default {
         (acc, log) => acc + parseFloat(log.duration),
         0
       );
-      return getMsOrSecondsFromMs(averageTime / logs.value.length);
+      return logs.value.length > 0
+        ? getMsOrSecondsFromMs(averageTime / logs.value.length)
+        : 0;
     };
 
     const getUpTimePercent = () => {
       const upTime = logs.value.filter((log) => log.status === "up").length;
-      return `${((upTime / logs.value.length) * 100).toFixed(2)}%`;
+      return logs.value.length > 0
+        ? `${((upTime / logs.value.length) * 100).toFixed(2)}%`
+        : "0.00%";
     };
 
     const columns = [
