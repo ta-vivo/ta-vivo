@@ -134,7 +134,7 @@
                 :label="$t('common.details')"
                 flat
                 size="sm"
-                icon="eva-eye-outline"
+                icon="eva-edit-outline"
                 :to="`/checks/edit/${props.row.id}`"
               />
               <q-btn
@@ -237,7 +237,7 @@
           <q-btn
             flat
             size="sm"
-            icon="eva-eye-outline"
+            icon="eva-edit-outline"
             :to="`/checks/edit/${props.row.id}`"
           >
             <q-tooltip>
