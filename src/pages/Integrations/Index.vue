@@ -70,7 +70,7 @@
                 :label="$t('common.details')"
                 flat
                 size="sm"
-                icon="eva-eye-outline"
+                icon="eva-edit-outline"
                 @click="handleEditIntegration(props.row)"
               />
               <q-btn
@@ -113,7 +113,7 @@
           <q-btn
             flat
             size="sm"
-            icon="eva-eye-outline"
+            icon="eva-edit-outline"
             @click="handleEditIntegration(props.row)"
           >
             <q-tooltip>
