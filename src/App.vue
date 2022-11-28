@@ -1,4 +1,9 @@
 <template>
+  <onboarding-new-users
+    v-if="showOnboarding"
+    @hide="handleEmitHide"
+    key="onboarding"
+  />
   <router-view class="constrain-width" />
   <footer-component />
 </template>
@@ -6,14 +11,20 @@
 import { defineComponent } from "vue";
 import jwtDecode from "jwt-decode";
 import FooterComponent from "components/Interface/Footer";
+import OnboardingNewUsers from "components/Onboarding/NewUsers";
 
 export default defineComponent({
   name: "App",
   components: {
     FooterComponent,
+    OnboardingNewUsers,
+  },
+  data() {
+    return {
+      showOnboarding: false,
+    };
   },
   created() {
-
     let darkmodeFromLocalStorage = localStorage.getItem("darkMode");
 
     if (
@@ -44,6 +55,37 @@ export default defineComponent({
         window.localStorage.setItem("token", token);
       });
     }
+    this.isNewUser();
+  },
+  methods: {
+    isNewUser() {
+      const onboarding = window.localStorage.getItem("new-users-onboarding");
+      const sessionToken = window.localStorage.getItem("token");
+
+      if (onboarding === null && sessionToken) {
+        const decoded = jwtDecode(sessionToken);
+        const createdAt = new Date(decoded.createdAt)
+          .toISOString()
+          .split("T")[0];
+
+        if (createdAt === new Date().toISOString().split("T")[0]) {
+          this.showOnboarding = true;
+        }
+      }
+    },
+    handleEmitHide() {
+      this.showOnboarding = false;
+    },
+  },
+  watch: {
+    $route(to, from) {
+      if (
+        from.name === "login" ||
+        (from.name === "confirm-email" && to.name === "home")
+      ) {
+        this.isNewUser();
+      }
+    },
   },
 });
 </script>

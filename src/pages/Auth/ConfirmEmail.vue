@@ -11,6 +11,7 @@
           {{ $t("messages.information.emailSuccessfullyVerified") }}
         </p>
         <q-btn
+          push
           color="primary"
           to="/"
           :label="$t('action.continueToDashboard')"

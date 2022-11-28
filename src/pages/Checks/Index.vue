@@ -2,6 +2,7 @@
   <q-page padding>
     <div>
       <q-btn
+        class="create-check"
         push
         color="primary"
         icon="eva-plus"

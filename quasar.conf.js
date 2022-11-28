@@ -9,6 +9,7 @@
 /* eslint-env node */
 const ESLintPlugin = require('eslint-webpack-plugin')
 const { configure } = require('quasar/wrappers');
+const webpack = require('webpack');
 
 module.exports = configure(function (ctx) {
   return {
@@ -24,7 +25,8 @@ module.exports = configure(function (ctx) {
     boot: [
       'i18n',
       'axios',
-      'supabase'
+      'supabase',
+      'shepherd'
     ],
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -78,6 +80,12 @@ module.exports = configure(function (ctx) {
       // https://quasar.dev/quasar-cli/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
       chainWebpack(chain) {
+        chain.plugin('process/browser').use(new webpack.ProvidePlugin({
+          // Make a global `process` variable that points to the `process` package,
+          // because the `util` package expects there to be a global variable named `process`.
+          // Thanks to https://stackoverflow.com/a/65018686/14239942
+          process: 'process/browser'
+        }))
         chain.plugin('eslint-webpack-plugin')
           .use(ESLintPlugin, [{ extensions: ['js', 'vue'] }])
       },
