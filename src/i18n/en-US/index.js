@@ -68,6 +68,7 @@ export default {
     seconds: 'seconds',
     averageResponseTime: 'Average response time',
     upTime: 'Up time',
+    description: 'Description',
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
@@ -122,7 +123,8 @@ export default {
     start: 'Start',
     skip: 'Skip',
     closeTheTour: 'Close the tour',
-    next: 'Next'
+    next: 'Next',
+    addStatusPage: 'Add status page',
   },
   messages: {
     onboarding:{
