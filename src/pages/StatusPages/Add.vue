@@ -60,10 +60,10 @@
             >
               <q-card-section>
                 <div class="row">
-                  <div class="col-10">
+                  <div class="col-10 ellipsis">
                     {{ check.name }}
 
-                    <div class="text-grey-7">
+                    <div class="text-grey-7 ellipsis">
                       {{ check.target }}
                     </div>
                   </div>
