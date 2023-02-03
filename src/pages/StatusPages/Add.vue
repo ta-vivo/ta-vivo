@@ -80,6 +80,49 @@
               </q-card-actions>
             </q-card>
           </div>
+          <div class="invitations-container">
+            <div>
+              <p class="text-bold">{{ $t("common.invitations") }}</p>
+              <div>
+                {{ $t("messages.information.statusPageInvitationDescription") }}
+              </div>
+            </div>
+            <q-input
+              class="invitation q-mt-sm"
+              name="invitation"
+              type="email"
+              outlined
+              v-model="currentInvitation"
+              :label="$t('common.email')"
+              :error="isDuplicateInvitationEmail()"
+              :error-message="$t('messages.errors.duplicateEmail')"
+              lazy-rules
+            >
+              <template v-slot:after>
+                <q-btn
+                  @click="addInvitation()"
+                  push
+                  color="primary"
+                  icon="eva-plus-circle-outline"
+                  :label="$t('action.addEmail')"
+                  :disable="!isValidInvitationEmail() || isDuplicateInvitationEmail()"
+                />
+              </template>
+            </q-input>
+
+            <div class="invitations q-mt-sm">
+              <q-chip
+                v-for="invitation in invitations"
+                :key="invitation"
+                class="q-mr-sm q-mb-sm"
+                removable
+                @remove="removeInvitation(invitation)"
+              >
+                {{ invitation }}
+              </q-chip>
+            </div>
+
+          </div>
         </q-form>
       </q-card-section>
     </q-card>
@@ -97,6 +140,8 @@ export default {
     const store = useStore();
 
     const checks = ref([]);
+    const invitations = ref([]);
+    const currentInvitation = ref("");
     const loadingChecks = ref(true);
     const statusPage = ref({
       name: "",
@@ -122,7 +167,26 @@ export default {
       statusPage,
       checks,
       loadingChecks,
+      invitations,
+      currentInvitation,
       onSubmit() {},
+      isValidInvitationEmail() {
+        return String(currentInvitation.value)
+          .toLowerCase()
+          .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          );
+      },
+      isDuplicateInvitationEmail() {
+        return invitations.value.includes(currentInvitation.value);
+      },
+      addInvitation() {
+        invitations.value.push(currentInvitation.value);
+        currentInvitation.value = "";
+      },
+      removeInvitation(invitation) {
+        invitations.value.splice(invitations.value.indexOf(invitation), 1);
+      },
     };
   },
 };
