@@ -69,6 +69,8 @@ export default {
     averageResponseTime: 'Average response time',
     upTime: 'Up time',
     description: 'Description',
+    public: 'Public',
+    checksInformation: 'Checks information',
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
@@ -186,7 +188,9 @@ export default {
       writeACustomValueAndPressEnter: 'Write a custom value and press enter',
       authorizationHeaderConfigured: 'Authorization header configured',
       noIntegration1: 'You haven`t added any integration yet,',
-      noIntegration2: 'to open a new tab and create your first integration to receive notifications.'
+      noIntegration2: 'to open a new tab and create your first integration to receive notifications.',
+      statusPagePublicDescription: 'If this mark as public, anyone with the link can access it.',
+      statusPageCheckDescription: 'Select the checks you want to include on the status page',
     },
     errors: {
       requireField: 'This field is required',
