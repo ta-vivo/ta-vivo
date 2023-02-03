@@ -71,6 +71,7 @@ export default {
     description: 'Description',
     public: 'Public',
     checksInformation: 'Checks information',
+    invitations: 'Invitations',
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
@@ -127,6 +128,7 @@ export default {
     closeTheTour: 'Close the tour',
     next: 'Next',
     addStatusPage: 'Add status page',
+    addEmail: 'Add email',
   },
   messages: {
     onboarding:{
@@ -191,6 +193,7 @@ export default {
       noIntegration2: 'to open a new tab and create your first integration to receive notifications.',
       statusPagePublicDescription: 'If this mark as public, anyone with the link can access it.',
       statusPageCheckDescription: 'Select the checks you want to include on the status page',
+      statusPageInvitationDescription: 'Give access to your team members'
     },
     errors: {
       requireField: 'This field is required',
@@ -199,6 +202,7 @@ export default {
       pleaseTypeTheOldPassword: 'Please type the old password',
       errorOnSave: 'Error on save, please try again',
       notValidPhoneNumber: 'This is not a valid phone number',
+      duplicateEmail: 'This email is already in the list',
     },
     questions: {
       areYousureYouWantCancelSubscription: 'Are you sure you want to cancel your subscription?',
