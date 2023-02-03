@@ -49,6 +49,37 @@
               {{ $t("messages.information.statusPageCheckDescription") }}
             </div>
           </div>
+          <div class="check-selection-container">
+            <q-card
+              flat
+              bordered
+              class="my-card bg-grey-1 q-my-sm"
+              style="max-width: 400px"
+              v-for="check in checks"
+              :key="check.id"
+            >
+              <q-card-section>
+                <div class="row">
+                  <div class="col-10">
+                    {{ check.name }}
+
+                    <div class="text-grey-7">
+                      {{ check.target }}
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <q-toggle
+                      class="float-right"
+                      v-model="check.addToStatusPage"
+                    />
+                  </div>
+                </div>
+              </q-card-section>
+
+              <q-card-actions vertical class="justify-around q-px-md">
+              </q-card-actions>
+            </q-card>
+          </div>
         </q-form>
       </q-card-section>
     </q-card>
@@ -57,18 +88,40 @@
 
 <script>
 import { ref } from "vue";
+import { useStore } from "vuex";
+
 export default {
   name: "PageStatusPageAdd",
 
   setup() {
+    const store = useStore();
+
+    const checks = ref([]);
+    const loadingChecks = ref(true);
     const statusPage = ref({
       name: "",
       description: "",
       isPublic: false,
     });
 
+    store
+      .dispatch("checks/fetchAll", "?limit=9999")
+      .then((response) => {
+        checks.value = response.data.data.map((check) => {
+          return {
+            ...check,
+            addToStatusPage: false,
+          };
+        });
+      })
+      .finally(() => {
+        loadingChecks.value = false;
+      });
+
     return {
       statusPage,
+      checks,
+      loadingChecks,
       onSubmit() {},
     };
   },
