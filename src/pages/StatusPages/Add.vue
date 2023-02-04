@@ -89,6 +89,7 @@
             </div>
             <q-input
               class="invitation q-mt-sm"
+              style="max-width: 500px"
               name="invitation"
               type="email"
               outlined
@@ -105,23 +106,35 @@
                   color="primary"
                   icon="eva-plus-circle-outline"
                   :label="$t('action.addEmail')"
-                  :disable="!isValidInvitationEmail() || isDuplicateInvitationEmail()"
+                  :disable="
+                    !isValidInvitationEmail() || isDuplicateInvitationEmail()
+                  "
                 />
               </template>
             </q-input>
 
-            <div class="invitations q-mt-sm">
+            <div class="invitations">
               <q-chip
                 v-for="invitation in invitations"
                 :key="invitation"
-                class="q-mr-sm q-mb-sm"
+                class="q-my-sm"
                 removable
                 @remove="removeInvitation(invitation)"
               >
                 {{ invitation }}
               </q-chip>
             </div>
-
+          </div>
+          <div class="text-center">
+            <q-btn
+              class="submit"
+              push
+              :loading="loading"
+              :label="$t('action.save')"
+              type="submit"
+              color="primary"
+              icon="eva-save-outline"
+            />
           </div>
         </q-form>
       </q-card-section>
@@ -142,6 +155,7 @@ export default {
     const checks = ref([]);
     const invitations = ref([]);
     const currentInvitation = ref("");
+    const loading = ref(false);
     const loadingChecks = ref(true);
     const statusPage = ref({
       name: "",
@@ -167,6 +181,7 @@ export default {
       statusPage,
       checks,
       loadingChecks,
+      loading,
       invitations,
       currentInvitation,
       onSubmit() {},
