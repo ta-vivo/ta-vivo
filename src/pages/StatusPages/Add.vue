@@ -29,11 +29,6 @@
             outlined
             v-model="statusPage.description"
             :label="$t('common.description')"
-            lazy-rules
-            :rules="[
-              (val) =>
-                (val && val.length > 0) || $t('messages.errors.requireField'),
-            ]"
           />
           <q-toggle
             v-model="statusPage.isPublic"
@@ -44,9 +39,21 @@
           </div>
 
           <div>
-            <p class="text-bold">{{ $t("common.checksInformation") }}</p>
+            <p class="check-selection-title text-bold">
+              {{ $t("common.checksInformation") }}
+            </p>
             <div>
               {{ $t("messages.information.statusPageCheckDescription") }}
+            </div>
+            <div v-show="showCheckSelectionError">
+              <q-banner
+                rounded
+                class="text-white bg-primary q-my-sm"
+                style="max-width: 450px"
+              >
+                <q-icon name="eva-alert-circle-outline" />
+                {{ $t("messages.errors.noChecksSelected") }}
+              </q-banner>
             </div>
           </div>
           <div class="check-selection-container">
@@ -145,14 +152,19 @@
 <script>
 import { ref } from "vue";
 import { useStore } from "vuex";
+import { useQuasar } from "quasar";
+import { useI18n } from "vue-i18n";
 
 export default {
   name: "PageStatusPageAdd",
 
   setup() {
     const store = useStore();
+    const $q = useQuasar();
+    const $t = useI18n().t;
 
     const checks = ref([]);
+    const showCheckSelectionError = ref(false);
     const invitations = ref([]);
     const currentInvitation = ref("");
     const loading = ref(false);
@@ -180,11 +192,39 @@ export default {
     return {
       statusPage,
       checks,
+      showCheckSelectionError,
       loadingChecks,
       loading,
       invitations,
       currentInvitation,
-      onSubmit() {},
+      onSubmit() {
+        loading.value = true;
+        const payload = {
+          name: statusPage.value.name,
+          description: statusPage.value.description,
+          isPublic: statusPage.value.isPublic,
+          checks: checks.value
+            .filter((check) => check.addToStatusPage)
+            .map((check) => check.id),
+          invitations: invitations.value,
+        };
+
+        if (payload.checks.length === 0) {
+          document.querySelector(".check-selection-title").scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+          showCheckSelectionError.value = true;
+          loading.value = false;
+          return;
+        }
+
+        console.log(payload);
+
+        setTimeout(() => {
+          loading.value = false;
+        }, 2000);
+      },
       isValidInvitationEmail() {
         return String(currentInvitation.value)
           .toLowerCase()
