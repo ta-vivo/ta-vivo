@@ -154,6 +154,7 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 
 export default {
   name: "PageStatusPageAdd",
@@ -162,6 +163,7 @@ export default {
     const store = useStore();
     const $q = useQuasar();
     const $t = useI18n().t;
+    const $router = useRouter();
 
     const checks = ref([]);
     const showCheckSelectionError = ref(false);
@@ -219,11 +221,25 @@ export default {
           return;
         }
 
-        console.log(payload);
-
-        setTimeout(() => {
-          loading.value = false;
-        }, 2000);
+        store
+          .dispatch("statusPages/create", payload)
+          .then(() => {
+            $q.notify({
+              message: $t("action.statusPageCreated"),
+              color: "positive",
+            });
+            $router.push({ name: "status-pages", query: { created: true } });
+          })
+          .catch((error) => {
+            console.log('🚀 ~ file: Add.vue:232 ~ onSubmit ~ error', error)
+            $q.notify({
+              color: "negative",
+              message: error.response.data.message,
+            });
+          })
+          .finally(() => {
+            loading.value = false;
+          });
       },
       isValidInvitationEmail() {
         return String(currentInvitation.value)
