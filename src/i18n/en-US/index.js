@@ -129,6 +129,7 @@ export default {
     next: 'Next',
     addStatusPage: 'Add status page',
     addEmail: 'Add email',
+    statusPageCreated: 'Status page created',
   },
   messages: {
     onboarding:{
