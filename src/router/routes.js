@@ -159,6 +159,7 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
+        name: 'status-pages',
         path: '', component: () => import('pages/StatusPages/Index.vue'),
         meta: {
           isPublic: false
