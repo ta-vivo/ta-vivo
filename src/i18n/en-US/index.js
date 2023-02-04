@@ -203,6 +203,7 @@ export default {
       errorOnSave: 'Error on save, please try again',
       notValidPhoneNumber: 'This is not a valid phone number',
       duplicateEmail: 'This email is already in the list',
+      noChecksSelected: 'Please select at least one check',
     },
     questions: {
       areYousureYouWantCancelSubscription: 'Are you sure you want to cancel your subscription?',
