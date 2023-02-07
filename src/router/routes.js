@@ -170,6 +170,12 @@ const routes = [
         meta: {
           isPublic: false
         }
+      },
+      {
+        path: 'edit/:id', component: () => import('pages/StatusPages/Edit.vue'),
+        meta: {
+          isPublic: false
+        }
       }
     ]
   },
