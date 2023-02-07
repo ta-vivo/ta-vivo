@@ -7,3 +7,7 @@ export function fetchAll(_, queryString) {
 export function create(_, payload) {
   return axiosInstance.post('/status-pages', payload)
 }
+
+export function remove(_, uuid) {
+  return axiosInstance.delete(`/status-pages/${uuid}`)
+}
