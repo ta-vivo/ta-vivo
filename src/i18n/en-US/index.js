@@ -130,6 +130,7 @@ export default {
     addStatusPage: 'Add status page',
     addEmail: 'Add email',
     statusPageCreated: 'Status page created',
+    yesDelete: 'Yes, delete',
   },
   messages: {
     onboarding:{
@@ -152,6 +153,9 @@ export default {
     information: {
       noIntegrationFound: 'No integration found',
       areYouSureYouWantToDelete: 'Are you sure you want to delete [ITEM]?',
+      deleteStatusPage: 'Delete status page',
+      deleteStatusPageDescription1: 'If you delete',
+      deleteStatusPageDescription2: 'the invites will stop seeing the page and this action is irreversible.',
       uniqueCodeGetFromTelegram: 'Unique code get from Telegram',
       telegramSetupInformation: 'You can receive direct messages on Telegram with the integration of the ta-vivo bot.',
       telegramSetupBot: 'Search Telegram',
