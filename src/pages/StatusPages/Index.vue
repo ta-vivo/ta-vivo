@@ -44,6 +44,16 @@
       <template v-slot:body-cell-actions="props">
         <q-td :props="props">
           <q-btn
+            flat
+            size="sm"
+            icon="eva-edit-outline"
+            :to="`/status-pages/edit/${props.row.uuid}`"
+          >
+            <q-tooltip>
+              {{ $t("common.details") }}
+            </q-tooltip>
+          </q-btn>
+          <q-btn
             color="negative"
             flat
             size="sm"
