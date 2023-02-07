@@ -23,7 +23,7 @@
       v-model:pagination="pagination"
       @request="fetchStatusPages"
     >
-        <!-- Table -->
+      <!-- Table -->
       <template v-slot:body-cell-enabled="props">
         <q-td :props="props">
           <q-chip
@@ -41,7 +41,51 @@
           <span>{{ breakDescription(props.row.description) }}</span>
         </q-td>
       </template>
-  </q-table>
+      <template v-slot:body-cell-actions="props">
+        <q-td :props="props">
+          <q-btn
+            color="negative"
+            flat
+            size="sm"
+            icon="eva-trash-outline"
+            @click="handleDeleteStatusPage(props.row)"
+          >
+            <q-tooltip class="bg-negative">
+              {{ $t("action.delete") }}
+            </q-tooltip>
+          </q-btn>
+        </q-td>
+      </template>
+    </q-table>
+    <q-dialog persistent v-model="showDeleteDialog">
+      <q-card style="width: 400px">
+        <q-card-section>
+          <div class="text-h6">
+            {{ $t("messages.information.deleteStatusPage") }}
+          </div>
+        </q-card-section>
+        <q-card-section>
+          {{ $t("messages.information.deleteStatusPageDescription1") }}
+          <strong>{{ statusPageToDelete.name }}</strong>
+          {{ $t("messages.information.deleteStatusPageDescription2") }}
+        </q-card-section>
+        <q-card-actions align="right">
+          <q-btn
+            outline
+            :label="$t('action.goBack')"
+            color="default"
+            v-close-popup
+          />
+          <q-btn
+            :loading="loading"
+            @click="dispatchDeleteStatusPage()"
+            push
+            :label="$t('action.yesDelete')"
+            color="negative"
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -56,6 +100,8 @@ export default {
     const store = useStore();
     const $t = useI18n().t;
 
+    const showDeleteDialog = ref(false);
+    const statusPageToDelete = ref({ name: "", uuid: "" });
     const loading = ref(false);
     const rows = ref([]);
     const pagination = ref({
@@ -69,19 +115,19 @@ export default {
     const columns = [
       {
         name: "name",
-        label: $t('common.name'),
+        label: $t("common.name"),
         field: "name",
         align: "left",
       },
       {
         name: "description",
-        label: $t('common.description'),
+        label: $t("common.description"),
         field: "description",
         align: "left",
       },
       {
         name: "enabled",
-        label: $t('common.status'),
+        label: $t("common.status"),
         field: "enabled",
         align: "left",
       },
@@ -121,17 +167,38 @@ export default {
 
     fetchStatusPages();
 
+    const dispatchDeleteStatusPage = () => {
+      loading.value = true;
+      store
+        .dispatch("statusPages/remove", statusPageToDelete.value.uuid)
+        .then(() => {
+          showDeleteDialog.value = false;
+          fetchStatusPages();
+        })
+    };
+
     return {
       loading,
       rows,
       pagination,
       columns,
       fetchStatusPages,
+      showDeleteDialog,
       breakDescription(description) {
         return description.length > 50
           ? description.substring(0, 50) + "..."
           : description;
       },
+      handleDeleteStatusPage(statusPage) {
+        showDeleteDialog.value = true;
+
+        statusPageToDelete.value = {
+          name: statusPage.name,
+          uuid: statusPage.uuid,
+        };
+      },
+      statusPageToDelete,
+      dispatchDeleteStatusPage,
     };
   },
 };
