@@ -131,6 +131,7 @@ export default {
     addEmail: 'Add email',
     statusPageCreated: 'Status page created',
     yesDelete: 'Yes, delete',
+    editStatusPage: 'Edit status page',
   },
   messages: {
     onboarding:{
