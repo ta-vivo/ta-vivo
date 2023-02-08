@@ -172,7 +172,7 @@ const routes = [
         }
       },
       {
-        path: 'edit/:id', component: () => import('pages/StatusPages/Edit.vue'),
+        path: 'edit/:uuid', component: () => import('pages/StatusPages/Edit.vue'),
         meta: {
           isPublic: false
         }
