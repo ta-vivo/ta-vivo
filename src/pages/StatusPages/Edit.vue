@@ -94,6 +94,9 @@
                       <q-toggle
                         class="float-right"
                         v-model="check.addToStatusPage"
+                        @update:model-value="
+                          (val) => updateCheckSelection(check, val)
+                        "
                       />
                     </div>
                   </div>
@@ -172,6 +175,7 @@ import { useStore } from "vuex";
 import { useQuasar } from "quasar";
 import { useI18n } from "vue-i18n";
 import { useRouter, useRoute } from "vue-router";
+import { isValidEmail } from "src/utils/validations";
 
 export default {
   name: "PageStatusPageAdd",
@@ -184,6 +188,8 @@ export default {
     const $route = useRoute();
 
     const checks = ref([]);
+    const checksToAdd = ref([]);
+    const checksToRemove = ref([]);
     const showCheckSelectionError = ref(false);
     const invitations = ref([]);
     const currentInvitation = ref("");
@@ -233,13 +239,12 @@ export default {
           name: statusPage.value.name,
           description: statusPage.value.description,
           isPublic: statusPage.value.isPublic,
-          checks: checks.value
-            .filter((check) => check.addToStatusPage)
-            .map((check) => check.id),
+          checksToAdd: checksToAdd.value,
+          checksToRemove: checksToRemove.value,
           invitations: invitations.value,
         };
 
-        if (payload.checks.length === 0) {
+        if (statusPage.value.checks.some((check) => check.addToStatusPage)) {
           document.querySelector(".check-selection-title").scrollIntoView({
             behavior: "smooth",
             block: "center",
@@ -250,10 +255,13 @@ export default {
         }
 
         store
-          .dispatch("statusPages/create", payload)
+          .dispatch("statusPages/update", {
+            uuid: statusPage.value.uuid,
+            payload,
+          })
           .then(() => {
             $q.notify({
-              message: $t("action.statusPageCreated"),
+              message: $t("action.statusPageUpdated"),
               color: "positive",
             });
             $router.push({ name: "status-pages", query: { created: true } });
@@ -270,11 +278,7 @@ export default {
           });
       },
       isValidInvitationEmail() {
-        return String(currentInvitation.value)
-          .toLowerCase()
-          .match(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          );
+        return isValidEmail(currentInvitation.value);
       },
       isDuplicateInvitationEmail() {
         return invitations.value.includes(currentInvitation.value);
@@ -285,6 +289,19 @@ export default {
       },
       removeInvitation(invitation) {
         invitations.value.splice(invitations.value.indexOf(invitation), 1);
+      },
+      updateCheckSelection(check, value) {
+        if (value) {
+          checksToAdd.value.push(check.id);
+          checksToRemove.value = checksToRemove.value.filter(
+            (checkId) => checkId !== check.id
+          );
+        } else {
+          checksToRemove.value.push(check.id);
+          checksToAdd.value = checksToAdd.value.filter(
+            (checkId) => checkId !== check.id
+          );
+        }
       },
     };
   },
