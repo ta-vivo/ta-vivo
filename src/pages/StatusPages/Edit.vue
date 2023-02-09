@@ -147,8 +147,10 @@
                 class="q-my-sm"
                 removable
                 @remove="removeInvitation(invitation)"
+                :color="invitation.status === 'accepted' ? 'positive' : 'grey-5'"
+                :text-color="invitation.status === 'accepted' ? 'white' : 'black'"
               >
-                {{ invitation }}
+                {{ invitation.email }} - <i>{{ invitation.status.toUpperCase() }}</i>
               </q-chip>
             </div>
           </div>
@@ -192,6 +194,8 @@ export default {
     const checksToRemove = ref([]);
     const showCheckSelectionError = ref(false);
     const invitations = ref([]);
+    const addEmailInvitations = ref([]);
+    const removeEmailInvitations = ref([]);
     const currentInvitation = ref("");
     const loading = ref(true);
     const loadingChecks = ref(true);
@@ -208,6 +212,10 @@ export default {
         ...response.data.data,
         checks: response.data.data.status_page_checks.map((check) => check.id),
       };
+
+      invitations.value = response.data.data.status_page_invitations.map(
+        (invitation) => ({ email: invitation.email, status: invitation.status })
+      );
 
       store
         .dispatch("checks/fetchAll", "?limit=9999")
@@ -241,7 +249,8 @@ export default {
           isPublic: statusPage.value.isPublic,
           checksToAdd: checksToAdd.value,
           checksToRemove: checksToRemove.value,
-          invitations: invitations.value,
+          addEmailInvitations: addEmailInvitations.value,
+          removeEmailInvitations: removeEmailInvitations.value,
         };
 
         if (statusPage.value.checks.some((check) => check.addToStatusPage)) {
@@ -284,11 +293,15 @@ export default {
         return invitations.value.includes(currentInvitation.value);
       },
       addInvitation() {
-        invitations.value.push(currentInvitation.value);
+        invitations.value.push({ email: currentInvitation.value, status: 'not send'});
+        addEmailInvitations.value.push(currentInvitation.value);
         currentInvitation.value = "";
       },
       removeInvitation(invitation) {
-        invitations.value.splice(invitations.value.indexOf(invitation), 1);
+        invitations.value = invitations.value.filter(
+          (currentInvitation) => currentInvitation.email !== invitation.email
+        );
+        removeEmailInvitations.value.push(invitation.email);
       },
       updateCheckSelection(check, value) {
         if (value) {
