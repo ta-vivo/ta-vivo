@@ -23,6 +23,53 @@
       v-model:pagination="pagination"
       @request="fetchStatusPages"
     >
+      <!-- Grid -->
+      <template v-slot:item="props">
+        <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
+          <q-card flat>
+            <q-card-section>
+              <div class="text-grey-8">{{ $t("common.name") }}</div>
+              <div class="q-mb-sm">{{ props.row.name }}</div>
+              <div class="text-grey-8">{{ $t("common.description") }}</div>
+              <div class="q-mb-sm">{{ props.row.description }}</div>
+              <div class="text-grey-8">
+                {{ $t("common.status") }}
+              </div>
+              <div class="q-mb-sm">
+                <q-chip
+                  class="q-ml-none"
+                  :color="props.row.status ? 'positive' : 'negative'"
+                  text-color="white"
+                >
+                  {{
+                    props.row.status
+                      ? $t("common.enabled")
+                      : $t("common.disabled")
+                  }}
+                </q-chip>
+              </div>
+            </q-card-section>
+            <q-separator />
+            <q-card-actions>
+              <q-btn
+                :label="$t('common.details')"
+                flat
+                size="sm"
+                icon="eva-edit-outline"
+                :to="`/status-pages/edit/${props.row.id}`"
+              />
+              <q-btn
+                :label="$t('action.delete')"
+                color="negative"
+                flat
+                size="sm"
+                icon="eva-trash-outline"
+                @click="handleDeleteStatusPage(props.row)"
+              />
+            </q-card-actions>
+          </q-card>
+        </div>
+      </template>
       <!-- Table -->
       <template v-slot:body-cell-enabled="props">
         <q-td :props="props">
@@ -184,7 +231,7 @@ export default {
         .then(() => {
           showDeleteDialog.value = false;
           fetchStatusPages();
-        })
+        });
     };
 
     return {
