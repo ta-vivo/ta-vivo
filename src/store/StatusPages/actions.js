@@ -12,6 +12,10 @@ export function create(_, payload) {
   return axiosInstance.post('/status-pages', payload)
 }
 
+export function update(_, {uuid, payload}) {
+  return axiosInstance.put(`/status-pages/${uuid}`, payload)
+}
+
 export function remove(_, uuid) {
   return axiosInstance.delete(`/status-pages/${uuid}`)
 }
