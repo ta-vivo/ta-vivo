@@ -6,6 +6,7 @@ import integrations from './Integrations'
 import dashboard from './Dashboard'
 import payments from './Payments'
 import user from './User'
+import statusPages from './StatusPages'
 
 /*
  * If not building with SSR mode, you can
@@ -24,7 +25,8 @@ export default store(function (/* { ssrContext } */) {
       integrations,
       dashboard,
       payments,
-      user
+      user,
+      statusPages
     },
 
     // enable strict mode (adds overhead!)

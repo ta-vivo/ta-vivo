@@ -10,6 +10,14 @@
         to="/checks/add"
         :disable="reachedTheLimit()"
       />
+      <q-btn
+        class="go-to-status-pages q-ml-sm"
+        outline
+        color="primary"
+        icon="eva-bar-chart-outline"
+        :label="$t('common.statusPages')"
+        to="/status-pages"
+      />
       <span
         :class="`${$q.screen.lt.md ? 'block q-mt-md' : null} q-ml-sm`"
         v-if="reachedTheLimit()"

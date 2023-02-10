@@ -68,6 +68,11 @@ export default {
     seconds: 'seconds',
     averageResponseTime: 'Average response time',
     upTime: 'Up time',
+    description: 'Description',
+    public: 'Public',
+    checksInformation: 'Checks information',
+    invitations: 'Invitations',
+    statusPages: 'Status pages',
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
@@ -122,7 +127,13 @@ export default {
     start: 'Start',
     skip: 'Skip',
     closeTheTour: 'Close the tour',
-    next: 'Next'
+    next: 'Next',
+    addStatusPage: 'Add status page',
+    addEmail: 'Add email',
+    statusPageCreated: 'Status page created',
+    yesDelete: 'Yes, delete',
+    editStatusPage: 'Edit status page',
+    statusPageUpdated: 'Status page updated',
   },
   messages: {
     onboarding:{
@@ -145,6 +156,9 @@ export default {
     information: {
       noIntegrationFound: 'No integration found',
       areYouSureYouWantToDelete: 'Are you sure you want to delete [ITEM]?',
+      deleteStatusPage: 'Delete status page',
+      deleteStatusPageDescription1: 'If you delete',
+      deleteStatusPageDescription2: 'the invites will stop seeing the page and this action is irreversible.',
       uniqueCodeGetFromTelegram: 'Unique code get from Telegram',
       telegramSetupInformation: 'You can receive direct messages on Telegram with the integration of the ta-vivo bot.',
       telegramSetupBot: 'Search Telegram',
@@ -184,7 +198,10 @@ export default {
       writeACustomValueAndPressEnter: 'Write a custom value and press enter',
       authorizationHeaderConfigured: 'Authorization header configured',
       noIntegration1: 'You haven`t added any integration yet,',
-      noIntegration2: 'to open a new tab and create your first integration to receive notifications.'
+      noIntegration2: 'to open a new tab and create your first integration to receive notifications.',
+      statusPagePublicDescription: 'If this mark as public, anyone with the link can access it.',
+      statusPageCheckDescription: 'Select the checks you want to include on the status page',
+      statusPageInvitationDescription: 'Give access to your team members'
     },
     errors: {
       requireField: 'This field is required',
@@ -193,6 +210,8 @@ export default {
       pleaseTypeTheOldPassword: 'Please type the old password',
       errorOnSave: 'Error on save, please try again',
       notValidPhoneNumber: 'This is not a valid phone number',
+      duplicateEmail: 'This email is already in the list',
+      noChecksSelected: 'Please select at least one check',
     },
     questions: {
       areYousureYouWantCancelSubscription: 'Are you sure you want to cancel your subscription?',
