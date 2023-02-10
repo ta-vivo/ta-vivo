@@ -56,7 +56,7 @@
                 flat
                 size="sm"
                 icon="eva-edit-outline"
-                :to="`/status-pages/edit/${props.row.id}`"
+                :to="`/status-pages/edit/${props.row.uuid}`"
               />
               <q-btn
                 :label="$t('action.delete')"
