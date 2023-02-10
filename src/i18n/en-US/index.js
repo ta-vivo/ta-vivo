@@ -72,6 +72,7 @@ export default {
     public: 'Public',
     checksInformation: 'Checks information',
     invitations: 'Invitations',
+    statusPages: 'Status pages',
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
