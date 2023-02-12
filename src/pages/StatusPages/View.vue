@@ -77,8 +77,8 @@
                 <apex-charts
                   type="area"
                   height="250"
-                  :options="chartOptions"
-                  :series="series"
+                  :options="check.chartOptions"
+                  :series="check.series"
                 />
               </div>
             </template>
@@ -175,10 +175,13 @@ export default {
           .then((response) => {
             check.details = response.data.data;
             check.showDetails = true;
-            series.value[0].data = check.details.map((log) => {
+            check.series = series.value;
+            check.chartOptions = chartOptions.value;
+
+            check.series[0].data = check.details.map((log) => {
               return log.duration;
             });
-            chartOptions.value.xaxis.categories = check.details.map((log) => {
+            check.chartOptions.xaxis.categories = check.details.map((log) => {
               return log.createdAt;
             });
           })
