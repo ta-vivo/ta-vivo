@@ -176,6 +176,12 @@ const routes = [
         meta: {
           isPublic: false
         }
+      },
+      {
+        path: 'view/:uuid', component: () => import('pages/StatusPages/View.vue'),
+        meta: {
+          isPublic: true
+        }
       }
     ]
   },
