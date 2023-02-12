@@ -73,6 +73,8 @@ export default {
     checksInformation: 'Checks information',
     invitations: 'Invitations',
     statusPages: 'Status pages',
+    avgResponseTime: 'Avg. response time',
+    totalUpTime: 'Total up time',
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
@@ -134,6 +136,7 @@ export default {
     yesDelete: 'Yes, delete',
     editStatusPage: 'Edit status page',
     statusPageUpdated: 'Status page updated',
+    refresh: 'Refresh',
   },
   messages: {
     onboarding:{
