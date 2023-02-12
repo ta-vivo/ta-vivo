@@ -175,7 +175,6 @@ export default {
           .dispatch("statusPages/fetchViewByuuid", { uuid, queryString })
           .then((response) => {
             check.details = response.data.data;
-            check.showDetails = true;
             check.series = series.value;
             check.chartOptions = chartOptions.value;
 
@@ -185,6 +184,11 @@ export default {
             check.chartOptions.xaxis.categories = check.details.map((log) => {
               return log.createdAt;
             });
+
+            statusPage.value.checks.forEach((check) => {
+              check.showDetails = false;
+            });
+            check.showDetails = true;
           })
           .finally(() => {
             check.loadingDetails = false;
