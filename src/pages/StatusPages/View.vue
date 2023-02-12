@@ -8,6 +8,7 @@
       <q-card
         flat
         bordered
+        class="q-mt-sm"
         v-for="(check, index) in statusPage.checks"
         :key="index"
       >
@@ -17,7 +18,7 @@
               <div class="text-h6">{{ check.name }}</div>
               <div class="text-grey-7">{{ check.target }}</div>
             </div>
-            <div class="col-2">
+            <div class="col-2" v-if="check.lastLog">
               <q-chip
                 class="q-ml-none"
                 :color="check.lastLog.status === 'up' ? 'positive' : 'negative'"
