@@ -39,7 +39,11 @@
                 flat
                 size="sm"
                 color="primary"
-                :label="check.showDetails ? $t('action.refresh') : $t('common.details')"
+                :label="
+                  check.showDetails
+                    ? $t('action.refresh')
+                    : $t('common.details')
+                "
               />
             </div>
             <template v-if="check.showDetails">
@@ -49,16 +53,20 @@
                     <div class="text-bold text-h4">
                       {{ getUpTimePercent(check.details) }}
                     </div>
-                    <div class="text-grey-7">{{ $t("common.totalUpTime") }}</div>
+                    <div class="text-grey-7">
+                      {{ $t("common.totalUpTime") }}
+                    </div>
                   </div>
                   <div class="col-4">
                     <div class="text-bold text-h4">
                       {{ getTheAverageResponseTime(check.details) }}
                     </div>
-                    <div class="text-grey-7">{{ $t("common.avgResponseTime") }}</div>
+                    <div class="text-grey-7">
+                      {{ $t("common.avgResponseTime") }}
+                    </div>
                   </div>
                   <div class="col-4">
-                    <div class="text-bold text-h4">
+                    <div class="text-bold text-h4 ellipsis">
                       {{ check.timezone }}
                     </div>
                     <div class="text-grey-7">{{ $t("common.timezone") }}</div>
@@ -122,6 +130,9 @@ export default {
         height: 450,
         width: "100%",
         type: "area",
+        toolbar: {
+          show: false
+        },
       },
       colors: [colors.getPaletteColor("positive")],
       dataLabels: {
