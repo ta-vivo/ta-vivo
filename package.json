@@ -12,6 +12,7 @@
   "dependencies": {
     "@quasar/extras": "^1.15.4",
     "@supabase/supabase-js": "^1.35.3",
+    "apexcharts": "^3.37.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "dayjs": "^1.11.4",
@@ -23,6 +24,7 @@
     "vue-i18n": "^9.0.0",
     "vue-router": "^4.0.0",
     "vue-shepherd": "^2.0.1",
+    "vue3-apexcharts": "^1.4.1",
     "vuex": "^4.0.1"
   },
   "devDependencies": {
