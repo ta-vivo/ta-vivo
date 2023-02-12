@@ -76,7 +76,7 @@
               <div class="col-12">
                 <apex-charts
                   type="area"
-                  height="350"
+                  height="250"
                   :options="chartOptions"
                   :series="series"
                 />
@@ -122,12 +122,12 @@ export default {
     const series = ref([
       {
         name: "ms",
-        data: [31, 40, 28, 51, 42, 109, 100],
+        data: [],
       },
     ]);
     const chartOptions = ref({
       chart: {
-        height: 450,
+        height: 250,
         width: "100%",
         type: "area",
         toolbar: {
@@ -143,15 +143,7 @@ export default {
       },
       xaxis: {
         type: "datetime",
-        categories: [
-          "2018-09-19T00:00:00.000Z",
-          "2018-09-19T01:30:00.000Z",
-          "2018-09-19T02:30:00.000Z",
-          "2018-09-19T03:30:00.000Z",
-          "2018-09-19T04:30:00.000Z",
-          "2018-09-19T05:30:00.000Z",
-          "2018-09-19T06:30:00.000Z",
-        ],
+        categories: [],
       },
       tooltip: {
         x: {
