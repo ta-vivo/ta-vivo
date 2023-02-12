@@ -49,19 +49,19 @@
                     <div class="text-bold text-h4">
                       {{ getUpTimePercent(check.details) }}
                     </div>
-                    <div>{{ $t("common.totalUpTime") }}</div>
+                    <div class="text-grey-7">{{ $t("common.totalUpTime") }}</div>
                   </div>
                   <div class="col-4">
                     <div class="text-bold text-h4">
                       {{ getTheAverageResponseTime(check.details) }}
                     </div>
-                    <div>{{ $t("common.avgResponseTime") }}</div>
+                    <div class="text-grey-7">{{ $t("common.avgResponseTime") }}</div>
                   </div>
                   <div class="col-4">
                     <div class="text-bold text-h4">
                       {{ check.timezone }}
                     </div>
-                    <div>{{ $t("common.timezone") }}</div>
+                    <div class="text-grey-7">{{ $t("common.timezone") }}</div>
                   </div>
                 </div>
               </div>
