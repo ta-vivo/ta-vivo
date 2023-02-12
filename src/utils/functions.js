@@ -1,6 +1,7 @@
 const getMsOrSecondsFromMs = (ms) => {
+  if (!ms) return 0;
   if (ms < 1000) {
-    return `${ms} ms`;
+    return `${Number(ms).toFixed(0)} ms`;
   }
   return `${(ms / 1000).toFixed(2)} seconds`;
 };
