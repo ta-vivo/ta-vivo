@@ -2,7 +2,7 @@ const getMsOrSecondsFromMs = (ms) => {
   if (ms < 1000) {
     return `${ms} ms`;
   }
-  return `${(ms / 1000).toFixed(2)} ${$t("common.seconds")}`;
+  return `${(ms / 1000).toFixed(2)} seconds`;
 };
 
 const getTheAverageResponseTime = (data) => {
