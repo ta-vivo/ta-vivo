@@ -57,7 +57,12 @@
                     </div>
                     <div>{{ $t("common.avgResponseTime") }}</div>
                   </div>
-                  <div class="col-4"></div>
+                  <div class="col-4">
+                    <div class="text-bold text-h4">
+                      {{ check.timezone }}
+                    </div>
+                    <div>{{ $t("common.timezone") }}</div>
+                  </div>
                 </div>
               </div>
               <div class="col-12">
