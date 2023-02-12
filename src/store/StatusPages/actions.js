@@ -8,11 +8,15 @@ export function fetchByuuid(_, uuid) {
   return axiosInstance.get(`/status-pages/${uuid}`)
 }
 
+export function fetchViewByuuid(_, { uuid, queryString }) {
+  return axiosInstance.get(`/status-pages/view/${uuid}${queryString || ''}`)
+}
+
 export function create(_, payload) {
   return axiosInstance.post('/status-pages', payload)
 }
 
-export function update(_, {uuid, payload}) {
+export function update(_, { uuid, payload }) {
   return axiosInstance.put(`/status-pages/${uuid}`, payload)
 }
 
