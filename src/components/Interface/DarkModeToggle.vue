@@ -1,6 +1,7 @@
 <template>
   <q-toggle
-    color="primary"
+    :color="darkMode ? 'primary' : 'black'"
+    keep-color
     dark
     v-model="darkMode"
     :icon="darkMode ? 'eva-moon-outline' : 'eva-sun-outline'"
