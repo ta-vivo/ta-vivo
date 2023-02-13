@@ -75,6 +75,7 @@ export default {
     statusPages: 'Status pages',
     avgResponseTime: 'Avg. response time',
     totalUpTime: 'Total up time',
+    view: 'View',
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
