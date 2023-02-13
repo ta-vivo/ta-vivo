@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import RoleBadge from "components/User/RoleBadge.vue";
