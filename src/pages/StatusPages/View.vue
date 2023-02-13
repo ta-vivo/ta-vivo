@@ -5,6 +5,7 @@
       <div class="header-container text-center">
         <p class="text-h4">{{ statusPage.name }}</p>
         <p class="text-grey-7">{{ statusPage.description }}</p>
+        <dark-mode-toggle />
       </div>
       <div class="checks-container">
         <q-card
@@ -107,12 +108,14 @@ import {
   getUpTimePercent,
 } from "src/utils/functions";
 import component404 from "components/Interface/404";
+import DarkModeToggle from "components/Interface/DarkModeToggle";
 
 export default {
   name: "PageStatusPagesView",
   components: {
     ApexCharts,
     component404,
+    DarkModeToggle,
   },
   setup() {
     const $store = useStore();
