@@ -176,7 +176,13 @@ const routes = [
         meta: {
           isPublic: false
         }
-      },
+      }
+    ]
+  },
+  {
+    path: '/status-pages',
+    component: () => import('layouts/Auth.vue'),
+    children: [
       {
         path: 'view/:uuid', component: () => import('pages/StatusPages/View.vue'),
         meta: {
