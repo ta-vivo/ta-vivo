@@ -212,7 +212,11 @@ export default {
       showNoFound,
       handleDetails: (check) => {
         check.loadingDetails = true;
-        const queryString = `?logs=true&check_id=${check.id}`;
+        const queryString = `?logs=true&check_id=${check.id}${
+          tokenFromLocalStorage
+            ? `&invitation_token=${tokenFromLocalStorage}`
+            : ""
+        }`;
         $store
           .dispatch("statusPages/fetchViewByuuid", { uuid, queryString })
           .then((response) => {
