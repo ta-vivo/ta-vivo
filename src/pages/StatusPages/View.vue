@@ -99,7 +99,7 @@
 <script>
 import { ref } from "vue";
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import ApexCharts from "vue3-apexcharts";
 import { colors } from "quasar";
 import {
@@ -120,6 +120,24 @@ export default {
   setup() {
     const $store = useStore();
     const $route = useRoute();
+    const $router = useRouter();
+    const uuid = $route.params.uuid;
+
+    const token = $route.query.invitation_token;
+
+    if (token) {
+      localStorage.setItem(`statusPageToken-${uuid}`, token);
+      $router.replace({
+        name: "status-pages-view",
+        params: {
+          uuid,
+        },
+      });
+    }
+
+    const tokenFromLocalStorage = localStorage.getItem(
+      `statusPageToken-${uuid}`
+    );
 
     const statusPage = ref({
       name: "",
@@ -162,10 +180,13 @@ export default {
       },
     });
 
-    const uuid = $route.params.uuid;
-
     $store
-      .dispatch("statusPages/fetchViewByuuid", { uuid })
+      .dispatch("statusPages/fetchViewByuuid", {
+        uuid,
+        queryString: tokenFromLocalStorage
+          ? `?invitation_token=${tokenFromLocalStorage}`
+          : "",
+      })
       .then((response) => {
         statusPage.value = response.data.data;
       })
@@ -177,6 +198,8 @@ export default {
         ) {
           showNoFound.value = true;
         }
+
+        localStorage.removeItem(`statusPageToken-${uuid}`);
       });
 
     return {

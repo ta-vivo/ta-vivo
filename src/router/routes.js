@@ -184,6 +184,7 @@ const routes = [
     component: () => import('layouts/Auth.vue'),
     children: [
       {
+        name: 'status-pages-view',
         path: 'view/:uuid', component: () => import('pages/StatusPages/View.vue'),
         meta: {
           isPublic: true
