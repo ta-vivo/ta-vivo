@@ -8,10 +8,23 @@
         <dark-mode-toggle />
       </div>
       <div class="checks-container">
-        <templat v-if="statusPage.checks && statusPage.checks.length === 0">
+        <template v-if="loading">
+          <q-card flat bordered class="q-mt-sm" v-for="i in 4" :key="i">
+            <q-skeleton height="120px" square />
+          </q-card>
+        </template>
+        <templat
+          v-if="!loading && statusPage.checks && statusPage.checks.length === 0"
+        >
           <div class="text-center">
-            <q-icon color="grey-7" size="100px" name="eva-radio-button-off-outline" />
-            <div class="text-h6 text-grey-7">{{ $t("common.noCheckFoundOnThisStatusPage") }}</div>
+            <q-icon
+              color="grey-7"
+              size="100px"
+              name="eva-radio-button-off-outline"
+            />
+            <div class="text-h6 text-grey-7">
+              {{ $t("common.noCheckFoundOnThisStatusPage") }}
+            </div>
           </div>
         </templat>
         <q-card
@@ -128,6 +141,7 @@ export default {
     const $route = useRoute();
     const $router = useRouter();
     const uuid = $route.params.uuid;
+    const loading = ref(true);
 
     const token = $route.query.invitation_token;
 
@@ -206,6 +220,9 @@ export default {
         }
 
         localStorage.removeItem(`statusPageToken-${uuid}`);
+      })
+      .finally(() => {
+        loading.value = false;
       });
 
     return {
@@ -216,6 +233,7 @@ export default {
       getTheAverageResponseTime,
       getUpTimePercent,
       showNoFound,
+      loading,
       handleDetails: (check) => {
         check.loadingDetails = true;
         const queryString = `?logs=true&check_id=${check.id}${
