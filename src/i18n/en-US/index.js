@@ -76,6 +76,7 @@ export default {
     avgResponseTime: 'Avg. response time',
     totalUpTime: 'Total up time',
     view: 'View',
+    noCheckFoundOnThisStatusPage: 'No check found on this status page',
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
