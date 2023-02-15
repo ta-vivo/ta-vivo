@@ -8,6 +8,12 @@
         <dark-mode-toggle />
       </div>
       <div class="checks-container">
+        <templat v-if="statusPage.checks && statusPage.checks.length === 0">
+          <div class="text-center">
+            <q-icon color="grey-7" size="100px" name="eva-radio-button-off-outline" />
+            <div class="text-h6 text-grey-7">{{ $t("common.noCheckFoundOnThisStatusPage") }}</div>
+          </div>
+        </templat>
         <q-card
           flat
           bordered
