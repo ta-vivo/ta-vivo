@@ -210,7 +210,7 @@ export default {
       statusPage.value = {
         ...statusPage.value,
         ...response.data.data,
-        checks: response.data.data.status_page_checks.map((check) => check.id),
+        checks: response.data.data.status_page_checks.map((check) => check.checkId),
       };
 
       invitations.value = response.data.data.status_page_invitations.map(
