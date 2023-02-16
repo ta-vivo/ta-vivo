@@ -208,7 +208,7 @@ export default {
           checks: checks.value
             .filter((check) => check.addToStatusPage)
             .map((check) => check.id),
-          invitations: invitations.value,
+          emailInvitations: invitations.value,
         };
 
         if (payload.checks.length === 0) {
