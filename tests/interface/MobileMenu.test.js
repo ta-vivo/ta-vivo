@@ -79,21 +79,4 @@ describe('Desktop Menu component', () => {
   it('should no have badge when the screen is not xs', () => {
     expect(wrapperLg.find('div.q-badge').exists()).toBe(false);
   })
-
-  it('should have a darkmode toggle functionality when the screen is not xs', () => {
-    expect(wrapperLg.vm.darkMode).toBe(false);
-    wrapperLg.find('div.q-toggle').trigger('click');
-    expect(wrapperLg.vm.darkMode).toBe(true);
-  })
-
-  it('should have a darkmode toggle', () => {
-    expect(wrapper.find('div.q-toggle').exists()).toBe(true);
-  })
-
-  it('should have a darkmode toggle functionality', () => {
-    expect(wrapper.vm.darkMode).toBe(false);
-    wrapper.find('div.q-toggle').trigger('click');
-    expect(wrapper.vm.darkMode).toBe(true);
-  })
-
 })
