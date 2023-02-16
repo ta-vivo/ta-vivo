@@ -52,6 +52,13 @@
             <q-separator />
             <q-card-actions>
               <q-btn
+                :label="$t('common.view')"
+                flat
+                size="sm"
+                icon="eva-eye-outline"
+                :to="`/status-pages/view/${props.row.uuid}`"
+              />
+              <q-btn
                 :label="$t('common.details')"
                 flat
                 size="sm"
@@ -90,6 +97,16 @@
       </template>
       <template v-slot:body-cell-actions="props">
         <q-td :props="props">
+          <q-btn
+            flat
+            size="sm"
+            icon="eva-eye-outline"
+            :to="`/status-pages/view/${props.row.uuid}`"
+          >
+            <q-tooltip>
+              {{ $t("common.view") }}
+            </q-tooltip>
+          </q-btn>
           <q-btn
             flat
             size="sm"

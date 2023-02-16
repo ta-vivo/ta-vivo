@@ -73,6 +73,10 @@ export default {
     checksInformation: 'Checks information',
     invitations: 'Invitations',
     statusPages: 'Status pages',
+    avgResponseTime: 'Avg. response time',
+    totalUpTime: 'Total up time',
+    view: 'View',
+    noCheckFoundOnThisStatusPage: 'No check found on this status page',
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
@@ -134,6 +138,8 @@ export default {
     yesDelete: 'Yes, delete',
     editStatusPage: 'Edit status page',
     statusPageUpdated: 'Status page updated',
+    refresh: 'Refresh',
+    goHome: 'Go home',
   },
   messages: {
     onboarding:{
@@ -212,6 +218,7 @@ export default {
       notValidPhoneNumber: 'This is not a valid phone number',
       duplicateEmail: 'This email is already in the list',
       noChecksSelected: 'Please select at least one check',
+      nothingHere:'Oops. Nothing here...'
     },
     questions: {
       areYousureYouWantCancelSubscription: 'Are you sure you want to cancel your subscription?',
