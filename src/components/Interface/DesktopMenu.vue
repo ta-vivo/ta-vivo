@@ -1,123 +1,115 @@
 <template>
-  <q-toolbar class="constrain-width" :class="`${$q.dark.isActive ? 'bg-dark text-white' : 'bg-white'}`">
-  <q-img
-    src="~assets/main-logo.png"
-    spinner-color="white"
-    style="height: 40px; max-width: 40px"
-    @click="$router.push('/')"
-    class="q-mr-sm cursor-pointer"
-  />
-  <q-btn
-    class="checks"
-    to="/checks"
-    stretch
-    flat
-    :text-color="$q.dark.isActive ? 'white' : 'primary'"
-    icon="eva-activity-outline"
-    :label="$t('common.checks')"
-  ></q-btn>
-  <q-btn
-    class="integrations"
-    to="/integrations"
-    stretch
-    flat
-    :text-color="$q.dark.isActive ? 'white' : 'primary'"
-    icon="eva-briefcase-outline"
-    :label="$t('common.integrations')"
-  ></q-btn>
-  <q-space />
-  <role-badge
-    v-if="$q.screen.gt.xs"
-    class="cursor-pointer"
-    @click="$router.push('/pricing')"
-    :role="user.role"
-  />
-  <q-btn-dropdown
-    flat
-    color="primary"
-    class="q-ml-xs q-mr-xs email dropdown"
-    :label="user.email"
-    icon='eva-person-outline'
+  <q-toolbar
+    class="constrain-width"
+    :class="`${$q.dark.isActive ? 'bg-dark text-white' : 'bg-white'}`"
   >
-    <q-list>
-      <q-item clickable v-close-popup @click="$router.push('/profile')">
-        <q-item-section>
-          <q-item-label>
-            <q-icon name="eva-person-outline" />
-            {{ $t("common.profile") }}
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-item clickable v-close-popup @click="logout" class="logout">
-        <q-item-section>
-          <q-item-label class="text-negative">
-            <q-icon name="eva-log-out-outline" />
-            Logout
-          </q-item-label>
-        </q-item-section>
-      </q-item>
-    </q-list>
-  </q-btn-dropdown>
-  <q-toggle
-    color="primary"
-    dark
-    v-model="darkMode"
-    :icon="darkMode ? 'eva-moon-outline' : 'eva-sun-outline'"
-    @update:model-value="toggleDarkMode"
-  />
-</q-toolbar>
+    <q-img
+      src="~assets/main-logo.png"
+      spinner-color="white"
+      style="height: 40px; max-width: 40px"
+      @click="$router.push('/')"
+      class="q-mr-sm cursor-pointer"
+    />
+    <q-btn
+      class="checks"
+      to="/checks"
+      stretch
+      flat
+      :text-color="$q.dark.isActive ? 'white' : 'primary'"
+      icon="eva-activity-outline"
+      :label="$t('common.checks')"
+    ></q-btn>
+    <q-btn
+      class="integrations"
+      to="/integrations"
+      stretch
+      flat
+      :text-color="$q.dark.isActive ? 'white' : 'primary'"
+      icon="eva-briefcase-outline"
+      :label="$t('common.integrations')"
+    ></q-btn>
+    <q-space />
+    <role-badge
+      v-if="$q.screen.gt.xs"
+      class="cursor-pointer"
+      @click="$router.push('/pricing')"
+      :role="user.role"
+    />
+    <q-btn-dropdown
+      flat
+      color="primary"
+      class="q-ml-xs q-mr-xs email dropdown"
+      :label="user.email"
+      icon="eva-person-outline"
+    >
+      <q-list>
+        <q-item clickable v-close-popup @click="$router.push('/profile')">
+          <q-item-section>
+            <q-item-label>
+              <q-icon name="eva-person-outline" />
+              {{ $t("common.profile") }}
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item clickable v-close-popup @click="logout" class="logout">
+          <q-item-section>
+            <q-item-label class="text-negative">
+              <q-icon name="eva-log-out-outline" />
+              Logout
+            </q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-btn-dropdown>
+    <dark-mode-toggle />
+  </q-toolbar>
 </template>
 
 <script>
-  import { defineComponent, ref } from "vue";
-  import { useStore } from "vuex";
-  import { useRouter } from "vue-router";
-  import RoleBadge from "components/User/RoleBadge.vue";
-  import supabase from "boot/supabase";
-  import { useQuasar } from 'quasar';
+import { defineComponent } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
+import RoleBadge from "components/User/RoleBadge.vue";
+import supabase from "boot/supabase";
+import { useQuasar } from "quasar";
+import DarkModeToggle from "components/Interface/DarkModeToggle";
 
-  export default defineComponent({
-    name: "MainLayout",
-    components: {
-      RoleBadge,
+export default defineComponent({
+  name: "ComponentDesktopMenu",
+  components: {
+    RoleBadge,
+    DarkModeToggle
+  },
+  setup() {
+    const $store = useStore();
+    const $router = useRouter();
+    const $q = useQuasar();
+
+    return {
+      async logout() {
+        $q.loading.show();
+        const user = supabase.auth.user();
+
+        window.localStorage.removeItem("token");
+        $store.commit("auth/SET_USER", {
+          email: "",
+          id: null,
+          role: "basic",
+        });
+
+        if (user) {
+          await supabase.auth.signOut();
+        }
+
+        $q.loading.hide();
+        $router.push("/auth/login");
+      },
+    };
+  },
+  computed: {
+    user() {
+      return this.$store.getters["auth/getUser"];
     },
-    setup() {
-      const darkmodeFromLocalStorage = localStorage.getItem("darkmode");
-      const $store = useStore();
-      const $router = useRouter();
-      const $q = useQuasar();
-      const darkMode = ref(darkmodeFromLocalStorage || $q.dark.isActive);
-
-      return {
-        darkMode,
-        async logout() {
-          $q.loading.show();
-          const user = supabase.auth.user();
-
-          window.localStorage.removeItem("token");
-          $store.commit("auth/SET_USER", {
-            email: "",
-            id: null,
-            role: "basic",
-          });
-
-          if (user) {
-            await supabase.auth.signOut();
-          }
-
-          $q.loading.hide();
-          $router.push("/auth/login");
-        },
-        toggleDarkMode() {
-          window.localStorage.setItem("darkMode", darkMode.value);
-          $q.dark.set(darkMode.value);
-        },
-      };
-    },
-    computed: {
-      user() {
-        return this.$store.getters["auth/getUser"];
-      }
-    },
-  });
-  </script>
+  },
+});
+</script>

@@ -154,6 +154,44 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/status-pages',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        name: 'status-pages',
+        path: '', component: () => import('pages/StatusPages/Index.vue'),
+        meta: {
+          isPublic: false
+        }
+      },
+      {
+        path: 'add', component: () => import('pages/StatusPages/Add.vue'),
+        meta: {
+          isPublic: false
+        }
+      },
+      {
+        path: 'edit/:uuid', component: () => import('pages/StatusPages/Edit.vue'),
+        meta: {
+          isPublic: false
+        }
+      }
+    ]
+  },
+  {
+    path: '/status-pages',
+    component: () => import('layouts/Auth.vue'),
+    children: [
+      {
+        name: 'status-pages-view',
+        path: 'view/:uuid', component: () => import('pages/StatusPages/View.vue'),
+        meta: {
+          isPublic: true
+        }
+      }
+    ]
+  },
 
   // Always leave this as last one,
   // but you can also remove it
