@@ -197,7 +197,3 @@
 .shepherd-modal-overlay-container.shepherd-modal-is-visible path {
   pointer-events: all;
 }
-
-label.highlight, label.q-field--highlighted, .period-container.highlight {
-  padding: 30px 10px;
-}
