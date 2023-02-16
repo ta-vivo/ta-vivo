@@ -71,7 +71,7 @@ import { useRouter } from "vue-router";
 import RoleBadge from "components/User/RoleBadge.vue";
 import supabase from "boot/supabase";
 import { useQuasar } from "quasar";
-import DarkModeToggle from "components/Interface/DarkModeToggle";
+import DarkModeToggle from "components/Interface/DarkModeToggle.vue";
 
 export default defineComponent({
   name: "ComponentMobileMenu",
