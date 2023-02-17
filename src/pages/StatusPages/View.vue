@@ -38,7 +38,7 @@
             <div class="row">
               <div class="col-10">
                 <div class="text-h6">{{ check.name }}</div>
-                <div class="text-grey-7">{{ check.target }}</div>
+                <div class="text-grey-7 ellipsis">{{ check.target }}</div>
               </div>
               <div class="col-2" v-if="check.lastLog">
                 <q-chip
