@@ -58,7 +58,7 @@
               </div>
               <div class="col-12 text-center">
                 <q-btn
-                  @click="handleDetails(check)"
+                  @click="() => handleDetails(check)"
                   :loading="check.loadingDetails"
                   class="full-width"
                   flat
