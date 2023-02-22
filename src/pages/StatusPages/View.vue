@@ -284,6 +284,10 @@ export default {
       handleOnDetails: (check) => {
         handleDetails(check);
 
+        if (timeInterval.value) {
+          clearInterval(timeInterval.value);
+        }
+
         timeInterval.value = setInterval(() => {
           fetchDetailsEach1Minute();
         }, 10000);
