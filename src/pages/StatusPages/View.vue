@@ -225,6 +225,37 @@ export default {
         loading.value = false;
       });
 
+    const handleDetails = (check) => {
+      check.loadingDetails = true;
+      const queryString = `?logs=true&check_id=${check.id}${
+        tokenFromLocalStorage
+          ? `&invitation_token=${tokenFromLocalStorage}`
+          : ""
+      }`;
+      $store
+        .dispatch("statusPages/fetchViewByuuid", { uuid, queryString })
+        .then((response) => {
+          check.details = response.data.data;
+          check.series = series.value;
+          check.chartOptions = chartOptions.value;
+
+          check.series[0].data = check.details.map((log) => {
+            return log.duration;
+          });
+          check.chartOptions.xaxis.categories = check.details.map((log) => {
+            return log.createdAt;
+          });
+
+          statusPage.value.checks.forEach((check) => {
+            check.showDetails = false;
+          });
+          check.showDetails = true;
+        })
+        .finally(() => {
+          check.loadingDetails = false;
+        });
+    };
+
     return {
       statusPage,
       series,
@@ -234,36 +265,7 @@ export default {
       getUpTimePercent,
       showNoFound,
       loading,
-      handleDetails: (check) => {
-        check.loadingDetails = true;
-        const queryString = `?logs=true&check_id=${check.id}${
-          tokenFromLocalStorage
-            ? `&invitation_token=${tokenFromLocalStorage}`
-            : ""
-        }`;
-        $store
-          .dispatch("statusPages/fetchViewByuuid", { uuid, queryString })
-          .then((response) => {
-            check.details = response.data.data;
-            check.series = series.value;
-            check.chartOptions = chartOptions.value;
-
-            check.series[0].data = check.details.map((log) => {
-              return log.duration;
-            });
-            check.chartOptions.xaxis.categories = check.details.map((log) => {
-              return log.createdAt;
-            });
-
-            statusPage.value.checks.forEach((check) => {
-              check.showDetails = false;
-            });
-            check.showDetails = true;
-          })
-          .finally(() => {
-            check.loadingDetails = false;
-          });
-      },
+      handleDetails
     };
   },
 };
