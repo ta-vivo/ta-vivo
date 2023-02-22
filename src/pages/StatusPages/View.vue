@@ -58,7 +58,7 @@
               </div>
               <div class="col-12 text-center">
                 <q-btn
-                  @click="() => handleDetails(check)"
+                  @click="() => handleOnDetails(check)"
                   :loading="check.loadingDetails"
                   class="full-width"
                   flat
@@ -116,7 +116,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, onUnmounted } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import ApexCharts from "vue3-apexcharts";
@@ -142,8 +142,15 @@ export default {
     const $router = useRouter();
     const uuid = $route.params.uuid;
     const loading = ref(true);
+    const timeInterval = ref(null);
 
     const token = $route.query.invitation_token;
+
+    onUnmounted(() => {
+      if (timeInterval.value) {
+        clearInterval(timeInterval.value);
+      }
+    });
 
     if (token) {
       localStorage.setItem(`statusPageToken-${uuid}`, token);
@@ -256,6 +263,14 @@ export default {
         });
     };
 
+    const fetchDetailsEach1Minute = () => {
+      statusPage.value.checks.forEach((check) => {
+        if (check.showDetails) {
+          handleDetails(check);
+        }
+      });
+    };
+
     return {
       statusPage,
       series,
@@ -265,7 +280,14 @@ export default {
       getUpTimePercent,
       showNoFound,
       loading,
-      handleDetails
+      handleDetails,
+      handleOnDetails: (check) => {
+        handleDetails(check);
+
+        timeInterval.value = setInterval(() => {
+          fetchDetailsEach1Minute();
+        }, 10000);
+      },
     };
   },
 };
