@@ -106,6 +106,12 @@
                     :series="check.series"
                   />
                 </div>
+                <div class="col-12">
+                  <span class="float-right text-grey-7">
+                    {{ timeAgo ? `${$t("action.updated")} ${timeAgo}` : null }}
+                    <q-spinner color="primary" size="1em" :thickness="1" />
+                  </span>
+                </div>
               </template>
             </div>
           </q-card-section>
@@ -116,7 +122,7 @@
 </template>
 
 <script>
-import { ref, onUnmounted } from "vue";
+import { ref, onUnmounted, watch } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import ApexCharts from "vue3-apexcharts";
@@ -126,6 +132,7 @@ import {
   getTheAverageResponseTime,
   getUpTimePercent,
 } from "src/utils/functions";
+import { getTimeAgo } from "src/utils/time";
 import component404 from "components/Interface/404";
 import DarkModeToggle from "components/Interface/DarkModeToggle";
 
@@ -143,6 +150,14 @@ export default {
     const uuid = $route.params.uuid;
     const loading = ref(true);
     const timeInterval = ref(null);
+    const lastTimeRefresh = ref(null);
+    const timeAgo = ref(getTimeAgo(lastTimeRefresh.value));
+
+    watch(lastTimeRefresh, () => {
+      timeInterval.value = setInterval(() => {
+        timeAgo.value = getTimeAgo(lastTimeRefresh.value);
+      }, 1000);
+    });
 
     const token = $route.query.invitation_token;
 
@@ -273,6 +288,7 @@ export default {
       showNoFound,
       loading,
       handleDetails,
+      timeAgo,
       handleOnDetails: (check) => {
         handleDetails(check);
 
@@ -285,10 +301,11 @@ export default {
             statusPage.value.checks.forEach((check) => {
               if (check.showDetails) {
                 handleDetails(check);
+                lastTimeRefresh.value = new Date();
               }
             });
           }
-        }, 60000);
+        }, 10000);
       },
     };
   },
