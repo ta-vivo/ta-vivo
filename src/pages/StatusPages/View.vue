@@ -263,14 +263,6 @@ export default {
         });
     };
 
-    const fetchDetailsEach1Minute = () => {
-      statusPage.value.checks.forEach((check) => {
-        if (check.showDetails) {
-          handleDetails(check);
-        }
-      });
-    };
-
     return {
       statusPage,
       series,
@@ -289,8 +281,14 @@ export default {
         }
 
         timeInterval.value = setInterval(() => {
-          fetchDetailsEach1Minute();
-        }, 10000);
+          if (document.visibilityState === "visible") {
+            statusPage.value.checks.forEach((check) => {
+              if (check.showDetails) {
+                handleDetails(check);
+              }
+            });
+          }
+        }, 60000);
       },
     };
   },
