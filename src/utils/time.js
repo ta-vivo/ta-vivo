@@ -26,4 +26,9 @@ const getDuration = (count) => {
   }
 }
 
-export { getUserTimezone, getTimestampInHumanFormat, getDuration }
+const getTimeAgo = (timestamp) => {
+  if (!timestamp) return null;
+  return dayjs(timestamp).fromNow();
+}
+
+export { getUserTimezone, getTimestampInHumanFormat, getDuration, getTimeAgo }
