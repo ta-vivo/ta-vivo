@@ -58,7 +58,7 @@
               </div>
               <div class="col-12 text-center">
                 <q-btn
-                  @click="handleDetails(check)"
+                  @click="() => handleOnDetails(check)"
                   :loading="check.loadingDetails"
                   class="full-width"
                   flat
@@ -106,6 +106,12 @@
                     :series="check.series"
                   />
                 </div>
+                <div class="col-12">
+                  <span class="float-right text-grey-7">
+                    {{ timeAgo ? `${$t("action.updated")} ${timeAgo}` : null }}
+                    <q-spinner color="primary" size="1em" :thickness="1" />
+                  </span>
+                </div>
               </template>
             </div>
           </q-card-section>
@@ -116,7 +122,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, onUnmounted, watch } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import ApexCharts from "vue3-apexcharts";
@@ -126,6 +132,7 @@ import {
   getTheAverageResponseTime,
   getUpTimePercent,
 } from "src/utils/functions";
+import { getTimeAgo } from "src/utils/time";
 import component404 from "components/Interface/404";
 import DarkModeToggle from "components/Interface/DarkModeToggle";
 
@@ -142,8 +149,23 @@ export default {
     const $router = useRouter();
     const uuid = $route.params.uuid;
     const loading = ref(true);
+    const timeInterval = ref(null);
+    const lastTimeRefresh = ref(null);
+    const timeAgo = ref(getTimeAgo(lastTimeRefresh.value));
+
+    watch(lastTimeRefresh, () => {
+      timeInterval.value = setInterval(() => {
+        timeAgo.value = getTimeAgo(lastTimeRefresh.value);
+      }, 1000);
+    });
 
     const token = $route.query.invitation_token;
+
+    onUnmounted(() => {
+      if (timeInterval.value) {
+        clearInterval(timeInterval.value);
+      }
+    });
 
     if (token) {
       localStorage.setItem(`statusPageToken-${uuid}`, token);
@@ -225,6 +247,37 @@ export default {
         loading.value = false;
       });
 
+    const handleDetails = (check) => {
+      check.loadingDetails = true;
+      const queryString = `?logs=true&check_id=${check.id}${
+        tokenFromLocalStorage
+          ? `&invitation_token=${tokenFromLocalStorage}`
+          : ""
+      }`;
+      $store
+        .dispatch("statusPages/fetchViewByuuid", { uuid, queryString })
+        .then((response) => {
+          check.details = response.data.data;
+          check.series = series.value;
+          check.chartOptions = chartOptions.value;
+
+          check.series[0].data = check.details.map((log) => {
+            return log.duration;
+          });
+          check.chartOptions.xaxis.categories = check.details.map((log) => {
+            return log.createdAt;
+          });
+
+          statusPage.value.checks.forEach((check) => {
+            check.showDetails = false;
+          });
+          check.showDetails = true;
+        })
+        .finally(() => {
+          check.loadingDetails = false;
+        });
+    };
+
     return {
       statusPage,
       series,
@@ -234,35 +287,25 @@ export default {
       getUpTimePercent,
       showNoFound,
       loading,
-      handleDetails: (check) => {
-        check.loadingDetails = true;
-        const queryString = `?logs=true&check_id=${check.id}${
-          tokenFromLocalStorage
-            ? `&invitation_token=${tokenFromLocalStorage}`
-            : ""
-        }`;
-        $store
-          .dispatch("statusPages/fetchViewByuuid", { uuid, queryString })
-          .then((response) => {
-            check.details = response.data.data;
-            check.series = series.value;
-            check.chartOptions = chartOptions.value;
+      handleDetails,
+      timeAgo,
+      handleOnDetails: (check) => {
+        handleDetails(check);
 
-            check.series[0].data = check.details.map((log) => {
-              return log.duration;
-            });
-            check.chartOptions.xaxis.categories = check.details.map((log) => {
-              return log.createdAt;
-            });
+        if (timeInterval.value) {
+          clearInterval(timeInterval.value);
+        }
 
+        timeInterval.value = setInterval(() => {
+          if (document.visibilityState === "visible") {
             statusPage.value.checks.forEach((check) => {
-              check.showDetails = false;
+              if (check.showDetails) {
+                handleDetails(check);
+                lastTimeRefresh.value = new Date();
+              }
             });
-            check.showDetails = true;
-          })
-          .finally(() => {
-            check.loadingDetails = false;
-          });
+          }
+        }, 60000);
       },
     };
   },
