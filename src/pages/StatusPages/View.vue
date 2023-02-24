@@ -126,7 +126,7 @@ import { ref, onUnmounted, watch } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import ApexCharts from "vue3-apexcharts";
-import { colors } from "quasar";
+import { colors, useQuasar } from "quasar";
 import {
   getMsOrSecondsFromMs,
   getTheAverageResponseTime,
@@ -147,6 +147,8 @@ export default {
     const $store = useStore();
     const $route = useRoute();
     const $router = useRouter();
+    const $q = useQuasar()
+
     const uuid = $route.params.uuid;
     const loading = ref(true);
     const timeInterval = ref(null);
@@ -216,6 +218,7 @@ export default {
         categories: [],
       },
       tooltip: {
+        theme: 'dark',
         x: {
           format: "dd/MM/yy HH:mm",
         },
