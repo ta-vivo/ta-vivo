@@ -74,6 +74,26 @@
       notify us immediately upon becoming aware of any breach of security or
       unauthorized use of your account.
     </p>
+    <p class="text-h5">Customer Name and Logo Usage</p>
+    <p>
+      By using this web application, you grant us permission to use your name
+      and logo on our customers section of the landing page. This includes
+      displaying your name and logo, along with a brief description of your use
+      of our services. We may also use your name and logo in promotional
+      materials and on social media, solely for the purpose of promoting our
+      services.
+    </p>
+    <p>
+      You acknowledge that we may use your name and logo without compensation to
+      you, and that you have no rights to review or approve any use of your name
+      and logo. You represent and warrant that you have the authority to grant
+      us this permission to use your name and logo, and that such use will not
+      infringe upon the rights of any third party.
+    </p>
+    <p>
+      If you do not wish for your name and logo to be used in this manner,
+      please contact us to discuss further.
+    </p>
     <p class="text-h5">Intellectual Property</p>
     <p>
       The Service and its original content, features and functionality are and
