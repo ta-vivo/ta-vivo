@@ -276,44 +276,62 @@
           <q-space />
           <q-btn icon="eva-close-outline" flat round dense v-close-popup />
         </q-card-section>
+        <q-card-section class="q-py-none">
+          <div class="text-grey-7">
+            {{ tempCheck.target }}
+          </div>
+        </q-card-section>
         <q-card-section>
-          <div class="row">
-            <div class="col">
-              <span class="text-bold">
-                {{ $t("common.averageResponseTime") }}:
-              </span>
-              {{ getTheAverageResponseTime() }}
-            </div>
-            <div class="col">
-              <span class="text-bold">{{ $t("common.upTime") }}: </span>
-              {{ getUpTimePercent() }}
+          <div class="col-12 text-center">
+            <div class="row">
+              <div class="col-4">
+                <div class="text-bold text-h4">
+                  {{ getUpTimePercent(logs.details) }}
+                </div>
+                <div class="text-grey-7">
+                  {{ $t("common.totalUpTime") }}
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="text-bold text-h4">
+                  {{ getTheAverageResponseTime(logs.details) }}
+                </div>
+                <div class="text-grey-7">
+                  {{ $t("common.avgResponseTime") }}
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="text-bold text-h4 ellipsis">
+                  {{ tempCheck.timezone }}
+                </div>
+                <div class="text-grey-7">{{ $t("common.timezone") }}</div>
+              </div>
+              <div class="col-12 text-grey-7">
+                {{$t('common.period')}} {{ tempCheck.periodToCheckLabel }}
+              </div>
             </div>
           </div>
         </q-card-section>
 
         <q-card-section>
-          <q-table
-            bordered
-            flat
-            :loading="loadingLogs"
-            :rows-per-page-options="[]"
-            :rows="logs"
-            :columns="logsColumns"
-            row-key="id"
-            v-model:pagination="logsPagination"
-            @request="fetchlogs"
-          >
-            <template v-slot:body-cell-status="props">
-              <q-td :props="props">
-                <q-chip
-                  :color="props.row.status === 'up' ? 'positive' : 'negative'"
-                  text-color="white"
-                >
-                  {{ props.row.status }}
-                </q-chip>
-              </q-td>
-            </template>
-          </q-table>
+          <div class="row">
+            <div class="col-12">
+              <template v-if="loadingLogs">
+                <q-skeleton height="250px" square />
+              </template>
+              <template v-else>
+                <apex-charts
+                  type="area"
+                  height="250"
+                  :options="logs.chartOptions"
+                  :series="logs.series"
+                />
+                <div class="text-grey-7 text-center">
+                  {{$t('common.lastRecords').replace('[NUMBER]', 10)}}
+                </div>
+              </template>
+            </div>
+          </div>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -324,18 +342,58 @@
 import { ref } from "vue";
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
-import { useQuasar } from "quasar";
+import { useQuasar, colors } from "quasar";
 import SmallIntegrationIcon from "components/Integrations/Icons/Small";
 import jwtDecode from "jwt-decode";
-import { getTimestampInHumanFormat, getDurationInMs } from "src/utils/time";
+import { getTimestampInHumanFormat } from "src/utils/time";
+import {
+  getTheAverageResponseTime,
+  getUpTimePercent,
+} from "src/utils/functions";
+import ApexCharts from "vue3-apexcharts";
 
 export default {
   name: "PageChecks",
-  components: { SmallIntegrationIcon },
+  components: { SmallIntegrationIcon, ApexCharts },
   setup() {
     const $t = useI18n().t;
     const $q = useQuasar();
     const store = useStore();
+
+    // chart options
+    const series = ref([
+      {
+        name: "ms",
+        data: [],
+      },
+    ]);
+    const chartOptions = ref({
+      chart: {
+        height: 250,
+        width: "100%",
+        type: "area",
+        toolbar: {
+          show: false,
+        },
+      },
+      colors: [colors.getPaletteColor("positive")],
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: "smooth",
+      },
+      xaxis: {
+        type: "datetime",
+        categories: [],
+      },
+      tooltip: {
+        theme: "dark",
+        x: {
+          format: "dd/MM/yy HH:mm",
+        },
+      },
+    });
 
     const truncatext = (text, length) => {
       if (text.length > length) {
@@ -349,23 +407,6 @@ export default {
         return `${ms} ms`;
       }
       return `${(ms / 1000).toFixed(2)} ${$t("common.seconds")}`;
-    };
-
-    const getTheAverageResponseTime = () => {
-      const averageTime = logs.value.reduce(
-        (acc, log) => acc + parseFloat(log.duration),
-        0
-      );
-      return logs.value.length > 0
-        ? getMsOrSecondsFromMs(averageTime / logs.value.length)
-        : 0;
-    };
-
-    const getUpTimePercent = () => {
-      const upTime = logs.value.filter((log) => log.status === "up").length;
-      return logs.value.length > 0
-        ? `${((upTime / logs.value.length) * 100).toFixed(2)}%`
-        : "0.00%";
     };
 
     const columns = [
@@ -448,7 +489,11 @@ export default {
     const loading = ref(false);
     const showLogsDialog = ref(false);
     const loadingLogs = ref(false);
-    const logs = ref([]);
+    const logs = ref({
+      series: [],
+      chartOptions: {},
+      details: [],
+    });
     const tempCheck = ref({});
 
     const fetchChecks = (props) => {
@@ -501,8 +546,19 @@ export default {
         })
         .then((response) => {
           const results = response.data;
+
+          logs.value.details = results.data;
           logsPagination.value.rowsNumber = results.pagination.total;
-          logs.value = results.data;
+
+          logs.value.series = series.value;
+          logs.value.chartOptions = chartOptions.value;
+
+          logs.value.series[0].data = results.data.map((log) => {
+            return log.duration;
+          });
+          logs.value.chartOptions.xaxis.categories = results.data.map((log) => {
+            return log.createdAt;
+          });
         })
         .finally(() => {
           loadingLogs.value = false;
