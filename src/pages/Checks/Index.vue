@@ -276,6 +276,11 @@
           <q-space />
           <q-btn icon="eva-close-outline" flat round dense v-close-popup />
         </q-card-section>
+        <q-card-section class="q-py-none">
+          <div class="text-grey-7">
+            {{ tempCheck.target }}
+          </div>
+        </q-card-section>
         <q-card-section>
           <div class="col-12 text-center">
             <div class="row">
@@ -301,6 +306,9 @@
                 </div>
                 <div class="text-grey-7">{{ $t("common.timezone") }}</div>
               </div>
+              <div class="col-12 text-grey-7">
+                {{$t('common.period')}} {{ tempCheck.periodToCheckLabel }}
+              </div>
             </div>
           </div>
         </q-card-section>
@@ -318,6 +326,9 @@
                   :options="logs.chartOptions"
                   :series="logs.series"
                 />
+                <div class="text-grey-7 text-center">
+                  {{$t('common.lastRecords').replace('[NUMBER]', 10)}}
+                </div>
               </template>
             </div>
           </div>
