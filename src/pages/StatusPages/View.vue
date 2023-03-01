@@ -126,7 +126,7 @@ import { ref, onUnmounted, watch } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 import ApexCharts from "vue3-apexcharts";
-import { colors, useQuasar } from "quasar";
+import { colors } from "quasar";
 import {
   getMsOrSecondsFromMs,
   getTheAverageResponseTime,
@@ -147,7 +147,6 @@ export default {
     const $store = useStore();
     const $route = useRoute();
     const $router = useRouter();
-    const $q = useQuasar()
 
     const uuid = $route.params.uuid;
     const loading = ref(true);
