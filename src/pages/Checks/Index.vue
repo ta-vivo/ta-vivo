@@ -277,16 +277,30 @@
           <q-btn icon="eva-close-outline" flat round dense v-close-popup />
         </q-card-section>
         <q-card-section>
-          <div class="row">
-            <div class="col">
-              <span class="text-bold">
-                {{ $t("common.averageResponseTime") }}:
-              </span>
-              {{ getTheAverageResponseTime(logs.details) }}
-            </div>
-            <div class="col">
-              <span class="text-bold">{{ $t("common.upTime") }}: </span>
-              {{ getUpTimePercent(logs.details) }}
+          <div class="col-12 text-center">
+            <div class="row">
+              <div class="col-4">
+                <div class="text-bold text-h4">
+                  {{ getUpTimePercent(logs.details) }}
+                </div>
+                <div class="text-grey-7">
+                  {{ $t("common.totalUpTime") }}
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="text-bold text-h4">
+                  {{ getTheAverageResponseTime(logs.details) }}
+                </div>
+                <div class="text-grey-7">
+                  {{ $t("common.avgResponseTime") }}
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="text-bold text-h4 ellipsis">
+                  {{ tempCheck.timezone }}
+                </div>
+                <div class="text-grey-7">{{ $t("common.timezone") }}</div>
+              </div>
             </div>
           </div>
         </q-card-section>
@@ -294,12 +308,17 @@
         <q-card-section>
           <div class="row">
             <div class="col-12">
-              <apex-charts
-                type="area"
-                height="250"
-                :options="logs.chartOptions"
-                :series="logs.series"
-              />
+              <template v-if="loadingLogs">
+                <q-skeleton height="250px" square />
+              </template>
+              <template v-else>
+                <apex-charts
+                  type="area"
+                  height="250"
+                  :options="logs.chartOptions"
+                  :series="logs.series"
+                />
+              </template>
             </div>
           </div>
         </q-card-section>
@@ -317,7 +336,6 @@ import SmallIntegrationIcon from "components/Integrations/Icons/Small";
 import jwtDecode from "jwt-decode";
 import { getTimestampInHumanFormat } from "src/utils/time";
 import {
-  getMsOrSecondsFromMs,
   getTheAverageResponseTime,
   getUpTimePercent,
 } from "src/utils/functions";
