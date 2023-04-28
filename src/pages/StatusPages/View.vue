@@ -13,7 +13,7 @@
             <q-skeleton height="120px" square />
           </q-card>
         </template>
-        <templat
+        <template
           v-if="!loading && statusPage.checks && statusPage.checks.length === 0"
         >
           <div class="text-center">
@@ -26,7 +26,7 @@
               {{ $t("common.noCheckFoundOnThisStatusPage") }}
             </div>
           </div>
-        </templat>
+        </template>
         <q-card
           flat
           bordered
