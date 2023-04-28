@@ -74,7 +74,7 @@
               <template v-if="check.showDetails">
                 <div class="col-12 text-center">
                   <div class="row">
-                    <div class="col-4">
+                    <div class="col-xs-12 col-sm-4">
                       <div class="text-bold text-h4">
                         {{ getUpTimePercent(check.details) }}
                       </div>
@@ -82,7 +82,7 @@
                         {{ $t("common.totalUpTime") }}
                       </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-xs-12 col-sm-4">
                       <div class="text-bold text-h4">
                         {{ getTheAverageResponseTime(check.details) }}
                       </div>
@@ -90,7 +90,7 @@
                         {{ $t("common.avgResponseTime") }}
                       </div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-xs-12 col-sm-4">
                       <div class="text-bold text-h4 ellipsis">
                         {{ check.timezone }}
                       </div>
