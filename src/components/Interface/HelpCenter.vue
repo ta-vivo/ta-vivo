@@ -11,7 +11,7 @@
 
     <q-dialog v-model="showHelpCenter" position="right">
       <q-card style="max-width: 400px">
-        <q-card-section class="row items-center bg-primary">
+        <q-card-section class="row items-center bg-primary text-white">
           <div class="text-h6">{{ $t("messages.helpCenter.welcome") }}</div>
           <q-space />
           <q-btn
