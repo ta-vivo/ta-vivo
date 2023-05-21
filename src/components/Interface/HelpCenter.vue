@@ -10,8 +10,8 @@
     </q-page-sticky>
 
     <q-dialog v-model="showHelpCenter" position="right">
-      <q-card style="min-width: 400px">
-        <q-card-section class="row items-center q-pb-none">
+      <q-card style="max-width: 400px">
+        <q-card-section class="row items-center bg-primary">
           <div class="text-h6">{{ $t("messages.helpCenter.welcome") }}</div>
           <q-space />
           <q-btn
@@ -21,6 +21,10 @@
             dense
             v-close-popup
           />
+
+          <div>
+            {{ $t('messages.helpCenter.description') }}
+          </div>
         </q-card-section>
 
         <q-card-section>
