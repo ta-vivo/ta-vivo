@@ -243,6 +243,7 @@ export default {
     },
     helpCenter: {
       welcome: 'Welcome to the help center',
+      description: 'We`re here to support you every step of the way.'
     },
     errors: {
       requireField: 'This field is required',
