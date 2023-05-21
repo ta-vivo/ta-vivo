@@ -94,6 +94,7 @@ export default {
           { label: $t("common.slack_integration") },
           { label: $t("common.telegram_alerts") },
           { label: $t("common.whatsapp_notifications") },
+          { label: $t("common.adding_integrations_to_checks") },
         ],
       },
       {
@@ -101,7 +102,6 @@ export default {
         icon: 'eva-bar-chart-outline',
         subItems: [
           { label: $t("common.create_dashboard") },
-          { label: $t("common.customize_layout") },
           { label: $t("common.share_information") },
         ],
       },
@@ -109,17 +109,14 @@ export default {
         label: $t("common.log_history"),
         icon: 'eva-file-text-outline',
         subItems: [
-          { label: $t("common.viewing_logs") },
           { label: $t("common.tracking_uptime") },
-          { label: $t("common.analyzing_data") },
         ],
       },
       {
         label: $t("common.timezone_configuration"),
         icon: 'eva-clock-outline',
         subItems: [
-          { label: $t("common.managing_timezones") },
-          { label: $t("common.daylight_saving") },
+          { label: $t("common.managing_general_timezones") },
         ],
       },
       {
