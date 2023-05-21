@@ -36,6 +36,7 @@
               clickable
               :label="item.label"
               :icon="item.icon"
+              group="somegroup"
             >
               <q-list>
                 <q-item
