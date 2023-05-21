@@ -172,7 +172,8 @@ export default {
     statusPageUpdated: 'Status page updated',
     refresh: 'Refresh',
     goHome: 'Go home',
-    updated: 'Updated'
+    updated: 'Updated',
+    back: 'Back'
   },
   messages: {
     onboarding:{
