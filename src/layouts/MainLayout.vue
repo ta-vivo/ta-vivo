@@ -15,7 +15,7 @@
 import { defineComponent, ref } from "vue";
 import DesktopMenu from "src/components/Interface/DesktopMenu.vue";
 import MobileMenu from "src/components/Interface/MobileMenu.vue";
-import HelpCenter from "components/Interface/HelpCenter";
+import HelpCenter from "components/HelpCenter/HelpCenter";
 
 export default defineComponent({
   name: "MainLayout",
