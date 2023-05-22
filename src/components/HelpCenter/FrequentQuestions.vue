@@ -1,6 +1,6 @@
 <template>
   <q-card flat bordered class="q-mt-lg">
-    <q-card-section>
+    <q-card-section v-if="showHeader">
       <div class="text-h6">{{ $t("common.frequentQuestions") }}</div>
     </q-card-section>
 
@@ -51,6 +51,12 @@
 <script>
 export default {
   name: "ComponentFrequentQuestions",
+  props: {
+    showHeader: {
+      type: Boolean,
+      default: true,
+    },
+  },
   setup() {
     return {};
   },
