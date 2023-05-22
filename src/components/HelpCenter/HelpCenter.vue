@@ -12,12 +12,12 @@
     <q-dialog v-model="showHelpCenter" position="right">
       <q-card style="min-width: 400px; min-height: 500px">
         <q-card-section
-          v-show="showVideo"
+          v-show="showTemplate === 'video' || showTemplate === 'contact-form'"
           class="row items-center bg-primary text-white"
         >
           <q-btn
             class="q-mr-md"
-            @click="() => (showVideo = false)"
+            @click="() => handleShow('options')"
             icon="eva-chevron-left-outline"
             flat
             :label="$t('action.back')"
@@ -26,7 +26,7 @@
             {{ selectedOption.label }}
           </div>
         </q-card-section>
-        <q-card-section v-show="showVideo">
+        <q-card-section v-show="showTemplate === 'video'">
           <video
             style="max-width: 530px; height: auto; border-radius: 4px"
             controls
@@ -36,7 +36,7 @@
         </q-card-section>
 
         <q-card-section
-          v-show="!showVideo"
+          v-show="showTemplate === 'options'"
           class="row items-center bg-primary text-white"
         >
           <div class="text-h6">{{ $t("messages.helpCenter.welcome") }}</div>
@@ -54,7 +54,7 @@
           </div>
         </q-card-section>
 
-        <q-card-section v-show="!showVideo">
+        <q-card-section v-show="showTemplate === 'options'">
           <q-list bordered class="rounded-borders">
             <q-expansion-item
               v-for="(item, index) in menuItems"
@@ -83,6 +83,10 @@
             </q-expansion-item>
           </q-list>
         </q-card-section>
+
+        <q-card-section v-show="showTemplate === 'contact-form'">
+          <ContactForm />
+        </q-card-section>
       </q-card>
     </q-dialog>
   </div>
@@ -91,14 +95,18 @@
 <script>
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+import ContactForm from "components/HelpCenter/ContactForm.vue";
 
 export default {
   name: "ComponentHelpCenter",
+  components: {
+    ContactForm,
+  },
   setup() {
     const $t = useI18n().t;
 
+    const showTemplate = ref("options"); // options | video | contact-form
     const showHelpCenter = ref(true);
-    const showVideo = ref(false);
     const selectedOption = ref({});
     const menuItems = ref([
       {
@@ -234,23 +242,35 @@ export default {
         icon: "eva-headphones-outline",
         subItems: [
           { label: $t("common.reach_out"), icon: "eva-book-open-outline" },
-          { label: $t("common.feedback_requests"), icon: "eva-edit-outline" },
+          {
+            label: $t("common.feedback_requests"),
+            icon: "eva-edit-outline",
+            action: "contact-form",
+          },
         ],
       },
     ]);
 
+    const handleShow = (option) => {
+      showTemplate.value = option;
+    };
+
     return {
       menuItems,
       showHelpCenter,
-      showVideo,
       selectedOption,
+      showTemplate,
+      handleShow,
       handleShowHelpCenter: () => {
         showHelpCenter.value = true;
       },
       handleClickOnOption: (option) => {
+        selectedOption.value = option;
+
         if (option.video) {
-          selectedOption.value = option;
-          showVideo.value = true;
+          handleShow("video");
+        } else if (option.action) {
+          handleShow(option.action);
         }
       },
     };
