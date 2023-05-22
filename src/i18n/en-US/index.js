@@ -108,7 +108,8 @@ export default {
     contact_support: "Contact Support",
     reach_out: "How to reach out for assistance",
     feedback_requests: "Submitting feedback or feature requests",
-    adding_integrations_to_checks:'Adding integrations to checks'
+    adding_integrations_to_checks:'Adding integrations to checks',
+    message: 'Message',
   },
   frequentQuestions: {
     whatPaymentAccept: 'What payment methods do you accept?',
@@ -173,7 +174,8 @@ export default {
     refresh: 'Refresh',
     goHome: 'Go home',
     updated: 'Updated',
-    back: 'Back'
+    back: 'Back',
+    sendMessage: 'Send message',
   },
   messages: {
     onboarding:{
@@ -245,7 +247,9 @@ export default {
     },
     helpCenter: {
       welcome: 'Welcome to the help center',
-      description: 'We`re here to support you every step of the way.'
+      description: 'We`re here to support you every step of the way.',
+      contactFormDescription: 'Contact us for assistance, feedback, or feature requests. We value your input and are here to help. Fill out the form below and our support team will get back to you promptly. We appreciate your continued support!',
+      contactFormSuccess: '🎉 Thank you for reaching out to us! We have received your message and our support team will get back to you shortly. We appreciate your patience and value your feedback. Have a great day! 👋'
     },
     errors: {
       requireField: 'This field is required',
