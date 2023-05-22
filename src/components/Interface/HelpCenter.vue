@@ -105,8 +105,8 @@ export default {
         label: $t("common.getting_started"),
         icon: "eva-compass-outline",
         subItems: [
-          { label: $t("common.overview_tool") },
-          { label: $t("common.quick_setup") },
+          { label: $t("common.overview_tool"), icon: "eva-book-open-outline" },
+          { label: $t("common.quick_setup"), icon: "eva-book-open-outline" },
         ],
       },
       {
@@ -219,16 +219,22 @@ export default {
         label: $t("common.faqs"),
         icon: "eva-question-mark-circle-outline",
         subItems: [
-          { label: $t("common.frequently_asked_questions") },
-          { label: $t("common.troubleshooting_issues") },
+          {
+            label: $t("common.frequently_asked_questions"),
+            icon: "eva-book-open-outline",
+          },
+          {
+            label: $t("common.troubleshooting_issues"),
+            icon: "eva-book-open-outline",
+          },
         ],
       },
       {
         label: $t("common.contact_support"),
         icon: "eva-headphones-outline",
         subItems: [
-          { label: $t("common.reach_out") },
-          { label: $t("common.feedback_requests") },
+          { label: $t("common.reach_out"), icon: "eva-book-open-outline" },
+          { label: $t("common.feedback_requests"), icon: "eva-edit-outline" },
         ],
       },
     ]);
