@@ -12,7 +12,7 @@
     <q-dialog v-model="showHelpCenter" position="right">
       <q-card style="min-width: 400px; min-height: 500px">
         <q-card-section
-          v-show="showTemplate === 'video' || showTemplate === 'contact-form'"
+          v-show="showTemplate === 'video' || showTemplate === 'contact-form' || showTemplate === 'frequent-questions'"
           class="row items-center bg-primary text-white"
         >
           <q-btn
@@ -65,7 +65,7 @@
               :icon="item.icon"
               group="somegroup"
             >
-              <q-list>
+              <q-list class="q-ml-md">
                 <q-item
                   v-for="(subItem, subIndex) in item.subItems"
                   :key="subIndex"
@@ -87,6 +87,10 @@
         <q-card-section v-show="showTemplate === 'contact-form'">
           <ContactForm />
         </q-card-section>
+
+        <q-card-section v-show="showTemplate === 'frequent-questions'">
+          <frequent-questions :show-header="false" />
+        </q-card-section>
       </q-card>
     </q-dialog>
   </div>
@@ -96,11 +100,12 @@
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 import ContactForm from "components/HelpCenter/ContactForm.vue";
-
+import FrequentQuestions from "components/HelpCenter/FrequentQuestions.vue";
 export default {
   name: "ComponentHelpCenter",
   components: {
     ContactForm,
+    FrequentQuestions,
   },
   setup() {
     const $t = useI18n().t;
@@ -230,6 +235,7 @@ export default {
           {
             label: $t("common.frequently_asked_questions"),
             icon: "eva-book-open-outline",
+            action: 'frequent-questions'
           },
           {
             label: $t("common.troubleshooting_issues"),
