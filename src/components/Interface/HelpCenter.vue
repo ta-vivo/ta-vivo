@@ -28,9 +28,9 @@
         </q-card-section>
         <q-card-section v-show="showVideo">
           <video
-            style="width: 600px; height: auto"
+            style="max-width: 530px; height: auto; border-radius: 4px"
             controls
-            autoplay
+            preload="auto"
             :src="selectedOption.video"
           ></video>
         </q-card-section>
@@ -73,7 +73,10 @@
                   @click="() => handleClickOnOption(subItem)"
                 >
                   <q-item-section>
-                    <q-item-label>- {{ subItem.label }}</q-item-label>
+                    <q-item-label>
+                      <q-icon size="sm" :name="subItem.icon" />
+                      {{ subItem.label }}
+                    </q-item-label>
                   </q-item-section>
                 </q-item>
               </q-list>
@@ -112,41 +115,105 @@ export default {
         subItems: [
           {
             label: $t("common.setting_targets"),
+            icon: "eva-video-outline",
             video: "https://tavivo.s3.amazonaws.com/create+checks.mp4",
           },
-          { label: $t("common.configuring_intervals") },
-          { label: $t("common.specifying_timezone") },
+          {
+            label: $t("common.configuring_intervals"),
+            icon: "eva-video-outline",
+            video:
+              "https://tavivo.s3.amazonaws.com/Configuring+check+intervals.mp4",
+          },
+          {
+            label: $t("common.specifying_timezone"),
+            icon: "eva-video-outline",
+            video:
+              "https://tavivo.s3.amazonaws.com/Specifying+timezone+for+each+check.mp4",
+          },
         ],
       },
       {
         label: $t("common.integrations"),
         icon: "eva-briefcase-outline",
         subItems: [
-          { label: $t("common.discord_integration") },
-          { label: $t("common.email_notifications") },
-          { label: $t("common.slack_integration") },
-          { label: $t("common.telegram_alerts") },
-          { label: $t("common.whatsapp_notifications") },
-          { label: $t("common.adding_integrations_to_checks") },
+          {
+            label: $t("common.discord_integration"),
+            icon: "eva-video-outline",
+            video:
+              "https://tavivo.s3.amazonaws.com/Adding+Discord+integration.mp4",
+          },
+          {
+            label: $t("common.email_notifications"),
+            icon: "eva-video-outline",
+            video:
+              "https://tavivo.s3.amazonaws.com/Setting+up+Email+notifications.mp4",
+          },
+          {
+            label: $t("common.slack_integration"),
+            icon: "eva-video-outline",
+            video:
+              "https://tavivo.s3.amazonaws.com/Configuring+Slack+integration.mp4",
+          },
+          {
+            label: $t("common.telegram_alerts"),
+            icon: "eva-video-outline",
+            video:
+              "https://tavivo.s3.amazonaws.com/Enabling+Telegram+alerts.mp4",
+          },
+          {
+            label: $t("common.whatsapp_notifications"),
+            icon: "eva-video-outline",
+            video:
+              "https://tavivo.s3.amazonaws.com/Managing+WhatsApp+notifications.mp4",
+          },
+          {
+            label: $t("common.adding_integrations_to_checks"),
+            icon: "eva-video-outline",
+            video:
+              "https://tavivo.s3.amazonaws.com/Adding+integrations+to+checks.mp4",
+          },
         ],
       },
       {
         label: $t("common.status_pages"),
         icon: "eva-bar-chart-outline",
         subItems: [
-          { label: $t("common.create_dashboard") },
-          { label: $t("common.share_information") },
+          {
+            label: $t("common.create_dashboard"),
+            icon: "eva-video-outline",
+            video:
+              "https://tavivo.s3.amazonaws.com/Creating+a+dynamic+dashboard.mp4",
+          },
+          {
+            label: $t("common.share_information"),
+            icon: "eva-video-outline",
+            video:
+              "https://tavivo.s3.amazonaws.com/Sharing+information+with+teams1.mp4",
+          },
         ],
       },
       {
         label: $t("common.log_history"),
         icon: "eva-file-text-outline",
-        subItems: [{ label: $t("common.tracking_uptime") }],
+        subItems: [
+          {
+            label: $t("common.tracking_uptime"),
+            icon: "eva-video-outline",
+            video: "https://tavivo.s3.amazonaws.com/Viewing+check+logs.mp4",
+          },
+        ],
       },
       {
         label: $t("common.timezone_configuration"),
         icon: "eva-clock-outline",
-        subItems: [{ label: $t("common.managing_general_timezones") }],
+        subItems: [
+          {
+            label: $t("common.managing_general_timezones"),
+            icon: "eva-video-outline",
+            video:
+              "https://tavivo.s3.amazonaws.com/Managing+general+timezones.mp4",
+          },
+        ],
       },
       {
         label: $t("common.faqs"),
