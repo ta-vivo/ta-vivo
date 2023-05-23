@@ -10,9 +10,15 @@
     </q-page-sticky>
 
     <q-dialog v-model="showHelpCenter" position="right">
-      <q-card style="min-width: 400px; min-height: 500px">
+      <q-card flat style="min-width: 400px; min-height: 500px">
         <q-card-section
-          v-show="showTemplate === 'video' || showTemplate === 'contact-form' || showTemplate === 'frequent-questions'"
+          v-show="
+            showTemplate === 'video' ||
+            showTemplate === 'contact-form' ||
+            showTemplate === 'frequent-questions' ||
+            showTemplate === 'reading' ||
+            showTemplate === 'troubleshooting'
+          "
           class="row items-center bg-primary text-white"
         >
           <q-btn
@@ -76,6 +82,10 @@
                     <q-item-label>
                       <q-icon size="sm" :name="subItem.icon" />
                       {{ subItem.label }}
+                      <q-inner-loading
+                        :showing="subItem.loading"
+                        label-class="text-teal"
+                      />
                     </q-item-label>
                   </q-item-section>
                 </q-item>
@@ -91,6 +101,23 @@
         <q-card-section v-show="showTemplate === 'frequent-questions'">
           <frequent-questions :show-header="false" />
         </q-card-section>
+
+        <q-card-section v-show="showTemplate === 'reading'">
+          <div class="text-body2">
+            <p
+              v-for="(description, index) in selectedOption.description"
+              :key="index"
+            >
+              {{ description }}
+            </p>
+          </div>
+        </q-card-section>
+
+        <q-card-section v-show="showTemplate === 'troubleshooting'">
+          <troubleshooting-common-issues
+            @click-on-contact-us="showTemplate = 'contact-form'"
+          />
+        </q-card-section>
       </q-card>
     </q-dialog>
   </div>
@@ -99,27 +126,48 @@
 <script>
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 import ContactForm from "components/HelpCenter/ContactForm.vue";
 import FrequentQuestions from "components/HelpCenter/FrequentQuestions.vue";
+import TroubleshootingCommonIssues from "./TroubleshootingCommonIssues.vue";
+
 export default {
   name: "ComponentHelpCenter",
   components: {
     ContactForm,
     FrequentQuestions,
+    TroubleshootingCommonIssues,
   },
   setup() {
     const $t = useI18n().t;
+    const router = useRouter();
 
-    const showTemplate = ref("options"); // options | video | contact-form
-    const showHelpCenter = ref(true);
+    const showTemplate = ref("options"); // options | video | contact-form | reading | frequent-questions | quick-guide | troubleshooting
+    const showHelpCenter = ref(false);
     const selectedOption = ref({});
     const menuItems = ref([
       {
         label: $t("common.getting_started"),
         icon: "eva-compass-outline",
         subItems: [
-          { label: $t("common.overview_tool"), icon: "eva-book-open-outline" },
-          { label: $t("common.quick_setup"), icon: "eva-book-open-outline" },
+          {
+            label: $t("common.overview_tool"),
+            icon: "eva-book-open-outline",
+            action: "reading",
+            description: [
+              $t("messages.helpCenter.overviewDescription1"),
+              $t("messages.helpCenter.overviewDescription2"),
+              $t("messages.helpCenter.overviewDescription3"),
+              $t("messages.helpCenter.overviewDescription4"),
+              $t("messages.helpCenter.overviewDescription5"),
+              $t("messages.helpCenter.overviewDescription6"),
+            ],
+          },
+          {
+            label: $t("common.quick_setup"),
+            icon: "eva-book-open-outline",
+            action: "quick-guide",
+          },
         ],
       },
       {
@@ -235,11 +283,12 @@ export default {
           {
             label: $t("common.frequently_asked_questions"),
             icon: "eva-book-open-outline",
-            action: 'frequent-questions'
+            action: "frequent-questions",
           },
           {
             label: $t("common.troubleshooting_issues"),
             icon: "eva-book-open-outline",
+            action: "troubleshooting",
           },
         ],
       },
@@ -275,6 +324,19 @@ export default {
 
         if (option.video) {
           handleShow("video");
+        } else if (option.action === "quick-guide") {
+          // show the onboarding
+          window.localStorage.removeItem("new-users-onboarding");
+          window.localStorage.setItem(
+            "show-new-users-onboarding-to-old-user",
+            "show"
+          );
+
+          option.loading = true;
+          router.push({ name: "home" });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
         } else if (option.action) {
           handleShow(option.action);
         }
