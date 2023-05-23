@@ -296,7 +296,6 @@ export default {
         label: $t("common.contact_support"),
         icon: "eva-headphones-outline",
         subItems: [
-          { label: $t("common.reach_out"), icon: "eva-book-open-outline" },
           {
             label: $t("common.feedback_requests"),
             icon: "eva-edit-outline",
