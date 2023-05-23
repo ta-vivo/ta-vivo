@@ -10,6 +10,7 @@
     "test": "TZ=UTC SUPABASE_PROJECT_URL=http://supabase.localhost SUPABASE_ANON_PUBLIC_KEY=anon_key vitest"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.11.0",
     "@quasar/extras": "^1.15.4",
     "@supabase/supabase-js": "^1.35.3",
     "apexcharts": "^3.37.0",

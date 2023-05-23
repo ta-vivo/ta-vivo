@@ -60,7 +60,15 @@ export default defineComponent({
   methods: {
     isNewUser() {
       const onboarding = window.localStorage.getItem("new-users-onboarding");
+      const obboardingToOldUser = window.localStorage.getItem(
+        "show-new-users-onboarding-to-old-user"
+      );
       const sessionToken = window.localStorage.getItem("token");
+
+      if(obboardingToOldUser === 'show') {
+        this.showOnboarding = true;
+        return;
+      }
 
       if (onboarding === null && sessionToken) {
         const decoded = jwtDecode(sessionToken);

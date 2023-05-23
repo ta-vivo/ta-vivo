@@ -82,6 +82,7 @@ export default {
 
       this.tour.on("cancel", () => {
         window.localStorage.setItem("new-users-onboarding", "closed");
+        window.localStorage.removeItem("show-new-users-onboarding-to-old-user");
         this.handleEmitHide();
       });
 
@@ -107,6 +108,7 @@ export default {
     skip() {
       this.showInitialDialog = false;
       window.localStorage.setItem("new-users-onboarding", "skiped");
+      window.localStorage.removeItem("show-new-users-onboarding-to-old-user");
       this.$emit("hide");
     },
     dispatchShowCreateCheck() {
@@ -205,6 +207,7 @@ export default {
       this.tour.next();
       this.showTheFinalDialog = true;
       window.localStorage.setItem("new-users-onboarding", "done");
+      window.localStorage.removeItem("show-new-users-onboarding-to-old-user");
     },
     finish() {
       this.showTheFinalDialog = false;
