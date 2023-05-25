@@ -10,7 +10,13 @@
     </q-page-sticky>
 
     <q-dialog v-model="showHelpCenter" position="right">
-      <q-card flat style="min-width: 400px; min-height: 500px">
+      <q-card
+        flat
+        :style="{
+          minWidth: $q.screen.width <= 414 ? `${$q.screen.width}px` : '400px',
+          minHeight: '500px',
+        }"
+      >
         <q-card-section
           v-show="
             showTemplate === 'video' ||
@@ -34,7 +40,11 @@
         </q-card-section>
         <q-card-section v-show="showTemplate === 'video'">
           <video
-            style="max-width: 530px; height: auto; border-radius: 4px"
+            :style="{
+              maxWidth: $q.screen.lt.md ? `${$q.screen.width - 50}px` : '530px',
+              height: 'auto',
+              borderRadius: '4px',
+            }"
             controls
             preload="auto"
             :src="selectedOption.video"
