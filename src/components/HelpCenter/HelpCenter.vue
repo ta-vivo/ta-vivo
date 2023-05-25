@@ -10,7 +10,13 @@
     </q-page-sticky>
 
     <q-dialog v-model="showHelpCenter" position="right">
-      <q-card flat style="min-width: 400px; min-height: 500px">
+      <q-card
+        flat
+        :style="{
+          minWidth: $q.screen.width <= 414 ? `${$q.screen.width}px` : '400px',
+          minHeight: '500px',
+        }"
+      >
         <q-card-section
           v-show="
             showTemplate === 'video' ||
@@ -33,8 +39,24 @@
           </div>
         </q-card-section>
         <q-card-section v-show="showTemplate === 'video'">
+          <q-skeleton
+            v-show="loadingVideo"
+            class="q-mb-md"
+            :style="{
+              width:
+                $q.screen.width <= 414 ? `${$q.screen.width - 50}px` : '530px',
+              height: '500px',
+            }"
+          />
           <video
-            style="max-width: 530px; height: auto; border-radius: 4px"
+            v-show="!loadingVideo"
+            ref="refVideo"
+            :style="{
+              maxWidth:
+                $q.screen.width <= 414 ? `${$q.screen.width - 50}px` : '530px',
+              height: 'auto',
+              borderRadius: '4px',
+            }"
             controls
             preload="auto"
             :src="selectedOption.video"
@@ -141,8 +163,10 @@ export default {
   setup() {
     const $t = useI18n().t;
     const router = useRouter();
+    const refVideo = ref(null);
 
     const showTemplate = ref("options"); // options | video | contact-form | reading | frequent-questions | quick-guide | troubleshooting
+    const loadingVideo = ref(false);
     const showHelpCenter = ref(false);
     const selectedOption = ref({});
     const menuItems = ref([
@@ -315,6 +339,8 @@ export default {
       selectedOption,
       showTemplate,
       handleShow,
+      refVideo,
+      loadingVideo,
       handleShowHelpCenter: () => {
         showHelpCenter.value = true;
       },
@@ -323,6 +349,14 @@ export default {
 
         if (option.video) {
           handleShow("video");
+          loadingVideo.value = true;
+
+          refVideo.value.addEventListener("loadeddata", () => {
+            console.log(refVideo.value.readyState);
+            if (refVideo.value.readyState >= 3) {
+              loadingVideo.value = false;
+            }
+          });
         } else if (option.action === "quick-guide") {
           // show the onboarding
           window.localStorage.removeItem("new-users-onboarding");
