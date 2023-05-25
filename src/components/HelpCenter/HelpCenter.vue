@@ -352,7 +352,6 @@ export default {
           loadingVideo.value = true;
 
           refVideo.value.addEventListener("loadeddata", () => {
-            console.log(refVideo.value.readyState);
             if (refVideo.value.readyState >= 3) {
               loadingVideo.value = false;
             }
