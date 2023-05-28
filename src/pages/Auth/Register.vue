@@ -38,7 +38,9 @@
             :label="$t('common.password')"
             lazy-rules
             :rules="[
-              val => isPasswordSecure(val) || this.$t('messages.errors.passwordSecurity')
+              (val) =>
+                isPasswordSecure(val) ||
+                this.$t('messages.errors.passwordSecurity'),
             ]"
           />
           <q-input
@@ -48,7 +50,9 @@
             :label="$t('common.confirmPassword')"
             lazy-rules
             :rules="[
-              val => isPasswordSecure(val) || this.$t('messages.errors.passwordSecurity')
+              (val) =>
+                isPasswordSecure(val) ||
+                this.$t('messages.errors.passwordSecurity'),
             ]"
           />
           <div class="text-center">
@@ -63,6 +67,13 @@
             />
           </div>
         </q-form>
+        <div class="text-center q-mb-md">
+          <q-separator class="q-my-md" />
+          <span class="text-grey-7">
+            {{ $t("common.connectWithOneClick") }}
+          </span>
+        </div>
+        <social-networks />
       </q-card-section>
     </q-card>
   </q-page>
@@ -74,15 +85,19 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import jwtDecode from "jwt-decode";
+import SocialNetworks from "components/Auth/SocialNetworks.vue";
 
 export default {
-  name: 'PageRegister',
-  setup () {
+  name: "PageRegister",
+  components: {
+    SocialNetworks,
+  },
+  setup() {
     const $q = useQuasar();
     const $store = useStore();
     const $router = useRouter();
 
-    const fullname = ref('')
+    const fullname = ref("");
     const email = ref(null);
     const password = ref(null);
     const confirmPassword = ref(null);
@@ -94,13 +109,13 @@ export default {
       password,
       confirmPassword,
       loading,
-      isPasswordSecure (password) {
+      isPasswordSecure(password) {
         if (password) {
-          const regex = /^(?=.*[a-z])(?=.*[0-9])(?=.{8,})/
-          return regex.test(password)
+          const regex = /^(?=.*[a-z])(?=.*[0-9])(?=.{8,})/;
+          return regex.test(password);
         }
         // Prevent show error message on empty field
-        return true
+        return true;
       },
       onSubmit() {
         loading.value = true;
@@ -109,14 +124,14 @@ export default {
             fullname: fullname.value,
             email: email.value,
             password: password.value,
-            confirmPassword: confirmPassword.value
+            confirmPassword: confirmPassword.value,
           })
           .then((response) => {
             const token = response.data.data.token;
             const decoded = jwtDecode(token);
             $store.commit("auth/SET_USER", decoded);
             window.localStorage.setItem("token", token);
-            $router.push("/auth/confirm-email")
+            $router.push("/auth/confirm-email");
           })
           .catch((error) => {
             $q.notify({
@@ -130,6 +145,6 @@ export default {
           });
       },
     };
-  }
-}
+  },
+};
 </script>
