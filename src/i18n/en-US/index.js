@@ -177,6 +177,7 @@ export default {
     back: 'Back',
     sendMessage: 'Send message',
     contactUs: 'Contact us',
+    downloadAll: 'Download all',
   },
   messages: {
     onboarding:{

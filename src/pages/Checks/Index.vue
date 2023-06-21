@@ -307,7 +307,7 @@
                 <div class="text-grey-7">{{ $t("common.timezone") }}</div>
               </div>
               <div class="col-12 text-grey-7">
-                {{$t('common.period')}} {{ tempCheck.periodToCheckLabel }}
+                {{ $t("common.period") }} {{ tempCheck.periodToCheckLabel }}
               </div>
             </div>
           </div>
@@ -327,7 +327,16 @@
                   :series="logs.series"
                 />
                 <div class="text-grey-7 text-center">
-                  {{$t('common.lastRecords').replace('[NUMBER]', 10)}}
+                  {{ $t("common.lastRecords").replace("[NUMBER]", 10) }}
+                  <span class="q-mx-md">-</span>
+                  <q-btn
+                    @click="() => handleLogsDownload()"
+                    :loading="downloadingLogs"
+                    flat
+                    dense
+                    color="primary"
+                    :label="$t('action.downloadAll')"
+                  />
                 </div>
               </template>
             </div>
@@ -359,6 +368,7 @@ export default {
     const $t = useI18n().t;
     const $q = useQuasar();
     const store = useStore();
+    const downloadingLogs = ref(false);
 
     // chart options
     const series = ref([
@@ -624,6 +634,7 @@ export default {
       enable,
       getTheAverageResponseTime,
       getUpTimePercent,
+      downloadingLogs,
       handleDeleteCheck(check) {
         $q.dialog({
           title: "Confirm",
@@ -679,6 +690,21 @@ export default {
 
         return false;
       },
+      handleLogsDownload(){
+        downloadingLogs.value = true;
+
+        store.dispatch('checks/downloadCheckLogs', tempCheck.value.id)
+        .then(response => {
+          const blob = new Blob([response.data], { type: 'text/csv' })
+          const link = document.createElement('a')
+          link.href = window.URL.createObjectURL(blob)
+          link.download = `${tempCheck.value.name}.csv`
+          link.click()
+        })
+        .finally(() => {
+          downloadingLogs.value = false;
+        })
+      }
     };
   },
 };

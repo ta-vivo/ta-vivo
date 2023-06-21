@@ -12,6 +12,10 @@ export function fetchLogsById(context, payload) {
   return axiosInstance.get(`/checks/${payload.id}/logs${payload.query}`)
 }
 
+export function downloadCheckLogs(context, checkId) {
+  return axiosInstance.get(`/checks/${checkId}/logs/download?limit=99999`, { responseType: 'blob' })
+}
+
 export function create(context, payload) {
   return axiosInstance.post('/checks', payload)
 }
