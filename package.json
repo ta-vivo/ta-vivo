@@ -26,7 +26,8 @@
     "vue-router": "^4.0.0",
     "vue-shepherd": "^2.0.1",
     "vue3-apexcharts": "^1.4.1",
-    "vuex": "^4.0.1"
+    "vuex": "^4.0.1",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.13.14",
