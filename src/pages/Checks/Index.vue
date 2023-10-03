@@ -78,7 +78,7 @@
               <div class="text-grey-8">{{ $t("common.name") }}</div>
               <div class="q-mb-sm">{{ props.row.name }}</div>
               <div class="text-grey-8">{{ $t("common.target") }}</div>
-              <div class="q-mb-sm">{{ props.row.target }}</div>
+              <div class="q-mb-sm text-wrap">{{ props.row.target }}</div>
               <div class="text-grey-8">{{ $t("common.integrations") }}</div>
               <div class="q-mb-sm">
                 <template
@@ -709,3 +709,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.text-wrap {
+  word-wrap: break-word;
+}
+</style>
