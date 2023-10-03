@@ -57,13 +57,13 @@
           >@ta-vivo-bot</a
         >
       </p>
-      <p>
-        <span class="text-bold">2-</span> {{ $t("messages.information.telegramSetupBotCommand") }}
+      <span class="text-bold">2-</span> {{ $t("messages.information.telegramSetupBotCommand") }}
+      <p class="text-center">
         <q-img
           class="q-mt-md telegram-demo"
           src="~assets/telegram/telegram-bot-command.jpeg"
           spinner-color="white"
-          style="max-width: 80%"
+          :style="$q.screen.xs ? 'max-width: 100%' : 'max-width: 60%'"
         />
       </p>
     </div>
