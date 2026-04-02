@@ -57,7 +57,7 @@
           />
           <div class="text-center">
             <q-btn
-              :disable="password !== confirmPassword"
+              :disabled="!fullname || !email || !password || password !== confirmPassword"
               push
               :loading="loading"
               :label="$t('common.register')"
