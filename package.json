@@ -12,7 +12,7 @@
   "dependencies": {
     "@emailjs/browser": "^3.11.0",
     "@quasar/extras": "^1.15.4",
-    "@supabase/supabase-js": "^1.35.3",
+    "@supabase/supabase-js": "^2.106.2",
     "apexcharts": "^3.37.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
